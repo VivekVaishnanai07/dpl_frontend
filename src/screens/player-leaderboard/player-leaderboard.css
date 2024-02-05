@@ -1,0 +1,24 @@
+.player-leaderboard-container {
+  margin-left: 64px;
+  margin-right: 64px;
+  margin-bottom: 50px;
+}
+
+.table-title {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.table-data-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .player-leaderboard-container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+
+}

@@ -1,0 +1,18 @@
+:root {
+  background: #f6f8fa;
+}
+
+body {
+  margin: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f6f8fa !important;
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}

@@ -1,0 +1,23 @@
+#match_edit {
+  width: 33.33%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+}
+
+#match_delete {
+  width: 33.33%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+}
+
+#winner_trophy {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+  width: 33.33%;
+}
