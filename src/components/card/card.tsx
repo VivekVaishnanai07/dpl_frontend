@@ -1,19 +1,18 @@
-import dayjs from "dayjs";
-import "./card.css"
-import { getTodayOrUpcoming } from "../../utils/util";
-import Countdown from "../../hooks/useCountdiwn";
+import { Button, Chip, IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router";
-import { Button } from "@mui/material";
+import StadiumIcon from '../../assets/icon/stadium';
+import { countdownFormat } from "../../utils/util";
+import "./card.css";
 
 const Card = (props: any) => {
   const { matchDetails } = props;
   const navigate = useNavigate();
-  const countDown = Countdown(matchDetails.date)
-  const status = getTodayOrUpcoming(matchDetails.date)
+  const countDown = countdownFormat(matchDetails.countdownTime);
+
   return (
     <div className="card">
       <div className="card_header">
-        <div className="match_status"><span dangerouslySetInnerHTML={{ __html: status }} /></div>
+        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && 'lightgreen'}` }}>{matchDetails.match_status}</div>
         <div className="match_number">T20 {matchDetails.match_no} of 60</div>
       </div>
       <div className="card_content">
@@ -29,14 +28,20 @@ const Card = (props: any) => {
         </div>
       </div>
       <div className="card_footer">
-        <div className="time_countdown">{countDown === "Live" ? countDown : `${countDown.hours}H ${countDown.minutes}M`}</div>
+        <div className="red-text">{countDown}</div>
         <div className="date_section">
-          <span>{dayjs(matchDetails.date).format('D MMM, YYYY')}</span> &nbsp;&nbsp;
-          <span>{dayjs(matchDetails.date).format('h:mm A')}</span>
+          <span>{matchDetails.date}</span>
         </div>
-        <div className="place_section">{matchDetails.venue}</div>
+        <div className="place_section">
+          <Tooltip title={matchDetails.venue} placement="bottom">
+            <IconButton>
+              <StadiumIcon width="18px" hanging="18px" />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
-      <div className="footer_btn">
+      <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'}`}>
+        {matchDetails.predicted_team && <Chip size="small" label={matchDetails.predicted_team} color="success" variant="outlined" />}
         <Button variant="contained" sx={{ fontSize: 10 }} color="success" onClick={() => navigate(`/dashboard/prediction/${matchDetails.id}`)}>Predicted</Button>
       </div>
     </div>

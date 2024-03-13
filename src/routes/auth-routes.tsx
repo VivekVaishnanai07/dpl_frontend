@@ -24,7 +24,7 @@ const AuthRoutes = [
     <Route key="EditTeams" path="/team/:id" element={<AuthGuard component={<AddTeam />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="Users" path="/users" element={<AuthGuard component={<Users />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="AddUser" path="/user/add-user" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
-    <Route key="EditUser" path="/user/:id" element={<AuthGuard component={<AddUser />} allowedRole={[]} />} />,
+    <Route key="EditUser" path="/user/:id" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="Status" path="/status" element={<AuthGuard component={<Status />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="PointTable" path="/point-table" element={<AuthGuard component={<PlayerLeaderboard />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="About" path="/about" element={<AuthGuard component={<About />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,

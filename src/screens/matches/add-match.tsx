@@ -31,7 +31,7 @@ export default function AddMatch() {
     team_1: "",
     team_2: "",
     venue: "",
-    season_year: 2023
+    season_year: 2024
   })
 
   let fieldDisable = !matchData.match_no || !matchData.team_1 || !matchData.team_2 || !matchData.venue;

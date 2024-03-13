@@ -74,11 +74,18 @@
   padding: 8px;
 }
 
-.time_countdown {
+.red-text {
   margin: 4px 0;
   padding-right: 6px;
   font-size: 14px;
   color: red;
+}
+
+.green-text {
+  margin: 4px 0;
+  padding-right: 6px;
+  font-size: 14px;
+  color: green;
 }
 
 .date_section {
@@ -88,12 +95,24 @@
 }
 
 .place_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 4px 0;
+  height: 20px;
 }
 
-.footer_btn {
+.d-flex {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-space-between {
+  justify-content: space-between !important;
 }
 
 @media screen and (max-width: 600px) {

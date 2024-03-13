@@ -1,12 +1,12 @@
-import { useNavigate, useParams } from "react-router";
-import "./prediction.css";
-import { useEffect, useState } from "react";
-import MatchesDataService from "../../service/matches.service";
-import dayjs from "dayjs";
 import { Button } from "@mui/material";
-import PredictionDataService from "../../service/prediction.service";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import MatchesDataService from "../../service/matches.service";
+import PredictionDataService from "../../service/prediction.service";
 import { notificationConfig } from "../../utils/util";
+import "./prediction.css";
+import StadiumIcon from "../../assets/icon/stadium";
 
 const Prediction = () => {
   let navigate = useNavigate();
@@ -21,7 +21,7 @@ const Prediction = () => {
   const [selectedTeam, setSelectedTeam] = useState<string>('')
 
   useEffect(() => {
-    PredictionDataService.getAll(user_id, id).then((res) => {
+    PredictionDataService.get(user_id, id).then((res) => {
       const data = res.data[0];
       if (data !== undefined) {
         let pId: string = JSON.stringify(data.id);
@@ -112,10 +112,10 @@ const Prediction = () => {
             </label>
           </div>
         </div>
+        <div className="prediction_footer">{matchDetails.date}</div>
         <div className="prediction_footer">
-          <span>{matchDetails.venue}</span>
-          <span>{dayjs(matchDetails.date).format('D MMM YYYY')}</span> &nbsp;&nbsp;
-          <span>{dayjs(matchDetails.date).format('h:mm A')}</span>
+          <StadiumIcon width="30px" height="30px" />
+          <span style={{ paddingTop: "10px" }}>{matchDetails.venue}</span>
         </div>
       </div>
       <div className="btn-box">

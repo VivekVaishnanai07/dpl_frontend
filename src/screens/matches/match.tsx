@@ -85,9 +85,6 @@ const Match = () => {
               label="SEASON YEAR"
               onChange={handlerFilterList}
             >
-              <MenuItem value={2021}>SEASON 2021</MenuItem>
-              <MenuItem value={2022}>SEASON 2022</MenuItem>
-              <MenuItem value={2023}>SEASON 2023</MenuItem>
               <MenuItem value={2024}>SEASON 2024</MenuItem>
             </Select>
           </FormControl>

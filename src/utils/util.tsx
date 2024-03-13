@@ -9,6 +9,16 @@ export default axios.create({
   }
 });
 
+export function countdownFormat(time: string) {
+  if (time.includes(':')) {
+    const [hours, minutes] = time.split(':');
+    return `${hours}H ${minutes}M`;
+  } else {
+    const days = parseInt(time);
+    return `${days}D`;
+  }
+}
+
 // create profile pic name first letter and background color
 export const capitalizeAndChangeColor = (firstName: string, lastName: string) => {
   if (firstName && lastName) {
@@ -60,24 +70,6 @@ export const dateFormateSql = (data: any) => {
     return formattedDate;
   }
 }
-
-// match status get
-export const getTodayOrUpcoming = (dateStr: string) => {
-  const today = new Date();
-  const inputDate = new Date(dateStr);
-
-  today.setHours(0, 0, 0, 0);
-  inputDate.setHours(0, 0, 0, 0);
-
-  if (inputDate.getTime() === today.getTime()) {
-    return "<span style='color: red;'>Today Match</span>";
-  } else if (inputDate > today) {
-    return "Upcoming Match";
-  } else {
-    return "<span style='color: lightgreen;'>Completed</span>";
-  }
-}
-
 
 // role base 
 export const roles = {
