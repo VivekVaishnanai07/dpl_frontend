@@ -1,12 +1,13 @@
 import { Chip } from "@mui/material";
 import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import predictionAnalysisDataService from "../../service/prediction-analysis.service";
 import "./prediction-analysis.css";
 
 const PredictionAnalysis = () => {
-  let getData: any = localStorage.getItem('isLogin')
-  let user = JSON.parse(getData)
+  let getData: any = localStorage.getItem('token')
+  let user: any = jwtDecode(getData) as any;
   const [predictionAnalysisList, setPredictionAnalysisList] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
 

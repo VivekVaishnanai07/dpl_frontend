@@ -2,12 +2,28 @@ import axios from "axios";
 import { ToastOptions } from 'react-toastify';
 import "../assets/css/common.css";
 
-export default axios.create({
+const axiosInstance = axios.create({
   baseURL: "https://dpl-backend-3pdy.onrender.com/api",
   headers: {
     "Content-type": "application/json"
   }
 });
+
+// Add a request interceptor to include the Bearer token from localStorage
+axiosInstance.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export default axiosInstance;
 
 export function countdownFormat(time: string) {
   if (time.includes(':')) {

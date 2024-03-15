@@ -1,4 +1,5 @@
 
+import { jwtDecode } from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../layout/header/header';
@@ -13,20 +14,21 @@ const AuthGuard = ({ component, allowedRole }: any) => {
 
   const checkToken = async () => {
     try {
-      let isLogin = localStorage.getItem('isLogin')
-      if (!isLogin) {
+      let isToken = localStorage.getItem('token')
+      if (!isToken) {
         navigate(`/login`);
       }
 
       // Assuming you have stored the user's role in localStorage or obtained it from an API
       let userRole;
 
-      if (isLogin) {
-        userRole = JSON.parse(isLogin.toString()); // Adjust this based on your actual implementation
+      if (isToken) {
+        let token = jwtDecode(isToken) as any;
+        userRole = token.role;
       }
 
       // Check if the user's role is in the allowed roles
-      if (!allowedRole.includes(userRole.role)) {
+      if (!allowedRole.includes(userRole)) {
         navigate(`/login`); // Redirect to an unauthorized access page
         return;
       }

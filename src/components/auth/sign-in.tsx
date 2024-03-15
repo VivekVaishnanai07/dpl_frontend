@@ -12,37 +12,25 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import cricketImg from '../../assets/img/cricket.gif';
-import UserDataService from '../../service/users.service';
-import { capitalizeAndChangeColor, notificationConfig } from '../../utils/util';
+import AuthService from '../../service/auth.service';
+import { notificationConfig } from '../../utils/util';
 import './sign-in.css';
 
 const defaultTheme = createTheme();
 
 export default function SingIn() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('vivek@gmail.com');
+  const [password, setPassword] = useState<string>('vivek@0033');
 
   const handleSubmit = () => {
-    UserDataService.get(email).then((response: any) => {
-      if (response.data.length !== 0) {
-        const user = response.data[0]
-        if (user.password === password) {
-          // setAuth(user.role)
-          toast.success('You are successfully logged in', notificationConfig);
-          const profileAvatar: any = capitalizeAndChangeColor(user.first_name, user.last_name)
-          let profileAvatarString = JSON.stringify(profileAvatar)
-          localStorage.setItem("avatarProfile", profileAvatarString)
-          let string = JSON.stringify(user)
-          localStorage.setItem("isLogin", string)
-          navigate('/dashboard');
-        } else {
-          toast.warn('incorrect your password pleas try again', notificationConfig);
-          setEmail("")
-          setPassword("")
-        }
+    AuthService.login({ "email": email, "password": password }).then((response: any) => {
+      if (response.data.token) {
+        toast.success('You are successfully logged in', notificationConfig);
+        localStorage.setItem("token", response.data.token)
+        navigate('/dashboard');
       } else {
-        toast.error('Error Your Email is not exits', {
+        toast.error(response.data, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -52,6 +40,8 @@ export default function SingIn() {
           progress: undefined,
           theme: "light",
         });
+        setEmail("");
+        setPassword("");
       }
     }).catch((error: Error) => {
       console.error(error)

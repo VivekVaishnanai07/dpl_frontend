@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -11,9 +12,9 @@ import "./prediction.css";
 const Prediction = () => {
   let navigate = useNavigate();
   let { id }: any = useParams();
-  let getData: any = localStorage.getItem('isLogin')
-  let user = JSON.parse(getData)
-  let user_id = JSON.stringify(user.id)
+  let getData: any = localStorage.getItem('token');
+  let user: any = jwtDecode(getData) as any;
+  let user_id = user.id;
 
   const [predictionId, setPredictionId] = useState('');
   const [matchDetails, setMatchDetails] = useState<any>({});

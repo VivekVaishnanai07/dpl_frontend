@@ -7,13 +7,14 @@ import Card from "../../components/card/card";
 import MatchesDataService from "../../service/matches.service";
 import playerLeaderboardDataService from "../../service/player-leaderboard.service";
 import "./dashboard.css";
+import { jwtDecode } from "jwt-decode";
 
 dayjs.extend(utc);
 
 const Dashboard = () => {
-  let getData: any = localStorage.getItem('isLogin');
-  let user = JSON.parse(getData);
-  let user_id = JSON.stringify(user.id);
+  let getData: any = localStorage.getItem('token');
+  let userData: any = jwtDecode(getData) as any;
+  let user_id = userData.id;
   const [matchListData, setMatchListData] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
   const [playerLeaderboardList, setPlayerLeaderboardList] = useState([]);

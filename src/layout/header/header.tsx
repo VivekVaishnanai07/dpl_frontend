@@ -12,17 +12,17 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { adminHeader, roles, userHeader } from '../../utils/util';
+import { adminHeader, capitalizeAndChangeColor, roles, userHeader } from '../../utils/util';
 import './header.css';
+import { jwtDecode } from 'jwt-decode';
 
 function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   let pathName = pathname.replace("/", "").toLocaleUpperCase()
-  const getData: any = localStorage.getItem('isLogin')
-  let user = JSON.parse(getData)
-  let getProfileAvatar: any = localStorage.getItem('avatarProfile')
-  let profileAvatar = JSON.parse(getProfileAvatar)
+  const getToken: any = localStorage.getItem('token');
+  let userData: any = jwtDecode(getToken) as any;
+  const profileAvatar: any = capitalizeAndChangeColor(userData.firstName, userData.lastName);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -60,7 +60,7 @@ function Header() {
   }
 
   const getHeaderData = () => {
-    if (user.role === roles.Admin_Role) {
+    if (userData.role === roles.Admin_Role) {
       return adminHeader;
     } else {
       return userHeader;
@@ -139,7 +139,7 @@ function Header() {
               <Avatar className='profileAvatar' sx={{ bgcolor: profileAvatar?.backgroundColor }}>
                 {profileAvatar?.firstName}{profileAvatar?.lastName}
               </Avatar>
-              <Typography className='avatar-title'>{user.first_name + " " + user.last_name}</Typography>
+              <Typography className='avatar-title'>{userData.firstName + " " + userData.lastName}</Typography>
             </IconButton>
             <Menu
               sx={{ mt: '45px' }}

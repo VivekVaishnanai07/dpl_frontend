@@ -12,9 +12,9 @@ const UnAuthGuard = ({ component }: any) => {
 
   const checkToken = async () => {
     try {
-      let isLogin = localStorage.getItem('isLogin')
-      if (!isLogin) {
-        localStorage.removeItem("isLogin")
+      let isToken = localStorage.getItem('token')
+      if (!isToken) {
+        localStorage.removeItem("token")
       } else {
         navigate(`/dashboard`);
       }
