@@ -20,8 +20,8 @@ const defaultTheme = createTheme();
 
 export default function SingIn() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>('vivek@gmail.com');
-  const [password, setPassword] = useState<string>('vivek@0033');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleSubmit = () => {
     AuthService.login({ "email": email, "password": password }).then((response: any) => {
