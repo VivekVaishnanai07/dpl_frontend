@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import cricketImg from '../../assets/img/cricket.gif';
 import UserDataService from '../../service/users.service';
 import { capitalizeAndChangeColor, notificationConfig } from '../../utils/util';
+import './sign-in.css';
 
 const defaultTheme = createTheme();
 
@@ -58,34 +59,19 @@ export default function SingIn() {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid className='login-container' container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={8}
-          sx={{
-            backgroundImage: `url(${cricketImg})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-          }}
-        >
+        {/* Adjust Grid item layout based on screen size */}
+        <Grid className='login-left-section' item xs={12} sm={12} md={8} lg={8} xl={8}>
           <Typography component="h1" variant="h5" sx={{ padding: '24px !important', fontFamily: 'cursive !important' }}>
             Login and try your luck
           </Typography>
+          <div className='img-container'>
+            <img className='login-img' src={cricketImg} alt="Cricket" />
+          </div>
         </Grid>
-        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              marginTop: '180px !important'
-            }}
-          >
+        <Grid className='login-right-section' item xs={12} sm={12} md={4} lg={4} xl={4} component={Paper} elevation={6} square>
+          <Box className="login-field-box">
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>

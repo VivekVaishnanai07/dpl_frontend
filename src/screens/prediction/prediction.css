@@ -122,10 +122,12 @@
 @media screen and (max-width: 600px) {
   .prediction_header {
     display: block !important;
+    padding: 16px;
   }
 
   .box_left_section {
     width: auto !important;
+    padding-bottom: 8px;
   }
 
   .prediction_team {
@@ -144,5 +146,6 @@
 
   .box_right_section {
     width: auto !important;
+    padding-top: 8px;
   }
 }

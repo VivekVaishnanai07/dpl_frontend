@@ -4,9 +4,8 @@ import About from "../screens/about/about";
 import Dashboard from "../screens/dashboard/dashboard";
 import AddMatch from "../screens/matches/add-match";
 import Match from "../screens/matches/match";
-import PlayerLeaderboard from "../screens/player-leaderboard/player-leaderboard";
+import PredictionAnalysis from "../screens/prediction-analysis/prediction-analysis";
 import Prediction from "../screens/prediction/prediction";
-import Status from "../screens/status/status";
 import AddTeam from "../screens/teams/add-team";
 import Teams from "../screens/teams/teams";
 import AddUser from "../screens/users/add-user";
@@ -25,8 +24,7 @@ const AuthRoutes = [
     <Route key="Users" path="/users" element={<AuthGuard component={<Users />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="AddUser" path="/user/add-user" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="EditUser" path="/user/:id" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
-    <Route key="Status" path="/status" element={<AuthGuard component={<Status />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
-    <Route key="PointTable" path="/point-table" element={<AuthGuard component={<PlayerLeaderboard />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
+    <Route key="PredictionAnalysis" path="/prediction-analysis" element={<AuthGuard component={<PredictionAnalysis />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="About" path="/about" element={<AuthGuard component={<About />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
 ]
 

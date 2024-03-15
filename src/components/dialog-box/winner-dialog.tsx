@@ -1,9 +1,9 @@
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import StadiumIcon from '../../assets/icon/stadium';
 import MatchesDataService from '../../service/matches.service';
 import { notificationConfig } from '../../utils/util';
 import "./winner-dialog.css";
@@ -20,11 +20,11 @@ export default function WinnerConfirmDialog(props: any) {
       console.error(err)
     })
 
-    if (match.winner_team !== null) {
-      const winTeam = JSON.stringify(match.winner_team)
+    if (teamDetails.winner_team !== null) {
+      const winTeam = JSON.stringify(teamDetails.winner_team)
       setSelectedTeam(winTeam);
     }
-  }, [match.id, match.winner_team])
+  }, [match.id, teamDetails.winner_team])
 
   const handlerChange = (e: any) => {
     setSelectedTeam(e.target.value);
@@ -104,10 +104,10 @@ export default function WinnerConfirmDialog(props: any) {
               </label>
             </div>
           </div>
+          <div className="prediction_footer">{match.date}</div>
           <div className="prediction_footer">
-            <span id='venue'>{match.venue}</span>
-            <span id='date'>{dayjs(match.date).format('D MMM YYYY')}</span>
-            <span id='time'>{dayjs(match.date).format('h:mm A')}</span>
+            <StadiumIcon width="30px" height="30px" />
+            <span style={{ paddingTop: "10px" }}>{match.venue}</span>
           </div>
         </div>
         <div className="btn-box">

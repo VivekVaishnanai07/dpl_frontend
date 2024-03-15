@@ -1,0 +1,38 @@
+.img-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-img {
+  width: 800px;
+  height: 500px;
+}
+
+.login-field-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 130px;
+  padding: 16px;
+}
+
+@media (max-width: 1330.39px) and (min-width: 975.39px) {
+  .img-container {
+    margin-top: 30px !important;
+  }
+
+  .login-img {
+    width: 700px !important;
+    height: 400px !important;
+  }
+
+  .login-right-section {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .login-left-section {
+    display: none !important;
+  }
+}

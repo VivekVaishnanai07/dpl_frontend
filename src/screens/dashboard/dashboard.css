@@ -1,8 +1,47 @@
+.wrulf-bg {
+  background-image: url('../../assets/img/wrulf-bg-1.svg'), url('../../assets/img/wrulf-bg-2.png');
+  background-position: right top, left bottom;
+}
+
+.wrulf-bg {
+  background-repeat: no-repeat, no-repeat;
+}
+
 @media screen and (max-width: 600px) {
   .dashboard_container {
     margin-top: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 12px !important;
+  }
+}
+
+/* player-leaderboard */
+
+.player-leaderboard-container {
+  /* margin: 50px 64px; */
+}
+
+.table-title {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.table-data-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.match-streak {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  .player-leaderboard-container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
   }
 }

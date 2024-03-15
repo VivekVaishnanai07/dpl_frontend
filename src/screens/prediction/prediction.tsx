@@ -2,11 +2,11 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import StadiumIcon from "../../assets/icon/stadium";
 import MatchesDataService from "../../service/matches.service";
 import PredictionDataService from "../../service/prediction.service";
 import { notificationConfig } from "../../utils/util";
 import "./prediction.css";
-import StadiumIcon from "../../assets/icon/stadium";
 
 const Prediction = () => {
   let navigate = useNavigate();
@@ -17,27 +17,32 @@ const Prediction = () => {
 
   const [predictionId, setPredictionId] = useState('');
   const [matchDetails, setMatchDetails] = useState<any>({});
-  const [defaultTeamId, setDefaultTeamId] = useState<any>('');
+  const [defaultTeamId, setDefaultTeamId] = useState<any>(0);
   const [selectedTeam, setSelectedTeam] = useState<string>('')
 
   useEffect(() => {
+    getPredictionData(user_id, id);
+    matchDetailsData(id);
+  }, [user_id, id])
+
+  const getPredictionData = (user_id: any, id: any) => {
     PredictionDataService.get(user_id, id).then((res) => {
       const data = res.data[0];
       if (data !== undefined) {
         let pId: string = JSON.stringify(data.id);
-        setPredictionId(pId)
-        let id = JSON.stringify(data.team_id)
+        setPredictionId(pId);
+        let id = JSON.stringify(data.team_id);
         setSelectedTeam(id);
         setDefaultTeamId(id);
       }
-    }).catch((error) => console.error(error))
-  }, [id, user_id])
+    }).catch((error) => console.error(error));
+  }
 
-  useEffect(() => {
+  const matchDetailsData = (id: any) => {
     MatchesDataService.getPredictionDetailsById(id).then((response) => {
       setMatchDetails(response.data[0]);
     }).catch((error) => console.error(error))
-  }, [id])
+  }
 
   const handlerChange = (e: any) => {
     setSelectedTeam(e.target.value);
@@ -58,8 +63,9 @@ const Prediction = () => {
     } else {
       teamName = matchDetails.team_2
     }
-    if (defaultTeamId) {
-      PredictionDataService.update(selectedTeam, predictionId).then((res) => {
+    if (defaultTeamId !== 0) {
+      console.log();
+      PredictionDataService.update(selectedTeam, predictionId, id).then((res) => {
         toast.success(`Are you selected ${teamName} and result will be declared after the match`, notificationConfig);
         navigate('/dashboard')
       }).catch((error: any) => console.error(error))

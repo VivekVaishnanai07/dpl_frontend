@@ -9,8 +9,8 @@ const PredictionDataService = {
     return http.post("/prediction/add-prediction", data);
   },
 
-  update(teamId: any, id: any) {
-    return http.put(`/prediction/${teamId}/${id}`);
+  update(teamId: any, predictionId: any, matchId: any) {
+    return http.put(`/prediction/${teamId}/${predictionId}/${matchId}`);
   },
 }
 

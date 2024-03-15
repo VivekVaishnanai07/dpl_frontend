@@ -82,14 +82,12 @@ export const adminHeader = [
   { navigateUrl: '/matches', componentName: 'Matches' },
   { navigateUrl: '/teams', componentName: 'Teams' },
   { navigateUrl: '/users', componentName: 'Users' },
-  { navigateUrl: '/point-table', componentName: 'Point Table' },
-  { navigateUrl: '/status', componentName: 'Status' },
+  { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
   { navigateUrl: '/about', componentName: 'About' },
 ]
 
 export const userHeader = [
   { navigateUrl: '/dashboard', componentName: 'Dashboard' },
-  { navigateUrl: '/point-table', componentName: 'Point Table' },
-  { navigateUrl: '/status', componentName: 'Status' },
+  { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
   { navigateUrl: '/about', componentName: 'About' },
 ]

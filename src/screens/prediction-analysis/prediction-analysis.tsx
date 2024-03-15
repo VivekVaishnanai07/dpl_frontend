@@ -1,13 +1,13 @@
+import { Chip } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import statusDataService from "../../service/status.service";
-import "./status.css";
-import { Chip } from "@mui/material";
+import predictionAnalysisDataService from "../../service/prediction-analysis.service";
+import "./prediction-analysis.css";
 
-const Status = () => {
+const PredictionAnalysis = () => {
   let getData: any = localStorage.getItem('isLogin')
   let user = JSON.parse(getData)
-  const [statusList, setstatusList] = useState([]);
+  const [predictionAnalysisList, setPredictionAnalysisList] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
 
   useEffect(() => {
@@ -16,13 +16,13 @@ const Status = () => {
   }, [])
 
   const getPredictionList = () => {
-    statusDataService.get(user.id).then((response: any) => {
+    predictionAnalysisDataService.get(user.id).then((response: any) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
         setEmptyMessageBanner(false)
       }
-      setstatusList(response.data);
+      setPredictionAnalysisList(response.data);
     }).catch((error) => {
       setEmptyMessageBanner(true)
       console.error(error)
@@ -33,7 +33,7 @@ const Status = () => {
     <div className="bottom-section-main">
       <div className="team-container">
         <table>
-          <caption>Status Table</caption>
+          <caption>Prediction Analysis Table</caption>
           <thead>
             <tr>
               <th id="table_row" scope="col">No.</th>
@@ -45,20 +45,27 @@ const Status = () => {
               <th id="table_row" scope="col">Time</th>
               <th id="table_row" scope="col">Predict Team</th>
               <th id="table_row" scope="col">Win Team</th>
+              <th id="table_row" scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {statusList.map((stack: any, index: number) => (
+            {predictionAnalysisList.map((item: any, index: number) => (
               <tr key={index + 1}>
                 <td id="table_row" data-label="No.">{index + 1}</td>
-                <td id="table_row" data-label="Match No.">{stack.match_no}</td>
-                <td id="table_row" data-label="Team 1">{stack.team_1}</td>
-                <td id="table_row" data-label="Team 2">{stack.team_2}</td>
-                <td id="table_row" data-label="Venue">{stack.venue}</td>
-                <td id="table_row" data-label="Date">{dayjs(stack.date).format('DD/MM/YYYY')}</td>
-                <td id="table_row" data-label="Time">{dayjs(stack.date).format('h:mm A')}</td>
-                <td id="table_row" data-label="Predict Team">{stack.predict_team}</td>
-                <td id="table_row" data-label="Won Team">{stack.winner_team ? stack.winner_team : <Chip label="Coming Soon " />}</td>
+                <td id="table_row" data-label="Match No.">{item.match_no}</td>
+                <td id="table_row" data-label="Team 1">{item.team_1}</td>
+                <td id="table_row" data-label="Team 2">{item.team_2}</td>
+                <td id="table_row" data-label="Venue">{item.venue}</td>
+                <td id="table_row" data-label="Date">{dayjs(item.date).format('DD/MM/YYYY')}</td>
+                <td id="table_row" data-label="Time">{dayjs(item.date).format('h:mm A')}</td>
+                <td id="table_row" data-label="Predict Team">{item.predict_team}</td>
+                <td id="table_row" data-label="Won Team">{item.winner_team ? item.winner_team : <Chip label="Coming Soon " />}</td>
+                <td id="table_row" data-label="">
+                  {item.status === "true" ?
+                    <span className="rf W ih-pt-g">W</span> :
+                    <span className="rf L ih-pt-r">L</span>
+                  }
+                </td>
               </tr>
             ))}
             <tr>
@@ -79,4 +86,4 @@ const Status = () => {
   )
 }
 
-export default Status;
+export default PredictionAnalysis;

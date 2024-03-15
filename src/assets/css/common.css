@@ -1,5 +1,6 @@
 .bottom-section-main {
   margin-top: 186px;
+  padding-bottom: 40px;
 }
 
 /* mobile view css */
@@ -7,6 +8,7 @@
 @media only screen and (max-width: 600px) {
   .bottom-section-main {
     margin-top: 0 !important;
+    padding-bottom: 40px !important;
   }
 }
 
