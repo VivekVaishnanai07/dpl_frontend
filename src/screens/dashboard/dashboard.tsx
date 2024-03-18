@@ -87,7 +87,7 @@ const Dashboard = () => {
                   ))}
                   <tr>
                     {emptyMessageBanner && (
-                      <td colSpan={9}>
+                      <td colSpan={7}>
                         <div id="main">
                           <div className="fof">
                             <h1>Data Not Found</h1>
