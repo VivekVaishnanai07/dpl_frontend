@@ -44,6 +44,11 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  const changePassword = () => {
+    setAnchorElUser(null);
+    navigate('/change-password');
+  }
+
   const logout = () => {
     localStorage.clear();
     navigate('/');
@@ -157,6 +162,9 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <MenuItem onClick={changePassword}>
+                <Typography textAlign="center">Change Password</Typography>
+              </MenuItem>
               <MenuItem onClick={logout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

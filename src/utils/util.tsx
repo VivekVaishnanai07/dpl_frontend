@@ -23,6 +23,19 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    const { response } = error;
+    if (response && response.data && response.data.message === "Invalid token") {
+      localStorage.clear();
+
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;
 
 export function countdownFormat(time: string) {

@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import AuthGuard from "../components/auth/guards/auth-guard";
+import ChangePassword from "../components/change-password/change-password";
 import About from "../screens/about/about";
 import Dashboard from "../screens/dashboard/dashboard";
 import AddMatch from "../screens/matches/add-match";
@@ -26,6 +27,7 @@ const AuthRoutes = [
     <Route key="EditUser" path="/user/:id" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="PredictionAnalysis" path="/prediction-analysis" element={<AuthGuard component={<PredictionAnalysis />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="About" path="/about" element={<AuthGuard component={<About />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
+    <Route key="ChangePassword" path="/change-password" element={<AuthGuard component={<ChangePassword />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
 ]
 
 export default AuthRoutes;

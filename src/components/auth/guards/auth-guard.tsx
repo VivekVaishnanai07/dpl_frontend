@@ -35,7 +35,6 @@ const AuthGuard = ({ component, allowedRole }: any) => {
       setStatus(true);
       return;
     } catch (error) {
-
       navigate(`/login`);
     }
   }
