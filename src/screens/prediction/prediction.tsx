@@ -121,7 +121,7 @@ const Prediction = () => {
         </div>
         <div className="prediction_footer">{matchDetails.date}</div>
         <div className="prediction_footer">
-          <StadiumIcon width="30px" height="30px" />
+          <StadiumIcon width="30px" height="30px" style={{ paddingRight: "10px" }} />
           <span style={{ paddingTop: "10px" }}>{matchDetails.venue}</span>
         </div>
       </div>

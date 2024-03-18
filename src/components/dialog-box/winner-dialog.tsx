@@ -106,7 +106,7 @@ export default function WinnerConfirmDialog(props: any) {
           </div>
           <div className="prediction_footer">{match.date}</div>
           <div className="prediction_footer">
-            <StadiumIcon width="30px" height="30px" />
+            <StadiumIcon width="30px" height="30px" style={{ paddingRight: "10px" }} />
             <span style={{ paddingTop: "10px" }}>{match.venue}</span>
           </div>
         </div>

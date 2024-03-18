@@ -4,7 +4,7 @@
   }
 
   .prediction_footer {
-    display: grid !important;
+    display: flex !important;
     font-size: 18px !important;
     margin-top: 0px !important;
     margin-bottom: 12px !important;
