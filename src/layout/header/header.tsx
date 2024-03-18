@@ -9,12 +9,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { jwtDecode } from 'jwt-decode';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { adminHeader, capitalizeAndChangeColor, roles, userHeader } from '../../utils/util';
+import { adminHeader, roles, userHeader } from '../../utils/util';
 import './header.css';
-import { jwtDecode } from 'jwt-decode';
 
 function Header() {
   const navigate = useNavigate();
@@ -22,7 +22,6 @@ function Header() {
   let pathName = pathname.replace("/", "").toLocaleUpperCase()
   const getToken: any = localStorage.getItem('token');
   let userData: any = jwtDecode(getToken) as any;
-  const profileAvatar: any = capitalizeAndChangeColor(userData.firstName, userData.lastName);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -141,8 +140,8 @@ function Header() {
           </Box>
           <Box sx={{ flexGrow: 0 }} className="avatar-box">
             <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-              <Avatar className='profileAvatar' sx={{ bgcolor: profileAvatar?.backgroundColor }}>
-                {profileAvatar?.firstName}{profileAvatar?.lastName}
+              <Avatar className='profileAvatar' sx={{ bgcolor: userData.avatarObj?.backgroundColor }}>
+                {userData.avatarObj?.firstName}{userData.avatarObj?.lastName}
               </Avatar>
               <Typography className='avatar-title'>{userData.firstName + " " + userData.lastName}</Typography>
             </IconButton>
