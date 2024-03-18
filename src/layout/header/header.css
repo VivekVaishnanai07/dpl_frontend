@@ -105,6 +105,10 @@
     position: unset !important;
   }
 
+  .top-header {
+    display: none !important;
+  }
+
   .middle-header {
     padding: 0 !important;
   }
