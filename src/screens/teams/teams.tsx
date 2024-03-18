@@ -87,8 +87,8 @@ const Teams = () => {
                 </td>
               </tr>
             ))}
-            <tr>
-              {emptyMessageBanner && (
+            {emptyMessageBanner && (
+              <tr>
                 <td colSpan={5}>
                   <div id="main">
                     <div className="fof">
@@ -96,8 +96,8 @@ const Teams = () => {
                     </div>
                   </div>
                 </td>
-              )}
-            </tr>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

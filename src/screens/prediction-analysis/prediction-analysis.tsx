@@ -69,8 +69,8 @@ const PredictionAnalysis = () => {
                 </td>
               </tr>
             ))}
-            <tr>
-              {emptyMessageBanner && (
+            {emptyMessageBanner && (
+              <tr>
                 <td colSpan={10}>
                   <div id="main">
                     <div className="fof">
@@ -78,8 +78,8 @@ const PredictionAnalysis = () => {
                     </div>
                   </div>
                 </td>
-              )}
-            </tr>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

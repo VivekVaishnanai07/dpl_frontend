@@ -83,8 +83,8 @@ const Users = () => {
                 </td>
               </tr>
             ))}
-            <tr>
-              {emptyMessageBanner && (
+            {emptyMessageBanner && (
+              <tr>
                 <td colSpan={5}>
                   <div id="main">
                     <div className="fof">
@@ -92,8 +92,8 @@ const Users = () => {
                     </div>
                   </div>
                 </td>
-              )}
-            </tr>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

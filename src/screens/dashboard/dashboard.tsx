@@ -1,13 +1,13 @@
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import FireIcon from "../../assets/icon/fire";
 import Card from "../../components/card/card";
 import MatchesDataService from "../../service/matches.service";
 import playerLeaderboardDataService from "../../service/player-leaderboard.service";
 import "./dashboard.css";
-import { jwtDecode } from "jwt-decode";
 
 dayjs.extend(utc);
 
@@ -85,8 +85,8 @@ const Dashboard = () => {
                       <td data-label="To Pay Money">{item.user_points}</td>
                     </tr>
                   ))}
-                  <tr>
-                    {emptyMessageBanner && (
+                  {emptyMessageBanner && (
+                    <tr>
                       <td colSpan={7}>
                         <div id="main">
                           <div className="fof">
@@ -94,8 +94,8 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </td>
-                    )}
-                  </tr>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

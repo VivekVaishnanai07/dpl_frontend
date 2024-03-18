@@ -133,8 +133,8 @@ const Match = () => {
                 </td>
               </tr>
             ))}
-            <tr>
-              {emptyMessageBanner && (
+            {emptyMessageBanner && (
+              <tr>
                 <td colSpan={9}>
                   <div id="main">
                     <div className="fof">
@@ -142,8 +142,8 @@ const Match = () => {
                     </div>
                   </div>
                 </td>
-              )}
-            </tr>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
