@@ -1,8 +1,8 @@
 import http from "../utils/util";
 
 const MatchesDataService = {
-  getAll() {
-    return http.get('/match');
+  getAll(data: any) {
+    return http.get('/match', data);
   },
 
   getDashboard(id: any) {
@@ -15,10 +15,6 @@ const MatchesDataService = {
 
   get(id: number) {
     return http.get(`/match/${id}`);
-  },
-
-  filterSeasonYear(year: any) {
-    return http.get(`/match/filter/${year}`)
   },
 
   create(data: any) {

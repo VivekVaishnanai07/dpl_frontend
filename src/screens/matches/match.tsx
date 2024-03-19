@@ -1,14 +1,19 @@
 import { Button, Chip, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import dayjs from "dayjs";
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DeleteIcon from "../../assets/icon/delete";
 import EditIcon from '../../assets/icon/edit';
+import Trophy from "../../assets/icon/trophy";
 import ConfirmDialog from '../../components/dialog-box/dialog-box';
+import WinnerConfirmDialog from "../../components/dialog-box/winner-dialog";
 import MatchesDataService from "../../service/matches.service";
 import './match.css';
-import Trophy from "../../assets/icon/trophy";
-import WinnerConfirmDialog from "../../components/dialog-box/winner-dialog";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const Match = () => {
   const navigate = useNavigate();
@@ -26,7 +31,8 @@ const Match = () => {
   }, [])
 
   const getMatchList = () => {
-    MatchesDataService.getAll().then((response) => {
+    const data = null;
+    MatchesDataService.getAll(data).then((response) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
@@ -61,7 +67,7 @@ const Match = () => {
   }
 
   const handlerFilterList = (e: any) => {
-    MatchesDataService.filterSeasonYear(e.target.value).then((res) => {
+    MatchesDataService.getAll({ seasonYear: e.target.value }).then((res) => {
       setFilterMatchList(res.data);
     }).catch((error) => console.error(error))
     setFilterValue(e.target.value)
@@ -112,7 +118,7 @@ const Match = () => {
                 <td data-label="Team 2">{match.team_2}</td>
                 <td data-label="Venue">{match.venue}</td>
                 <td data-label="Date">{dayjs(match.date).format('DD/MM/YYYY')}</td>
-                <td data-label="Time">{dayjs(match.date).format('h:mm A')}</td>
+                <td data-label="Time">{match.time}</td>
                 <td data-label="Time">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
                 <td className='buttons'>
                   <div id='match_edit' data-label="Buttons">
