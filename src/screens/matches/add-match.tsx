@@ -24,7 +24,6 @@ export default function AddMatch() {
   const { id }: any = useParams();
   const [teamList, setTeamList] = useState([]);
   const [error, setError] = useState(false);
-  const [fieldDisable, setFieldDisable] = useState(false);
   const [matchData, setMatchData] = useState<any>({
     match_no: 0,
     date: dayjs(new Date()),
@@ -37,6 +36,7 @@ export default function AddMatch() {
   useEffect(() => {
     getMatchData();
     getTeamList();
+    // eslint-disable-next-line
   }, [])
 
   const getMatchData = () => {
@@ -252,7 +252,7 @@ export default function AddMatch() {
                   </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
+                  <Button variant="contained" className='btn' onClick={handleSubmit}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>
             </Box>
