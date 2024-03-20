@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -65,7 +66,6 @@ const Prediction = () => {
       teamName = matchDetails.team_2
     }
     if (defaultTeamId !== 0) {
-      console.log();
       PredictionDataService.update(selectedTeam, predictionId, id).then((res) => {
         toast.success(`Are you selected ${teamName} and result will be declared after the match`, notificationConfig);
         navigate('/dashboard')
@@ -119,14 +119,14 @@ const Prediction = () => {
             </label>
           </div>
         </div>
-        <div className="prediction_footer">{matchDetails.date}</div>
+        <div className="prediction_footer">{dayjs.utc(matchDetails.date).local().format('DD/MM/YYYY h:mm A')}</div>
         <div className="prediction_footer">
           <StadiumIcon width="30px" height="30px" style={{ paddingRight: "10px" }} />
           <span style={{ paddingTop: "10px" }}>{matchDetails.venue}</span>
         </div>
       </div>
       <div className="btn-box">
-        <Button variant="contained" color="success" onClick={submitPrediction} disabled={selectedTeam ? false : true}>{defaultTeamId ? 'Update' : 'Submit'}</Button>
+        <Button variant="contained" className="btn" onClick={submitPrediction} disabled={selectedTeam ? false : true}>{defaultTeamId ? 'Update' : 'Submit'}</Button>
       </div>
     </div>
   )

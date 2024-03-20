@@ -37,12 +37,6 @@ export default function AddMatch() {
   useEffect(() => {
     getMatchData();
     getTeamList();
-
-    if (matchData.match_no !== 0 || matchData.team_1 !== 0 || matchData.team_2 !== 0 || matchData.venue !== "") {
-      setFieldDisable(true);
-    } else {
-      setFieldDisable(false);
-    }
   }, [])
 
   const getMatchData = () => {
@@ -71,22 +65,26 @@ export default function AddMatch() {
   }
 
   const handleSubmit = () => {
-    if (matchData.match_no !== 0) {
-      if (id !== undefined) {
-        let data = { ...matchData, date: matchData.date }
-        MatchesDataService.update(id, data).then((res: any) => {
-          navigate('/matches')
-        }).catch((error) => console.error(error))
+    if (matchData.match_no !== 0 || matchData.team_1 !== 0 || matchData.team_2 !== 0 || matchData.venue !== "") {
+      if (matchData.match_no !== 0) {
+        if (id !== undefined) {
+          let data = { ...matchData, date: matchData.date }
+          MatchesDataService.update(id, data).then((res: any) => {
+            navigate('/matches')
+          }).catch((error) => console.error(error))
+        } else {
+          let data = { ...matchData, date: matchData.date }
+          MatchesDataService.create(data).then((res: any) => {
+            navigate('/matches')
+          }).catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+        }
       } else {
-        let data = { ...matchData, date: matchData.date }
-        MatchesDataService.create(data).then((res: any) => {
-          navigate('/matches')
-        }).catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+        toast.error(`0 Match number is default selected please change match number`, notificationConfig);
       }
     } else {
-      toast.error(`0 Match number is default selected please change match number`, notificationConfig);
+      toast.error(`Enter a valid data`, notificationConfig);
     }
   };
 
@@ -99,10 +97,8 @@ export default function AddMatch() {
     if (matchData.team_2 !== 0) {
       if (event.target.value === matchData.team_2) {
         setError(true);
-        setFieldDisable(true);
       } else {
         setError(false);
-        setFieldDisable(false);
       }
     }
   };
@@ -114,10 +110,8 @@ export default function AddMatch() {
     if (matchData.team_1 !== 0) {
       if (event.target.value === matchData.team_1) {
         setError(true);
-        setFieldDisable(true);
       } else {
         setError(false);
-        setFieldDisable(false);
       }
     }
   };
@@ -251,13 +245,14 @@ export default function AddMatch() {
                       label="Date"
                       value={matchData.date}
                       onChange={handleDateTimeChange}
-                      format=''
+                      format='DD/MM/YYYY h:mm A'
                       sx={{ width: "100%" }}
+                      disabled={id ? true : false}
                     />
                   </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="contained" onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
+                  <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>
             </Box>

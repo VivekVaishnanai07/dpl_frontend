@@ -121,7 +121,7 @@ export default function AddUser() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="contained" onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
+                  <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>
             </Box>

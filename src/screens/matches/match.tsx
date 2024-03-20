@@ -23,11 +23,12 @@ const Match = () => {
   const [winnerTeamSelectDialog, setWinnerTeamSelectDialog] = useState(false);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
   const [matchId, setMatchId] = useState<number>(0);
-  const [matchDetails, setMatchDetails] = useState();
+  const [matchDetails, setMatchDetails] = useState<any>();
 
 
   useEffect(() => {
     getMatchList();
+
   }, [])
 
   const getMatchList = () => {
@@ -117,8 +118,8 @@ const Match = () => {
                 <td data-label="Team 1">{match.team_1}</td>
                 <td data-label="Team 2">{match.team_2}</td>
                 <td data-label="Venue">{match.venue}</td>
-                <td data-label="Date">{dayjs(match.date).format('DD/MM/YYYY')}</td>
-                <td data-label="Time">{match.time}</td>
+                <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
+                <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
                 <td data-label="Time">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
                 <td className='buttons'>
                   <div id='match_edit' data-label="Buttons">

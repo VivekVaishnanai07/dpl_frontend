@@ -115,6 +115,16 @@
   justify-content: space-between !important;
 }
 
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
+
+.chip-text {
+  border-color: #1e5b79 !important;
+  color: #1e5b79 !important;
+}
+
 @media screen and (max-width: 600px) {
   .team_icon {
     width: 50px !important;

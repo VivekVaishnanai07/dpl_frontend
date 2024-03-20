@@ -41,6 +41,11 @@
   height: 64px;
 }
 
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
+
 @media screen and (max-width: 600px) {
   .user-container {
     margin-left: 16px !important;

@@ -98,11 +98,9 @@ export const adminHeader = [
   { navigateUrl: '/teams', componentName: 'Teams' },
   { navigateUrl: '/users', componentName: 'Users' },
   { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
-  { navigateUrl: '/about', componentName: 'About' },
 ]
 
 export const userHeader = [
   { navigateUrl: '/dashboard', componentName: 'Dashboard' },
   { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
-  { navigateUrl: '/about', componentName: 'About' },
 ]

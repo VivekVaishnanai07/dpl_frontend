@@ -16,7 +16,7 @@ import { NavLink } from 'react-router-dom';
 import { adminHeader, roles, userHeader } from '../../utils/util';
 import './header.css';
 
-function Header() {
+function Header({ handleDrawerToggle }: any) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   let pathName = pathname.replace("/", "").toLocaleUpperCase()
@@ -25,11 +25,6 @@ function Header() {
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -85,7 +80,7 @@ function Header() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={handleDrawerToggle}
             >
               <MenuIcon style={{ color: "white", height: 36, width: 36 }} />
             </IconButton>

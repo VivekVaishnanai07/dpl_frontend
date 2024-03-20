@@ -1,4 +1,5 @@
 import { Button, Chip, IconButton, Tooltip } from "@mui/material";
+import dayjs from "dayjs";
 import { useNavigate } from "react-router";
 import StadiumIcon from '../../assets/icon/stadium';
 import { countdownFormat } from "../../utils/util";
@@ -12,7 +13,7 @@ const Card = (props: any) => {
   return (
     <div className="card">
       <div className="card_header">
-        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && 'lightgreen'}` }}>{matchDetails.match_status}</div>
+        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && '#1e5b79'}` }}>{matchDetails.match_status}</div>
         <div className="match_number">T20 {matchDetails.match_no} of 60</div>
       </div>
       <div className="card_content">
@@ -30,7 +31,7 @@ const Card = (props: any) => {
       <div className="card_footer">
         <div className="red-text">{countDown}</div>
         <div className="date_section">
-          <span>{matchDetails.date}</span>
+          <span>{dayjs.utc(matchDetails.date).local().format('DD/MM/YYYY h:mm A')}</span>
         </div>
         <div className="place_section">
           <Tooltip title={matchDetails.venue} placement="bottom">
@@ -41,8 +42,8 @@ const Card = (props: any) => {
         </div>
       </div>
       <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'}`}>
-        {matchDetails.predicted_team && <Chip size="small" label={matchDetails.predicted_team} color="success" variant="outlined" />}
-        <Button variant="contained" sx={{ fontSize: 10 }} color="success" onClick={() => navigate(`/dashboard/prediction/${matchDetails.id}`)}>Predicted</Button>
+        {matchDetails.predicted_team && <Chip className="chip-text" size="small" label={matchDetails.predicted_team} variant="outlined" />}
+        <Button variant="contained" className="btn" sx={{ fontSize: 10 }} onClick={() => navigate(`/dashboard/prediction/${matchDetails.id}`)}>Predicted</Button>
       </div>
     </div>
   )

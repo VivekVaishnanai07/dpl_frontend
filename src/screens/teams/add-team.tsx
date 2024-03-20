@@ -104,7 +104,7 @@ export default function AddTeam() {
                   />
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="contained" onClick={handleSubmit} disabled={fieldDisable}>{id !== 'add-team' ? 'Update' : 'Add'}</Button>
+                  <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== 'add-team' ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>
             </Box>

@@ -21,3 +21,8 @@
   height: 64px;
   width: 33.33%;
 }
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}

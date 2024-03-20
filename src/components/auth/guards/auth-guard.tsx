@@ -3,10 +3,14 @@ import { jwtDecode } from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../layout/header/header';
+import Sidebar from '../../../layout/sidebar/sidebar';
 
 const AuthGuard = ({ component, allowedRole }: any) => {
   const [status, setStatus] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,9 +43,14 @@ const AuthGuard = ({ component, allowedRole }: any) => {
     }
   }
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return status ?
     <>
-      <Header />
+      <Header handleDrawerToggle={handleDrawerToggle} />
+      <Sidebar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
       {component}
     </> :
     <React.Fragment></React.Fragment>;
