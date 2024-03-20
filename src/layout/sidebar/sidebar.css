@@ -62,7 +62,7 @@
 }
 
 .mb-sidebar-main-box .sidebar-first-section .sidebar-menu-title {
-  color: var(--primary-100, #1C4980);
+  color: black;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Inter;
   font-size: 14px;

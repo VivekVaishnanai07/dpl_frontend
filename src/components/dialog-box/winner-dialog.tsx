@@ -35,7 +35,6 @@ export default function WinnerConfirmDialog(props: any) {
 
   const submitPrediction = () => {
     const team = JSON.parse(selectedTeam)
-    console.log(team);
     MatchesDataService.addWinnerTeam(match.id, team).then((res) => {
       let winTeamName = "";
       if (selectedTeam === teamOne) {
@@ -46,9 +45,9 @@ export default function WinnerConfirmDialog(props: any) {
       onWinnerSelect(winTeamName);
       toast.success(`${winTeamName} won this match`, notificationConfig);
       setOpen(false);
-      console.log(res);
     }).catch((err) => {
-      console.error(err);
+      toast.error(err.response.data.message, notificationConfig);
+      setOpen(false);
     })
   }
 
@@ -111,8 +110,8 @@ export default function WinnerConfirmDialog(props: any) {
           </div>
         </div>
         <div className="btn-box">
-          <Button variant="contained" color="info" sx={{ mr: 4 }} onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" color="success" onClick={() => submitPrediction()} disabled={selectedTeam ? false : true}>Submit</Button>
+          <Button variant="contained" color='inherit' sx={{ mr: 4 }} onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" className="btn" onClick={() => submitPrediction()} disabled={selectedTeam ? false : true}>Submit</Button>
         </div>
       </DialogContent>
     </Dialog>

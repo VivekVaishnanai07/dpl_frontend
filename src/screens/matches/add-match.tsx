@@ -30,6 +30,7 @@ export default function AddMatch() {
     team_1: 0,
     team_2: 0,
     venue: "",
+    match_price: 10,
     season_year: 2024
   })
 
@@ -51,6 +52,7 @@ export default function AddMatch() {
             team_1: match.team_1,
             team_2: match.team_2,
             venue: match.venue,
+            match_price: match.match_price,
             season_year: match.season_year
           })
         }
@@ -65,7 +67,7 @@ export default function AddMatch() {
   }
 
   const handleSubmit = () => {
-    if (matchData.match_no !== 0 || matchData.team_1 !== 0 || matchData.team_2 !== 0 || matchData.venue !== "") {
+    if (matchData.match_no !== 0 || matchData.team_1 !== 0 || matchData.team_2 !== 0 || matchData.venue !== "" || matchData.match_price !== 0) {
       if (matchData.match_no !== 0) {
         if (id !== undefined) {
           let data = { ...matchData, date: matchData.date }
@@ -237,6 +239,18 @@ export default function AddMatch() {
                     id="venue"
                     value={matchData.venue}
                     onChange={(e) => setMatchData({ ...matchData, venue: e.target.value })}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type='number'
+                    name="match_price"
+                    label="Match Price"
+                    id="match_price"
+                    value={matchData.match_price}
+                    onChange={(e) => setMatchData({ ...matchData, match_price: e.target.value })}
                   />
                 </Grid>
                 <Grid item xs={12}>

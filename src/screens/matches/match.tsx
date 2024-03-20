@@ -120,7 +120,7 @@ const Match = () => {
                 <td data-label="Venue">{match.venue}</td>
                 <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
                 <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
-                <td data-label="Time">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
+                <td data-label="Win Team">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
                 <td className='buttons'>
                   <div id='match_edit' data-label="Buttons">
                     <Button onClick={() => handlerEditMatch(match.id)}>

@@ -39,16 +39,6 @@ axiosInstance.interceptors.response.use(
 
 export default axiosInstance;
 
-export function countdownFormat(time: string) {
-  if (time.includes(':')) {
-    const [hours, minutes] = time.split(':');
-    return `${hours}H ${minutes}M`;
-  } else {
-    const days = parseInt(time);
-    return `${days}D`;
-  }
-}
-
 // toaster configuration
 export const notificationConfig: ToastOptions = {
   autoClose: 1000,

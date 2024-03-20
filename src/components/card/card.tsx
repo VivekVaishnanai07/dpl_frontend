@@ -2,18 +2,18 @@ import { Button, Chip, IconButton, Tooltip } from "@mui/material";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router";
 import StadiumIcon from '../../assets/icon/stadium';
-import { countdownFormat } from "../../utils/util";
+import useCountdownTimer from "../../hooks/useCountdownTimer";
 import "./card.css";
 
 const Card = (props: any) => {
   const { matchDetails } = props;
   const navigate = useNavigate();
-  const countDown = countdownFormat(matchDetails.countdownTime);
+  const { days, hours, minutes, seconds } = useCountdownTimer(matchDetails.date);
 
   return (
     <div className="card">
       <div className="card_header">
-        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && '#1e5b79'}` }}>{matchDetails.match_status}</div>
+        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && '#1e5b79'} ` }}>{matchDetails.match_status}</div>
         <div className="match_number">T20 {matchDetails.match_no} of 60</div>
       </div>
       <div className="card_content">
@@ -29,7 +29,9 @@ const Card = (props: any) => {
         </div>
       </div>
       <div className="card_footer">
-        <div className="red-text">{countDown}</div>
+        <div className="countdown-text">
+          <div>{days > 0 && `${days}D,`} {hours > 0 && `${hours}H,`} {minutes}M, {seconds}S</div>
+        </div>
         <div className="date_section">
           <span>{dayjs.utc(matchDetails.date).local().format('DD/MM/YYYY h:mm A')}</span>
         </div>
@@ -41,9 +43,9 @@ const Card = (props: any) => {
           </Tooltip>
         </div>
       </div>
-      <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'}`}>
+      <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'} `}>
         {matchDetails.predicted_team && <Chip className="chip-text" size="small" label={matchDetails.predicted_team} variant="outlined" />}
-        <Button variant="contained" className="btn" sx={{ fontSize: 10 }} onClick={() => navigate(`/dashboard/prediction/${matchDetails.id}`)}>Predicted</Button>
+        <Button variant="contained" className="btn" sx={{ fontSize: 10 }} onClick={() => navigate(`/ dashboard / prediction / ${matchDetails.id} `)}>Predicted</Button>
       </div>
     </div>
   )

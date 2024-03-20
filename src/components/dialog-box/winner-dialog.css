@@ -20,3 +20,8 @@
     margin: 0px !important;
   }
 }
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}

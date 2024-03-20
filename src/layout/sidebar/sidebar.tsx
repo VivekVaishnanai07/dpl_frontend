@@ -87,6 +87,7 @@ const Sidebar = (props: Props) => {
                   isPending ? "pending" : isActive ? "sidebar-first-section remove-nav-tag sidebar-active-section" : "remove-nav-tag sidebar-first-section"
                 }
                 key={index + 1}
+                onClick={handleDrawerToggle}
               >
                 {data.icon}
                 <div className={isActive}>{data.title}</div>
