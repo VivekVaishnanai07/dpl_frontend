@@ -68,22 +68,26 @@ export default function AddMatch() {
 
   const handleSubmit = () => {
     if (matchData.match_no !== 0 || matchData.team_1 !== 0 || matchData.team_2 !== 0 || matchData.venue !== "" || matchData.match_price !== 0) {
-      if (matchData.match_no !== 0) {
-        if (id !== undefined) {
-          let data = { ...matchData, date: matchData.date }
-          MatchesDataService.update(id, data).then((res: any) => {
-            navigate('/matches')
-          }).catch((error) => console.error(error))
+      if (matchData.team_1 !== matchData.team_2) {
+        if (matchData.match_no !== 0) {
+          if (id !== undefined) {
+            let data = { ...matchData, date: matchData.date }
+            MatchesDataService.update(id, data).then((res: any) => {
+              navigate('/matches')
+            }).catch((error) => console.error(error))
+          } else {
+            let data = { ...matchData, date: matchData.date }
+            MatchesDataService.create(data).then((res: any) => {
+              navigate('/matches')
+            }).catch((error) => {
+              console.error("Error fetching data:", error);
+            });
+          }
         } else {
-          let data = { ...matchData, date: matchData.date }
-          MatchesDataService.create(data).then((res: any) => {
-            navigate('/matches')
-          }).catch((error) => {
-            console.error("Error fetching data:", error);
-          });
+          toast.error(`0 Match number is default selected please change match number`, notificationConfig);
         }
       } else {
-        toast.error(`0 Match number is default selected please change match number`, notificationConfig);
+        toast.error(`You cannot select 2 identical teams.`, notificationConfig);
       }
     } else {
       toast.error(`Enter a valid data`, notificationConfig);
@@ -124,7 +128,7 @@ export default function AddMatch() {
   return (
     <div className="bottom-section-main">
       <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" style={{ maxWidth: "650px" }}>
           <CssBaseline />
           <Box
             sx={{
@@ -136,7 +140,7 @@ export default function AddMatch() {
           >
             <Box component="form" noValidate sx={{ marginTop: "40px !important", marginBottom: "40px !important" }}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     required
                     fullWidth
@@ -148,7 +152,7 @@ export default function AddMatch() {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMatchData({ ...matchData, match_no: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     required
                     fullWidth
@@ -160,7 +164,19 @@ export default function AddMatch() {
                     onChange={(e: any) => setMatchData({ ...matchData, season_year: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={4}>
+                  <TextField
+                    required
+                    fullWidth
+                    type='number'
+                    name="match_price"
+                    label="Match Price"
+                    id="match_price"
+                    value={matchData.match_price}
+                    onChange={(e) => setMatchData({ ...matchData, match_price: e.target.value })}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Team 1</InputLabel>
                     <Select
@@ -183,7 +199,8 @@ export default function AddMatch() {
                               width="40"
                               height="40"
                               src={team.icon}
-                              alt=""
+                              alt="team_1"
+                              style={{ paddingRight: "4px" }}
                             />
                             {team.short_name}
                           </div>
@@ -192,7 +209,7 @@ export default function AddMatch() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Team 2</InputLabel>
                     <Select
@@ -215,7 +232,8 @@ export default function AddMatch() {
                               width="40"
                               height="40"
                               src={team.icon}
-                              alt=""
+                              alt="team_2"
+                              style={{ paddingRight: "4px" }}
                             />
                             {team.short_name}
                           </div>
@@ -230,7 +248,7 @@ export default function AddMatch() {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     required
                     fullWidth
@@ -241,19 +259,7 @@ export default function AddMatch() {
                     onChange={(e) => setMatchData({ ...matchData, venue: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type='number'
-                    name="match_price"
-                    label="Match Price"
-                    id="match_price"
-                    value={matchData.match_price}
-                    onChange={(e) => setMatchData({ ...matchData, match_price: e.target.value })}
-                  />
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                       label="Date"
@@ -265,7 +271,8 @@ export default function AddMatch() {
                     />
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
+                  <Button variant="contained" color='inherit' onClick={() => navigate('/matches')}>Back</Button>
                   <Button variant="contained" className='btn' onClick={handleSubmit}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>

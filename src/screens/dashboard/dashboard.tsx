@@ -65,6 +65,7 @@ const Dashboard = () => {
                     <th scope="col">Player Name</th>
                     <th scope="col">Win</th>
                     <th scope="col">Lost</th>
+                    <th scope="col">Upcoming</th>
                     <th scope="col">Total</th>
                     <th scope="col">To Pay Money</th>
                   </tr>
@@ -79,6 +80,7 @@ const Dashboard = () => {
                         {item.streak === 'Up' && <FireIcon width="16px" height="16px" />}
                       </td>
                       <td data-label="Lost">{item.lost_matches}</td>
+                      <td data-label="Upcoming">{item.upcoming_match}</td>
                       <td data-label="Total">{item.total_matches}</td>
                       <td data-label="To Pay Money">{item.pay_money}</td>
                     </tr>

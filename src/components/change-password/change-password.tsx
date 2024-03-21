@@ -12,10 +12,12 @@ import { toast } from 'react-toastify';
 import ChangePasswordIcon from '../../assets/icon/change-password-icon';
 import AuthService from '../../service/auth.service';
 import { notificationConfig } from '../../utils/util';
+import { useNavigate } from 'react-router';
 
 const defaultTheme = createTheme();
 
 export default function ChangePassword() {
+  const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newPasswordMatchError, setNewPasswordMatchError] = useState('');
@@ -70,6 +72,8 @@ export default function ChangePassword() {
         toast.success(res.data.message, notificationConfig);
         setNewPassword('');
         setConfirmPassword('');
+        localStorage.clear();
+        navigate('/login');
       }
     }).catch((error) => {
       toast.error(error.message, {

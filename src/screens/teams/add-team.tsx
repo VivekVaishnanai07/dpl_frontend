@@ -103,7 +103,8 @@ export default function AddTeam() {
                     onChange={(e) => setTeamData({ ...teamData, icon: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
+                  <Button variant="contained" color='inherit' onClick={() => navigate('/teams')} >Back</Button>
                   <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== 'add-team' ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>

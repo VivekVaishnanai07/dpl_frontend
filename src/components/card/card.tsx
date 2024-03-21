@@ -9,6 +9,10 @@ const Card = (props: any) => {
   const { matchDetails } = props;
   const navigate = useNavigate();
   const { days, hours, minutes, seconds } = useCountdownTimer(matchDetails.date);
+  
+  if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+    window.location.reload();
+  }
 
   return (
     <div className="card">

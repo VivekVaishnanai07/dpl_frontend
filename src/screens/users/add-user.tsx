@@ -120,7 +120,8 @@ export default function AddUser() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
+                  <Button variant="contained" color="inherit" onClick={() => navigate('/users')}>Back</Button>
                   <Button variant="contained" className='btn' onClick={handleSubmit} disabled={fieldDisable}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>

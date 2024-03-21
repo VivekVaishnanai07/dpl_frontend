@@ -68,7 +68,7 @@ const PredictionAnalysis = () => {
               ))}
               {emptyMessageBanner && (
                 <tr>
-                  <td colSpan={10}>
+                  <td colSpan={4}>
                     <div id="main">
                       <div className="fof">
                         <h1>Data Not Found</h1>

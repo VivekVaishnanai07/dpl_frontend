@@ -106,6 +106,7 @@ const Match = () => {
               <th scope="col">Venue</th>
               <th scope="col">Date</th>
               <th scope="col">Time</th>
+              <th scope="col">Match Price</th>
               <th scope="col">Win Team</th>
               <th scope="col"></th>
             </tr>
@@ -120,6 +121,7 @@ const Match = () => {
                 <td data-label="Venue">{match.venue}</td>
                 <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
                 <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
+                <td data-label="Match Price">{match.match_price}</td>
                 <td data-label="Win Team">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
                 <td className='buttons'>
                   <div id='match_edit' data-label="Buttons">
@@ -142,7 +144,7 @@ const Match = () => {
             ))}
             {emptyMessageBanner && (
               <tr>
-                <td colSpan={9}>
+                <td colSpan={10}>
                   <div id="main">
                     <div className="fof">
                       <h1>Data Not Found</h1>
