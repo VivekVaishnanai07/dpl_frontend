@@ -43,9 +43,9 @@ const Card = (props: any) => {
           </Tooltip>
         </div>
       </div>
-      <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'} `}>
+      <div className={`d-flex ${matchDetails.predicted_team ? 'justify-content-space-between' : 'justify-content-end'}`}>
         {matchDetails.predicted_team && <Chip className="chip-text" size="small" label={matchDetails.predicted_team} variant="outlined" />}
-        <Button variant="contained" className="btn" sx={{ fontSize: 10 }} onClick={() => navigate(`/ dashboard / prediction / ${matchDetails.id} `)}>Predicted</Button>
+        <Button variant="contained" className="btn" sx={{ fontSize: 10 }} onClick={() => navigate(`/dashboard/prediction/${matchDetails.id}`)}>Predicted</Button>
       </div>
     </div>
   )

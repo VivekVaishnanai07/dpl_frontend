@@ -17,6 +17,9 @@ const PredictionAnalysis = () => {
   }, [])
 
   const getPredictionList = () => {
+    predictionAnalysisDataService.getAll().then((response: any) => {
+      console.log(response.data);
+    });
     predictionAnalysisDataService.get(user.id).then((response: any) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
