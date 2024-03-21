@@ -1,32 +1,28 @@
-import { Chip } from "@mui/material";
-import dayjs from "dayjs";
-import { jwtDecode } from "jwt-decode";
+import { IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import ViewMoreIcon from "../../assets/icon/view-more";
 import predictionAnalysisDataService from "../../service/prediction-analysis.service";
 import "./prediction-analysis.css";
 
 const PredictionAnalysis = () => {
-  let getData: any = localStorage.getItem('token')
-  let user: any = jwtDecode(getData) as any;
-  const [predictionAnalysisList, setPredictionAnalysisList] = useState([]);
+  const navigate = useNavigate();
+  const [usersPredictionAnalysisList, setUsersPredictionAnalysisList] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
 
   useEffect(() => {
-    getPredictionList()
+    getUsersPredictionList()
     // eslint-disable-next-line
   }, [])
 
-  const getPredictionList = () => {
+  const getUsersPredictionList = () => {
     predictionAnalysisDataService.getAll().then((response: any) => {
-      console.log(response.data);
-    });
-    predictionAnalysisDataService.get(user.id).then((response: any) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
         setEmptyMessageBanner(false)
       }
-      setPredictionAnalysisList(response.data);
+      setUsersPredictionAnalysisList(response.data);
     }).catch((error) => {
       setEmptyMessageBanner(true)
       console.error(error)
@@ -36,55 +32,54 @@ const PredictionAnalysis = () => {
   return (
     <div className="bottom-section-main">
       <div className="team-container">
-        <table>
-          <caption>Prediction Analysis Table</caption>
-          <thead>
-            <tr>
-              <th id="table_row" scope="col">No.</th>
-              <th id="table_row" scope="col">Match No.</th>
-              <th id="table_row" scope="col">Team 1</th>
-              <th id="table_row" scope="col">Team 2</th>
-              <th id="table_row" scope="col">Venue</th>
-              <th id="table_row" scope="col">Date</th>
-              <th id="table_row" scope="col">Time</th>
-              <th id="table_row" scope="col">Predict Team</th>
-              <th id="table_row" scope="col">Win Team</th>
-              <th id="table_row" scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {predictionAnalysisList.map((item: any, index: number) => (
-              <tr key={index + 1}>
-                <td id="table_row" data-label="No.">{index + 1}</td>
-                <td id="table_row" data-label="Match No.">{item.match_no}</td>
-                <td id="table_row" data-label="Team 1">{item.team_1}</td>
-                <td id="table_row" data-label="Team 2">{item.team_2}</td>
-                <td id="table_row" data-label="Venue">{item.venue}</td>
-                <td id="table_row" data-label="Date">{dayjs(item.date).format('DD/MM/YYYY')}</td>
-                <td id="table_row" data-label="Time">{dayjs(item.date).format('h:mm A')}</td>
-                <td id="table_row" data-label="Predict Team">{item.predict_team}</td>
-                <td id="table_row" data-label="Won Team">{item.winner_team ? item.winner_team : <Chip label="Coming Soon " />}</td>
-                <td id="table_row" data-label="">
-                  {item.status === "true" ?
-                    <span className="rf W ih-pt-g">W</span> :
-                    <span className="rf L ih-pt-r">L</span>
-                  }
-                </td>
-              </tr>
-            ))}
-            {emptyMessageBanner && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <table style={{ maxWidth: "1000px" }}>
+            <caption>Player Prediction Analysis</caption>
+            <thead>
               <tr>
-                <td colSpan={10}>
-                  <div id="main">
-                    <div className="fof">
-                      <h1>Data Not Found</h1>
-                    </div>
-                  </div>
-                </td>
+                <th scope="col">No.</th>
+                <th scope="col">Players</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {usersPredictionAnalysisList && usersPredictionAnalysisList.map((item: any, index: number) => (
+                <tr key={index + 1}>
+                  <td data-label="No.">{index + 1}</td>
+                  <td data-label="Match No.">{item.full_name}</td>
+                  <td data-label="">
+                    <div className="d-flex justify-content-center">
+                      {item.match_details && item.match_details.map((data: any, i: number) => (
+                        <div key={i + 1}>
+                          {data.status === "true" ?
+                            <span className="rf W ih-pt-g">W</span> :
+                            <span className="rf L ih-pt-r">L</span>}
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="d-flex justify-content-center align-items-center" data-label="">
+                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}`)}>
+                      <ViewMoreIcon />
+                    </IconButton>
+                  </td>
+                </tr>
+              ))}
+              {emptyMessageBanner && (
+                <tr>
+                  <td colSpan={10}>
+                    <div id="main">
+                      <div className="fof">
+                        <h1>Data Not Found</h1>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )

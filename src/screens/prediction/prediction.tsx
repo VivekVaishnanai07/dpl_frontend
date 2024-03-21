@@ -74,7 +74,6 @@ const Prediction = () => {
       PredictionDataService.create(prediction_data).then((res) => {
         toast.success(`You selected ${teamName} and result will be declared after the match`, notificationConfig);
         navigate('/dashboard')
-        console.log(res)
       }).catch((error: any) => console.error(error))
     }
   }

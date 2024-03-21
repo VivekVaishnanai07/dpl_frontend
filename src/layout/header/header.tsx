@@ -13,6 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import AvatarImg from '../../assets/img/avatar.jpg';
 import { adminHeader, roles, userHeader } from '../../utils/util';
 import './header.css';
 
@@ -135,9 +136,7 @@ function Header({ handleDrawerToggle }: any) {
           </Box>
           <Box sx={{ flexGrow: 0 }} className="avatar-box">
             <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-              <Avatar className='profileAvatar' sx={{ bgcolor: userData.avatarObj?.backgroundColor }}>
-                {userData.avatarObj?.firstName}{userData.avatarObj?.lastName}
-              </Avatar>
+              <Avatar alt='avatar' className='profileAvatar' src={AvatarImg} />
               <Typography className='avatar-title'>{userData.firstName + " " + userData.lastName}</Typography>
             </IconButton>
             <Menu

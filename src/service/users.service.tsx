@@ -5,10 +5,6 @@ const UserDataService = {
     return http.get("/user");
   },
 
-  get(email: string) {
-    return http.get(`/user/getEmail/${email}`);
-  },
-
   getById(id: number) {
     return http.get(`/user/${id}`);
   },

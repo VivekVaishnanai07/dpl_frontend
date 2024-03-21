@@ -131,3 +131,11 @@ table th {
     box-shadow: inset -3px 0px 0px transparent;
   }
 }
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
