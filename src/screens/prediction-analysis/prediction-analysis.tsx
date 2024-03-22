@@ -60,7 +60,7 @@ const PredictionAnalysis = () => {
                     </div>
                   </td>
                   <td className="d-flex justify-content-center align-items-center" data-label="">
-                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}`)}>
+                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}`, { state: { name: item.full_name } })}>
                       <ViewMoreIcon />
                     </IconButton>
                   </td>

@@ -1,20 +1,19 @@
 import { Chip } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import predictionAnalysisDataService from "../../../service/prediction-analysis.service";
-import UserDataService from "../../../service/users.service";
 import "./user-prediction-analysis.css";
 
 const UserPredictionAnalysis = () => {
   const { id }: any = useParams();
+  const location = useLocation();
+  const state = location.state;
   const [predictionAnalysisList, setPredictionAnalysisList] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
-  const [userDetails, setUserDetails] = useState<any>({});
 
   useEffect(() => {
     getPredictionList()
-    getUserDetails();
     // eslint-disable-next-line
   }, [])
 
@@ -32,21 +31,11 @@ const UserPredictionAnalysis = () => {
     })
   }
 
-  const getUserDetails = () => {
-    UserDataService.getById(id).then((res) => {
-      if (res.data.length > 0) {
-        setUserDetails(res.data[0])
-      }
-    }).catch((err) => {
-      console.error(err);
-    })
-  }
-
   return (
     <div className="bottom-section-main">
       <div className="team-container">
         <table>
-          <caption>{userDetails.first_name + ' ' + userDetails.last_name} Prediction Table</caption>
+          <caption>{state.name} Prediction Table</caption>
           <thead>
             <tr>
               <th id="table_row" scope="col">No.</th>
