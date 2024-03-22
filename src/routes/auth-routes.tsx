@@ -16,10 +16,10 @@ import { roles } from "../utils/util";
 const AuthRoutes = [
     <Route key="Dashboard" path="/dashboard" element={<AuthGuard component={<Dashboard />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="Prediction" path="/dashboard/prediction/:id" element={<AuthGuard component={<Prediction />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
-    <Route key="Match" path="/matches" element={<AuthGuard component={<Match />} allowedRole={[roles.Admin_Role]} />} />,
+    <Route key="Match" path="/matches" element={<AuthGuard component={<Match />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="AddMatch" path="/match/add-match" element={<AuthGuard component={<AddMatch />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="EditMatch" path="/match/:id" element={<AuthGuard component={<AddMatch />} allowedRole={[roles.Admin_Role]} />} />,
-    <Route key="Teams" path="/teams" element={<AuthGuard component={<Teams />} allowedRole={[roles.Admin_Role]} />} />,
+    <Route key="Teams" path="/teams" element={<AuthGuard component={<Teams />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="AddTeams" path="/team/add-teams" element={<AuthGuard component={<AddTeam />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="EditTeams" path="/team/:id" element={<AuthGuard component={<AddTeam />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="Users" path="/users" element={<AuthGuard component={<Users />} allowedRole={[roles.Admin_Role]} />} />,

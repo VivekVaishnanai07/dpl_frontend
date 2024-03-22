@@ -92,5 +92,7 @@ export const adminHeader = [
 
 export const userHeader = [
   { navigateUrl: '/dashboard', componentName: 'Dashboard' },
+  { navigateUrl: '/matches', componentName: 'Matches' },
+  { navigateUrl: '/teams', componentName: 'Teams' },
   { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
 ]

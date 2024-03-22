@@ -33,7 +33,7 @@ const PredictionAnalysis = () => {
     <div className="bottom-section-main">
       <div className="team-container">
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <table style={{ maxWidth: "1000px" }}>
+          <table style={{ maxWidth: "1100px" }}>
             <caption>Player Prediction Analysis</caption>
             <thead>
               <tr>
@@ -52,7 +52,7 @@ const PredictionAnalysis = () => {
                     <div className="d-flex justify-content-center">
                       {item.match_details && item.match_details.map((data: any, i: number) => (
                         <div key={i + 1}>
-                          {data.status === "true" ?
+                          {data.status && data.status === "true" ?
                             <span className="rf W ih-pt-g">W</span> :
                             <span className="rf L ih-pt-r">L</span>}
                         </div>

@@ -172,7 +172,7 @@ function Header({ handleDrawerToggle }: any) {
       </div>
       <div className='title-header'>
         <div className="title">{pathName}</div>
-        {
+        {userData.role === 'admin' &&
           (pathname === "/teams" || pathname === "/matches" || pathname === "/users") && (
             <div className="add-icon-box">
               <Fab color="primary" aria-label="add" className='add-button'>

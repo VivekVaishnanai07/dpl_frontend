@@ -1,7 +1,6 @@
-import { Button, Chip, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import dayjs from "dayjs";
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DeleteIcon from "../../assets/icon/delete";
@@ -12,12 +11,10 @@ import WinnerConfirmDialog from "../../components/dialog-box/winner-dialog";
 import MatchesDataService from "../../service/matches.service";
 import './match.css';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 const Match = () => {
+  const token = localStorage.getItem('token') as any;
+  const userData: any = jwtDecode(token);
   const navigate = useNavigate();
-  const [filterValue, setFilterValue] = useState('2024');
   const [filterMatchList, setFilterMatchList] = useState([]);
   const [open, setOpen] = useState(false);
   const [winnerTeamSelectDialog, setWinnerTeamSelectDialog] = useState(false);
@@ -67,13 +64,6 @@ const Match = () => {
     setMatchDetails(match);
   }
 
-  const handlerFilterList = (e: any) => {
-    MatchesDataService.getAll({ seasonYear: e.target.value }).then((res) => {
-      setFilterMatchList(res.data);
-    }).catch((error) => console.error(error))
-    setFilterValue(e.target.value)
-  }
-
   const handleWinnerSelect = () => {
     getMatchList();
     setWinnerTeamSelectDialog(false);
@@ -81,83 +71,72 @@ const Match = () => {
 
   return (
     <div className="bottom-section-main">
-      <div className="team-container">
-        <div style={{ display: "flex", justifyContent: "end", padding: "10px 0px" }}>
-          <FormControl sx={{ minWidth: 160 }}>
-            <InputLabel id="demo-simple-select-label">SEASON YEAR</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={filterValue}
-              label="SEASON YEAR"
-              onChange={handlerFilterList}
-            >
-              <MenuItem value={2024}>SEASON 2024</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">No.</th>
-              <th scope="col">Match No.</th>
-              <th scope="col">Team 1</th>
-              <th scope="col">Team 2</th>
-              <th scope="col">Venue</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-              <th scope="col">Match Price</th>
-              <th scope="col">Win Team</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filterMatchList.map((match: any, index: number) => (
-              <tr key={index + 1}>
-                <td data-label="No.">{index + 1}</td>
-                <td data-label="Match No.">{match.match_no}</td>
-                <td data-label="Team 1">{match.team_1}</td>
-                <td data-label="Team 2">{match.team_2}</td>
-                <td data-label="Venue">{match.venue}</td>
-                <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
-                <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
-                <td data-label="Match Price">{match.match_price}</td>
-                <td data-label="Win Team">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
-                <td className='buttons'>
-                  <div id='match_edit' data-label="Buttons">
-                    <Button onClick={() => handlerEditMatch(match.id)}>
-                      <EditIcon />
-                    </Button>
-                  </div>
-                  <div id='winner_trophy' data-label="">
-                    <Button onClick={() => handlerSelectWinnerTeam(match)}>
-                      <Trophy />
-                    </Button>
-                  </div>
-                  <div id='match_delete' data-label="">
-                    <Button onClick={() => handleClickOpen(match.id)}>
-                      <DeleteIcon />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {emptyMessageBanner && (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="team-container">
+          <table style={{ maxWidth: "1500px" }}>
+            <caption>Matches Table</caption>
+            <thead>
               <tr>
-                <td colSpan={10}>
-                  <div id="main">
-                    <div className="fof">
-                      <h1>Data Not Found</h1>
-                    </div>
-                  </div>
-                </td>
+                <th scope="col">No.</th>
+                <th scope="col">Match No.</th>
+                <th scope="col">Team 1</th>
+                <th scope="col">Team 2</th>
+                <th scope="col">Venue</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Match Price</th>
+                <th scope="col">Win Team</th>
+                {userData.role === 'admin' && <th scope="col"></th>}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filterMatchList.map((match: any, index: number) => (
+                <tr key={index + 1}>
+                  <td data-label="No.">{index + 1}</td>
+                  <td data-label="Match No.">{match.match_no}</td>
+                  <td data-label="Team 1">{match.team_1}</td>
+                  <td data-label="Team 2">{match.team_2}</td>
+                  <td data-label="Venue">{match.venue}</td>
+                  <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
+                  <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
+                  <td data-label="Match Price">{match.match_price}</td>
+                  <td data-label="Win Team">{match.winner_team ? match.winner_team : <Chip label="Coming Soon " />}</td>
+                  {userData.role === 'admin' && <td className='buttons'>
+                    <div id='match_edit' data-label="Buttons">
+                      <Button onClick={() => handlerEditMatch(match.id)}>
+                        <EditIcon />
+                      </Button>
+                    </div>
+                    <div id='winner_trophy' data-label="">
+                      <Button onClick={() => handlerSelectWinnerTeam(match)}>
+                        <Trophy />
+                      </Button>
+                    </div>
+                    <div id='match_delete' data-label="">
+                      <Button onClick={() => handleClickOpen(match.id)}>
+                        <DeleteIcon />
+                      </Button>
+                    </div>
+                  </td>}
+                </tr>
+              ))}
+              {emptyMessageBanner && (
+                <tr>
+                  <td colSpan={userData.role === 'admin' ? 10 : 9}>
+                    <div id="main">
+                      <div className="fof">
+                        <h1>Data Not Found</h1>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+          {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
+          <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
+        </div>
       </div>
-      {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
-      <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
     </div>
   )
 }

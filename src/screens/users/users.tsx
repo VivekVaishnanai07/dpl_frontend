@@ -51,51 +51,53 @@ const Users = () => {
   return (
     <div className="bottom-section-main">
       <div className="user-container">
-        <table>
-          <caption>Users Table</caption>
-          <thead>
-            <tr>
-              <th scope="col">No.</th>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Email</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {userList.map((user: any, index: number) => (
-              <tr key={index + 1}>
-                <td data-label="ID">{index + 1}</td>
-                <td data-label="First Name">{user.first_name}</td>
-                <td data-label="Last Name">{user.last_name}</td>
-                <td data-label="Email">{user.email}</td>
-                <td className='buttons'>
-                  <div id='edit' data-label="">
-                    <Button onClick={() => handlerEditMatch(user.id)}>
-                      <EditIcon />
-                    </Button>
-                  </div>
-                  <div id='delete' data-label="">
-                    <Button onClick={() => handleClickOpen(user.id)}>
-                      <DeleteIcon />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {emptyMessageBanner && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <table style={{ maxWidth: "1100px" }}>
+            <caption>Users Table</caption>
+            <thead>
               <tr>
-                <td colSpan={5}>
-                  <div id="main">
-                    <div className="fof">
-                      <h1>Data Not Found</h1>
-                    </div>
-                  </div>
-                </td>
+                <th scope="col">No.</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {userList.map((user: any, index: number) => (
+                <tr key={index + 1}>
+                  <td data-label="ID">{index + 1}</td>
+                  <td data-label="First Name">{user.first_name}</td>
+                  <td data-label="Last Name">{user.last_name}</td>
+                  <td data-label="Email">{user.email}</td>
+                  <td className='buttons'>
+                    <div id='edit' data-label="">
+                      <Button onClick={() => handlerEditMatch(user.id)}>
+                        <EditIcon />
+                      </Button>
+                    </div>
+                    <div id='delete' data-label="">
+                      <Button onClick={() => handleClickOpen(user.id)}>
+                        <DeleteIcon />
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {emptyMessageBanner && (
+                <tr>
+                  <td colSpan={5}>
+                    <div id="main">
+                      <div className="fof">
+                        <h1>Data Not Found</h1>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       <ConfirmDialog id={userId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
     </div>
