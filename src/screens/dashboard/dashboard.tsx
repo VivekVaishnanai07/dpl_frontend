@@ -74,15 +74,15 @@ const Dashboard = () => {
                   {playerLeaderboardList.map((item: any, index: number) => (
                     <tr key={index + 1}>
                       <td data-label="No.">{index + 1}</td>
-                      <td data-label="Player Name">{item.userName}</td>
+                      <td data-label="Player Name">{item.full_name}</td>
                       <td className="match-streak" data-label="Win">
-                        <span>{item.won_matches}</span>
-                        {item.streak === 'Up' && <FireIcon width="16px" height="16px" />}
+                        <span>{item.win_matches}</span>
+                        {/* {item.streak === 'Up' && <FireIcon width="16px" height="16px" />} */}
                       </td>
-                      <td data-label="Lost">{item.lost_matches && item.lost_matches > 0 ? item.lost_matches : 0}</td>
-                      <td data-label="Upcoming">{item.upcoming_match}</td>
+                      <td data-label="Lost">{item.total_lose_matches}</td>
+                      <td data-label="Upcoming">{item.upcoming_matches}</td>
                       <td data-label="Total">{item.total_matches}</td>
-                      <td data-label="To Pay Money">{item.pay_money}</td>
+                      <td data-label="To Pay Money">{item.to_pay_money}</td>
                     </tr>
                   ))}
                   {emptyMessageBanner && (

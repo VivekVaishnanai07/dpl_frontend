@@ -1,5 +1,6 @@
 import { Button, Chip, IconButton, Tooltip } from "@mui/material";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import StadiumIcon from '../../assets/icon/stadium';
 import useCountdownTimer from "../../hooks/useCountdownTimer";
@@ -9,10 +10,12 @@ const Card = (props: any) => {
   const { matchDetails } = props;
   const navigate = useNavigate();
   const { days, hours, minutes, seconds } = useCountdownTimer(matchDetails.date);
-  
-  if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-    window.location.reload();
-  }
+
+  useEffect(() => {
+    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+      window.location.reload();
+    }
+  }, [days, hours, minutes, seconds]);
 
   return (
     <div className="card">
