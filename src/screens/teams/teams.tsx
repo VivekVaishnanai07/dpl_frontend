@@ -2,10 +2,12 @@ import { Button } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import DeleteIcon from "../../assets/icon/delete";
 import EditIcon from '../../assets/icon/edit';
 import ConfirmDialog from '../../components/dialog-box/dialog-box';
 import TeamsDataService from "../../service/teams.service";
+import { notificationConfig } from "../../utils/util";
 import "./teams.css";
 
 const Teams = () => {
@@ -42,6 +44,8 @@ const Teams = () => {
   const handlerDeleteMatch = (id: number) => {
     TeamsDataService.delete(id).then((res) => {
       getTeamsList()
+    }).catch((err) => {
+      toast.error(err.response.data.error, notificationConfig);
     })
     setOpen(false)
   }
@@ -63,7 +67,7 @@ const Teams = () => {
                 <th scope="col">Logo</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Short Name</th>
-                {userData === 'admin' && <th scope="col"></th>}
+                {userData.role === 'admin' && <th scope="col"></th>}
               </tr>
             </thead>
             <tbody>
@@ -77,7 +81,7 @@ const Teams = () => {
                   </td>
                   <td data-label="Full Name">{team.full_name}</td>
                   <td data-label="Short Name">{team.short_name}</td>
-                  {userData === 'admin' && <td className='buttons'>
+                  {userData.role === 'admin' && <td className='buttons'>
                     <div id='edit' data-label="">
                       <Button onClick={() => handlerEditMatch(team.id)}>
                         <EditIcon />
@@ -93,7 +97,7 @@ const Teams = () => {
               ))}
               {emptyMessageBanner && (
                 <tr>
-                  <td colSpan={userData === 'admin' ? 5 : 4}>
+                  <td colSpan={userData.role === 'admin' ? 5 : 4}>
                     <div id="main">
                       <div className="fof">
                         <h1>Data Not Found</h1>

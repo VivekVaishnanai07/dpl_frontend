@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DeleteIcon from "../../assets/icon/delete";
@@ -13,6 +14,9 @@ const Users = () => {
   const [userList, setUserList] = useState([]);
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState<number>(0);
+  const token = localStorage.getItem('token') as any;
+  const userData: any = jwtDecode(token);
+
 
   useEffect(() => {
     getUsersList()
@@ -38,7 +42,11 @@ const Users = () => {
 
   const handlerDeleteMatch = (id: number) => {
     UserDataService.delete(id).then((res) => {
-      getUsersList()
+      if (userData.id === id) {
+        getUsersList();
+        localStorage.clear();
+        navigate('/login');
+      }
     })
     setOpen(false)
   }

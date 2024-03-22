@@ -7,7 +7,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 import TeamsDataService from '../../service/teams.service';
+import { notificationConfig } from '../../utils/util';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -42,12 +44,14 @@ export default function AddTeam() {
     if (id !== "add-team") {
       TeamsDataService.update(id, teamData).then((res: any) => {
         navigate('/teams')
-      }).catch((error) => console.error(error))
+      }).catch((error) => {
+        toast.error(error.response.data.error, notificationConfig);
+      })
     } else {
       TeamsDataService.create(teamData).then((res: any) => {
         navigate('/teams')
       }).catch((error) => {
-        console.error(error)
+        console.error(error);
       })
     }
   };

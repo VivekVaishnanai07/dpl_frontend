@@ -3,12 +3,14 @@ import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import DeleteIcon from "../../assets/icon/delete";
 import EditIcon from '../../assets/icon/edit';
 import Trophy from "../../assets/icon/trophy";
 import ConfirmDialog from '../../components/dialog-box/dialog-box';
 import WinnerConfirmDialog from "../../components/dialog-box/winner-dialog";
 import MatchesDataService from "../../service/matches.service";
+import { notificationConfig } from "../../utils/util";
 import './match.css';
 
 const Match = () => {
@@ -50,6 +52,8 @@ const Match = () => {
   const handlerDeleteMatch = (id: number) => {
     MatchesDataService.delete(id).then((res) => {
       getMatchList()
+    }).catch((err) => {
+      toast.error(err.response.data.error, notificationConfig);
     })
     setOpen(false)
   }

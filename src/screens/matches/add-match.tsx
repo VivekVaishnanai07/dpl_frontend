@@ -74,7 +74,9 @@ export default function AddMatch() {
             let data = { ...matchData, date: matchData.date }
             MatchesDataService.update(id, data).then((res: any) => {
               navigate('/matches')
-            }).catch((error) => console.error(error))
+            }).catch((error) => {
+              toast.error(error.response.data.error, notificationConfig);
+            })
           } else {
             let data = { ...matchData, date: matchData.date }
             MatchesDataService.create(data).then((res: any) => {
