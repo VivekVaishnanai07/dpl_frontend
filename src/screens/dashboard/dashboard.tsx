@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import FireIcon from "../../assets/icon/fire";
 import Card from "../../components/card/card";
 import MatchesDataService from "../../service/matches.service";
 import playerLeaderboardDataService from "../../service/player-leaderboard.service";
@@ -77,7 +76,6 @@ const Dashboard = () => {
                       <td data-label="Player Name">{item.full_name}</td>
                       <td className="match-streak" data-label="Win">
                         <span>{item.win_matches}</span>
-                        {/* {item.streak === 'Up' && <FireIcon width="16px" height="16px" />} */}
                       </td>
                       <td data-label="Lost">{item.total_lose_matches}</td>
                       <td data-label="Upcoming">{item.upcoming_matches}</td>
