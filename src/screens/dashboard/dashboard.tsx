@@ -79,7 +79,7 @@ const Dashboard = () => {
                         <span>{item.won_matches}</span>
                         {item.streak === 'Up' && <FireIcon width="16px" height="16px" />}
                       </td>
-                      <td data-label="Lost">{item.lost_matches}</td>
+                      <td data-label="Lost">{item.lost_matches && item.lost_matches > 0 ? item.lost_matches : 0}</td>
                       <td data-label="Upcoming">{item.upcoming_match}</td>
                       <td data-label="Total">{item.total_matches}</td>
                       <td data-label="To Pay Money">{item.pay_money}</td>
