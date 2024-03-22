@@ -47,7 +47,7 @@ const PredictionAnalysis = () => {
               {usersPredictionAnalysisList && usersPredictionAnalysisList.map((item: any, index: number) => (
                 <tr key={index + 1}>
                   <td data-label="No.">{index + 1}</td>
-                  <td data-label="Match No.">{item.full_name}</td>
+                  <td data-label="Player Name">{item.full_name}</td>
                   <td data-label="">
                     <div className="d-flex justify-content-center">
                       {item.match_details && item.match_details.map((data: any, i: number) => (
