@@ -77,10 +77,10 @@ const Dashboard = () => {
                       <td className="match-streak" data-label="Win">
                         <span>{item.win_matches}</span>
                       </td>
-                      <td data-label="Lost">{item.total_lose_matches}</td>
+                      <td data-label="Lost">{item.lose_matches}</td>
                       <td data-label="Upcoming">{item.upcoming_matches}</td>
                       <td data-label="Total">{item.total_matches}</td>
-                      <td data-label="To Pay Money">{item.to_pay_money}</td>
+                      <td data-label="To Pay Money">{item.pay_money}</td>
                     </tr>
                   ))}
                   {emptyMessageBanner && (
