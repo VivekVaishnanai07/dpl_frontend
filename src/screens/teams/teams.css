@@ -1,0 +1,47 @@
+.team-container {
+  margin-left: 64px;
+  margin-right: 64px;
+  margin-bottom: 50px;
+}
+
+.add-button {
+  margin-right: 8px !important;
+  height: 45px !important;
+  width: 45px !important;
+}
+
+.table-title {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.table-data-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.img_box {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+@media screen and (max-width: 1250px) {
+  .team-container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+
+  .img_box {
+    display: block !important;
+  }
+}

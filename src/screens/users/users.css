@@ -1,0 +1,54 @@
+.user-container {
+  margin-left: 64px;
+  margin-right: 64px;
+  margin-bottom: 50px;
+}
+
+.add-button {
+  margin-right: 8px !important;
+  height: 45px !important;
+  width: 45px !important;
+}
+
+.table-title {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.table-data-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.buttons {
+  display: flex;
+}
+
+#edit {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+}
+
+#delete {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+}
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
+
+@media screen and (max-width: 600px) {
+  .user-container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+}

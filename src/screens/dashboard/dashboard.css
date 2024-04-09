@@ -1,0 +1,70 @@
+@media screen and (max-width: 600px) {
+  .dashboard_container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+/* player-leaderboard */
+
+.table-title {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.table-data-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.match-streak {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.max-width {
+  max-width: 1800px;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.text-align-left {
+  text-align: left !important;
+}
+
+.mr-4 {
+  margin-right: 4px !important;
+}
+
+.MuiAvatar-img {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 600px) {
+  .player-leaderboard-container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+
+  .match-streak {
+    justify-content: space-between;
+  }
+
+  .align-center {
+    display: block !important;
+  }
+}
+
+.green-text {
+  color: #6cb33e;
+}
+
+.red-text {
+  color: #d14242;
+}

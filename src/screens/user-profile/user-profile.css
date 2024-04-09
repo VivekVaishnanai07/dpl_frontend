@@ -1,0 +1,35 @@
+.title-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 26px !important;
+  padding-top: 18px;
+  font-weight: 600;
+}
+
+.user-profile-container {
+  display: flex;
+  justify-content: center;
+}
+
+.image-warning {
+  padding: 10px;
+  text-align: center;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: 12px !important;
+  color: red;
+}
+
+.user-profile-container input {
+  opacity: 0;
+  width: 0px;
+}
+
+.user-profile-container img {
+  max-width: 160px;
+  border-radius: 999px;
+  outline: 3px solid #e1e1e1;
+  cursor: pointer;
+  transition: 200ms ease-in-out;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+}

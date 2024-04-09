@@ -1,0 +1,65 @@
+.progress-bar-container {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.progress-bar-container .text-details {
+  font-size: 12px;
+}
+
+.progress-bar-container .text-details .team1 {
+  width: 50%;
+  text-align: left;
+}
+
+.progress-bar-container .text-details .team2 {
+  width: 50%;
+  text-align: right;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.gap-1 {
+  gap: 1px !important;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-size: 12px;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

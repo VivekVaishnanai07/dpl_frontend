@@ -1,0 +1,139 @@
+.card {
+  background-color: #fff;
+  max-height: 350px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 20px;
+  font-family: 'Rubik', sans-serif !important;
+}
+
+.card_header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  align-items: center;
+}
+
+.match_status {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.match_number {
+  font-size: 14px !important;
+}
+
+.card_content {
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.card_left {
+  width: 45%;
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+}
+
+.team_1 {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  padding-left: 6px;
+}
+
+.team_2 {
+  text-align: end;
+  padding-right: 6px;
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.card_center {
+  width: 10%;
+  height: 50px;
+  background-image: url(../../assets/img/versus.png);
+  background-repeat: no-repeat;
+  background-size: 28px;
+  display: inline-block;
+  background-position: center center;
+}
+
+.card_right {
+  width: 45%;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  justify-content: flex-end;
+}
+
+.card_footer {
+  text-align: center;
+  padding: 8px;
+}
+
+.countdown-text {
+  font-size: 12px;
+  color: red;
+  text-align: center;
+}
+
+.date_section {
+  margin: 4px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.place_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+  height: 20px;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-space-between {
+  justify-content: space-between !important;
+}
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
+
+.chip-text {
+  color: #fff !important;
+  height: 24px !important;
+  width: 56px !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+
+.MuiChip-label {
+  padding: 0px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .team_icon {
+    width: 50px !important;
+  }
+
+  .team_1 {
+    font-size: 13px !important;
+  }
+
+  .team_2 {
+    font-size: 13px !important;
+  }
+}

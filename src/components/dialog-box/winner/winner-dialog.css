@@ -1,0 +1,27 @@
+@media screen and (max-width: 600px) {
+  .prediction_container {
+    padding: 0 !important;
+  }
+
+  .prediction_footer {
+    display: flex !important;
+    font-size: 18px !important;
+    margin-top: 0px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #venue,
+  #time,
+  #date {
+    margin-top: 8px !important;
+  }
+
+  .radio-btn {
+    margin: 0px !important;
+  }
+}
+
+.btn {
+  color: #fff !important;
+  background-color: var(--primary-100, #1C4980) !important;
+}
