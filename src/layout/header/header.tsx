@@ -15,7 +15,6 @@ import { useLocation, useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import AvatarImg from '../../assets/img/avatar.jpg';
 import UserContext from '../../context/user-context';
-import AuthService from '../../service/auth.service';
 import { JwtTokenDecode } from '../../types/auth';
 import { adminHeader, biteCodeConvertIntoImg, roles, userHeader } from '../../utils/util';
 import './header.css';
@@ -26,7 +25,6 @@ function Header({ handleDrawerToggle }: any) {
   const { user } = useContext(UserContext);
   let pathName = pathname.replace("/", "").toLocaleUpperCase()
   const getToken = localStorage.getItem('token') as string;
-  const getSessionID = localStorage.getItem('sessionID') as string;
   let userData = jwtDecode(getToken) as JwtTokenDecode;
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -62,18 +60,8 @@ function Header({ handleDrawerToggle }: any) {
   }
 
   const logout = () => {
-    const data = {
-      userId: userData.id,
-      sessionID: getSessionID
-    }
-    AuthService.logout(data).then((res) => {
-      if (res.data) {
-        localStorage.clear();
-        navigate('/');
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
+    localStorage.clear();
+    navigate('/');
   }
 
   const addForms = () => {

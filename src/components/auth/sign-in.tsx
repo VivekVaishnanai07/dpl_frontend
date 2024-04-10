@@ -36,8 +36,6 @@ export default function SingIn() {
       if (responseData.token) {
         toast.success('You are successfully logged in', notificationConfig);
         localStorage.setItem("token", responseData.token)
-        localStorage.setItem("sessionID", responseData.sessionID)
-
         navigate('/dashboard');
       } else {
         console.log(response.data.message);
