@@ -1,10 +1,11 @@
-import { Button } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import DeleteIcon from "../../assets/icon/delete";
-import EditIcon from '../../assets/icon/edit';
+import EditTeamIcon from "../../assets/icon/edit-team-icon";
+import IplLogo from "../../assets/img/new-logo.png";
+import TeamTrophy from "../../assets/img/teams-trophy.svg";
 import ConfirmDialog from '../../components/dialog-box/confirm/confirm-dialog';
 import TeamService from "../../service/teams.service";
 import { JwtTokenDecode } from "../../types/auth";
@@ -58,58 +59,45 @@ const Teams = () => {
   };
 
   return (
-    <div className="bottom-section-main bg">
+    <div className="team-container-background">
+      <div className="horizontal-align">
+        <img src={IplLogo} className="ipl_logo" alt="ipl2024" />
+      </div>
       <div className="team-container">
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <table style={{ maxWidth: "1100px" }}>
-            <caption>Teams Table</caption>
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Logo</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Short Name</th>
-                {userData.role === 'admin' && <th scope="col"></th>}
-              </tr>
-            </thead>
-            <tbody>
-              {teamList.map((team: ITeam, index: number) => (
-                <tr key={index + 1}>
-                  <td data-label="No.">{index + 1}</td>
-                  <td data-label="Full Name">
-                    <div className="img_box">
-                      <img src={team.icon} alt="team_logo" style={{ width: 60 }} />
+          <div style={{ maxWidth: "1250px" }}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container className="justify-content-center" spacing={{ xs: 1 }} columns={{ xs: 4, sm: 6, md: 12 }}>
+                {teamList.map((team: ITeam, index: number) => (
+                  <Grid item xs={2} sm={2} md={3} key={index}>
+                    <div key={team.id} className={`team_${team.short_name.toLowerCase()}`}>
+                      <a data-team_name={team.full_name} className="w-100">
+                        <div className="d-flex flex-wrap justify-content-center">
+                          <div className="team-logo">
+                            <img src={team.icon} alt="" />
+                          </div>
+                          <div className="hover_team_logo_and_name">
+                            <img src={team.icon} alt="" />
+                            <span>{team.short_name}</span>
+                          </div>
+                          <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon /></div>
+                          <div className="team_full_name">
+                            <div>{team.full_name}</div>
+                          </div>
+                        </div>
+                        <div className="team-on-hover">
+                          <img src={TeamTrophy} alt="" />
+                          <div className="trophy-text-align">
+                            {team.winner_years ? team.winner_years.replace(/,/g, ' | ') : ''}
+                          </div>
+                        </div>
+                      </a>
                     </div>
-                  </td>
-                  <td data-label="Full Name">{team.full_name}</td>
-                  <td data-label="Short Name">{team.short_name}</td>
-                  {userData.role === 'admin' && <td className='buttons'>
-                    <div id='edit' data-label="">
-                      <Button onClick={() => handlerEditMatch(team.id)}>
-                        <EditIcon />
-                      </Button>
-                    </div>
-                    <div id='delete' data-label="">
-                      <Button onClick={() => handleClickOpen(team.id)}>
-                        <DeleteIcon />
-                      </Button>
-                    </div>
-                  </td>}
-                </tr>
-              ))}
-              {emptyMessageBanner && (
-                <tr>
-                  <td colSpan={userData.role === 'admin' ? 5 : 4}>
-                    <div id="main">
-                      <div className="fof">
-                        <h1>Data Not Found</h1>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </div>
         </div>
       </div>
       <ConfirmDialog id={teamId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />

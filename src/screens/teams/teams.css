@@ -1,7 +1,18 @@
+.team-container-background {
+  background-image: url('../../assets/img/teams-new-landing-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.team-container-background .ipl_logo {
+  width: 200px;
+  margin: 50px auto;
+}
+
 .team-container {
   margin-left: 64px;
   margin-right: 64px;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 .add-button {
@@ -31,10 +42,6 @@
   background-color: var(--primary-100, #1C4980) !important;
 }
 
-.w-100 {
-  width: 100% !important;
-}
-
 @media screen and (max-width: 1250px) {
   .team-container {
     margin-left: 16px !important;
@@ -44,4 +51,366 @@
   .img_box {
     display: block !important;
   }
+}
+
+/* team card css */
+.team_csk,
+.team_dc,
+.team_gt,
+.team_kkr,
+.team_lsg,
+.team_mi,
+.team_pbks,
+.team_rcb,
+.team_rr,
+.team_srh {
+  background: linear-gradient(133.55deg, #4d4d4f -30.17%, rgba(77, 77, 79, 0) 117.73%);
+  position: relative;
+  overflow: hidden;
+  max-width: 296px;
+  height: 296px;
+  margin: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.team_csk a,
+.team_dc a,
+.team_gt a,
+.team_kkr a,
+.team_lsg a,
+.team_mi a,
+.team_pbks a,
+.team_rcb a,
+.team_rr a,
+.team_srh a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team_csk .team-logo,
+.team_dc .team-logo,
+.team_gt .team-logo,
+.team_kkr .team-logo,
+.team_lsg .team-logo,
+.team_mi .team-logo,
+.team_pbks .team-logo,
+.team_rcb .team-logo,
+.team_rr .team-logo,
+.team_srh .team-logo {
+  width: 400px;
+  height: 400px !important;
+  border-radius: 100%;
+  top: -220px;
+  position: absolute;
+  background: #ffcb05;
+}
+
+.team-on-hover {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.team-on-hover img {
+  margin-top: 46px;
+  width: 90px;
+  opacity: 0;
+}
+
+.team-logo {
+  height: 130px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.hover_team_logo_and_name {
+  position: absolute;
+  z-index: 999;
+  top: 8px;
+  left: 16px;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 3px;
+  top: 10px;
+  opacity: 0;
+  z-index: 999;
+}
+
+.team_full_name {
+  position: relative;
+  bottom: -70px;
+  text-align: center;
+}
+
+.team-on-hover img {
+  margin-top: 46px;
+  width: 90px;
+  opacity: 0;
+}
+
+.trophy-text-align {
+  width: 100%;
+  font-size: 20px;
+  line-height: 34px;
+  font-family: "Bebas Neue", sans-serif;
+  text-align: center;
+  margin-top: 56px;
+  opacity: 0;
+  color: #11141c;
+  padding-inline: 5px;
+}
+
+.team-logo {
+  height: 130px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.team_full_name {
+  width: 100%;
+  float: left;
+  color: #fff;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 1.2;
+  margin: 12px 0 20px;
+}
+
+.hover_team_logo_and_name img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.hover_team_logo_and_name span {
+  font-size: 28px;
+  font-family: "Bebas Neue", sans-serif;
+  color: #11141c;
+}
+
+.team_csk:hover,
+.team_gt:hover,
+.team_kkr:hover,
+.team_mi:hover,
+.team_rr:hover,
+.team_rcb:hover,
+.team_dc:hover,
+.team_lsg:hover,
+.team_pbks:hover,
+.team_srh:hover {
+  background: rgba(255, 255, 255, .8);
+}
+
+.team_csk:hover .team-logo,
+.team_gt:hover .team-logo,
+.team_kkr:hover .team-logo,
+.team_mi:hover .team-logo,
+.team_rr:hover .team-logo,
+.team_rcb:hover .team-logo,
+.team_dc:hover .team-logo,
+.team_lsg:hover .team-logo,
+.team_pbks:hover .team-logo,
+.team_srh:hover .team-logo {
+  background: rgba(255, 255, 255, .33);
+}
+
+.team_csk:hover .team-on-hover img,
+.team_csk:hover .trophy-text-align,
+.team_csk:hover .hover_team_logo_and_name,
+.team_csk:hover .edit-icon,
+.team_gt:hover .team-on-hover img,
+.team_gt:hover .trophy-text-align,
+.team_gt:hover .hover_team_logo_and_name,
+.team_gt:hover .edit-icon,
+.team_kkr:hover .team-on-hover img,
+.team_kkr:hover .trophy-text-align,
+.team_kkr:hover .hover_team_logo_and_name,
+.team_kkr:hover .edit-icon,
+.team_mi:hover .team-on-hover img,
+.team_mi:hover .trophy-text-align,
+.team_mi:hover .hover_team_logo_and_name,
+.team_mi:hover .edit-icon,
+.team_rr:hover .team-on-hover img,
+.team_rr:hover .trophy-text-align,
+.team_rr:hover .hover_team_logo_and_name,
+.team_rr:hover .edit-icon,
+.team_rcb:hover .edit-icon,
+.team_lsg:hover .edit-icon,
+.team_pbks:hover .edit-icon,
+.team_dc:hover .edit-icon,
+.team_srh:hover .team-on-hover img,
+.team_srh:hover .trophy-text-align,
+.team_srh:hover .hover_team_logo_and_name,
+.team_srh:hover .edit-icon {
+  opacity: 1;
+}
+
+.team_csk:hover .team_full_name,
+.team_csk:hover .team-logo img,
+.team_gt:hover .team_full_name,
+.team_gt:hover .team-logo img,
+.team_kkr:hover .team_full_name,
+.team_kkr:hover .team-logo img,
+.team_mi:hover .team_full_name,
+.team_mi:hover .team-logo img,
+.team_rr:hover .team_full_name,
+.team_rr:hover .team-logo img,
+.team_rcb:hover .team_full_name,
+.team_rcb:hover .team-logo img,
+.team_dc:hover .team_full_name,
+.team_dc:hover .team-logo img,
+.team_lsg:hover .team_full_name,
+.team_lsg:hover .team-logo img,
+.team_pbks:hover .team_full_name,
+.team_pbks:hover .team-logo img,
+.team_srh:hover .team_full_name,
+.team_srh:hover .team-logo img,
+.ap-vd-pop-inner .mCSB_draggerRail {
+  opacity: 0;
+}
+
+.team_csk:hover .team-on-hover img,
+.team_csk:hover .trophy-text-align,
+.team_csk:hover .hover_team_logo_and_name,
+.team_gt:hover .team-on-hover img,
+.team_gt:hover .trophy-text-align,
+.team_gt:hover .hover_team_logo_and_name,
+.team_kkr:hover .team-on-hover img,
+.team_kkr:hover .trophy-text-align,
+.team_kkr:hover .hover_team_logo_and_name,
+.team_mi:hover .team-on-hover img,
+.team_mi:hover .trophy-text-align,
+.team_mi:hover .hover_team_logo_and_name,
+.team_rr:hover .team-on-hover img,
+.team_rr:hover .trophy-text-align,
+.team_rr:hover .hover_team_logo_and_name,
+.team_dc:hover .hover_team_logo_and_name,
+.team_rcb:hover .hover_team_logo_and_name,
+.team_pbks:hover .hover_team_logo_and_name,
+.team_lsg:hover .hover_team_logo_and_name,
+.team_srh:hover .team-on-hover img,
+.team_srh:hover .trophy-text-align,
+.team_srh:hover .hover_team_logo_and_name {
+  opacity: 1;
+}
+
+.team_csk .team-logo img,
+.team_dc .team-logo img,
+.team_gt .team-logo img,
+.team_kkr .team-logo img,
+.team_lsg .team-logo img,
+.team_mi .team-logo img,
+.team_pbks .team-logo img,
+.team_rcb .team-logo img,
+.team_rr .team-logo img,
+.team_srh .team-logo img {
+  width: 120px;
+  height: auto;
+  object-fit: unset;
+  object-position: bottom;
+  position: absolute;
+  z-index: 999;
+  bottom: 30px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+.team_csk img,
+.team_dc img,
+.team_gt img,
+.team_kkr img,
+.team_lsg img,
+.team_mi img,
+.team_pbks img,
+.team_rcb img,
+.team_rr img,
+.team_srh img {
+  vertical-align: middle;
+}
+
+/* dc */
+
+.team_dc .team-logo {
+  background: #b9251c;
+}
+
+.team_dc {
+  background: linear-gradient(137.7deg, #051677 1%, #001939 110.83%);
+}
+
+.team_gt .team-logo {
+  background: #77c7f2;
+}
+
+.team_gt {
+  background: linear-gradient(137.7deg, rgba(15, 29, 51, .8) 1%, rgba(15, 29, 51, .8) 110.83%);
+}
+
+.team_kkr .team-logo {
+  background: #ecc542;
+}
+
+.team_kkr {
+  background: linear-gradient(137.7deg, rgba(49, 36, 83, .8) 1%, rgba(48, 35, 83, .8) 110.83%);
+}
+
+.team_lsg .team-logo {
+  background: #fff;
+}
+
+.team_lsg {
+  background: linear-gradient(137.7deg, rgba(1, 86, 225, .8) 1%, rgba(1, 86, 225, .8) 110.83%);
+}
+
+.team_mi .team-logo {
+  background: #2d6ab1;
+}
+
+.team_mi {
+  background: linear-gradient(137.7deg, rgba(21, 58, 117, .8) 1%, rgba(23, 58, 118, .8) 110.83%);
+}
+
+.team_pbks .team-logo {
+  background: #d71920;
+}
+
+.team_pbks {
+  background: linear-gradient(137.7deg, rgba(48, 64, 117, .8) 1%, rgba(48, 64, 117, .8) 110.83%);
+}
+
+.team_rr .team-logo {
+  background: #eb83b5;
+}
+
+.team_rr {
+  background: linear-gradient(137.7deg, rgba(1, 78, 162, .8) 1%, rgba(1, 78, 162, .24) 110.83%);
+}
+
+.team_rcb .team-logo {
+  background: #2b2a29;
+}
+
+.team_rcb {
+  background: linear-gradient(137.7deg, rgba(203, 47, 47, .8) 1%, rgba(17, 19, 16, .8) 110.83%);
+}
+
+.team_srh .team-logo {
+  background: #f26522;
+}
+
+.team_srh {
+  background: linear-gradient(137.7deg, rgba(139, 40, 36, .8) 1%, rgba(140, 40, 35, .8) 110.83%);
 }

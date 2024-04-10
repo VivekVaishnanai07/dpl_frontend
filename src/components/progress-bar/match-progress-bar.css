@@ -17,11 +17,6 @@
   text-align: right;
 }
 
-.d-flex {
-  display: flex;
-  align-items: center;
-}
-
 .gap-1 {
   gap: 1px !important;
 }
