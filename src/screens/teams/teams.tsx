@@ -80,7 +80,7 @@ const Teams = () => {
                             <img src={team.icon} alt="" />
                             <span>{team.short_name}</span>
                           </div>
-                          <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon /></div>
+                          {userData.role === 'admin' && <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon /></div>}
                           <div className="team_full_name">
                             <div>{team.full_name}</div>
                           </div>
