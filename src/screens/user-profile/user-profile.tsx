@@ -28,7 +28,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     if (user !== null) {
-      const getImage = biteCodeConvertIntoImg(user);
+      const getImage = biteCodeConvertIntoImg(user.userImg.data);
       setImagePreview(getImage);
       setUserDetails({
         first_name: user.first_name,

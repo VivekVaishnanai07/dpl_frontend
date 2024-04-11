@@ -77,8 +77,8 @@ export const dateFormateSql = (data: string) => {
 }
 
 export const biteCodeConvertIntoImg = (data: any) => {
-  if (data.userImg) {
-    let uint8Array: any = new Uint8Array(data.userImg.data);
+  if (data) {
+    let uint8Array: any = new Uint8Array(data);
     const base64String = uint8Array.reduce((data: any, byte: any) => data + String.fromCharCode(byte), '');
     return base64String;
   }

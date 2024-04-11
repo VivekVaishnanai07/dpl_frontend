@@ -1,3 +1,4 @@
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Box, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import ConfirmDialog from '../../components/dialog-box/confirm/confirm-dialog';
 import TeamService from "../../service/teams.service";
 import { JwtTokenDecode } from "../../types/auth";
 import { ITeam } from "../../types/team";
-import { notificationConfig } from "../../utils/util";
+import { biteCodeConvertIntoImg, notificationConfig } from "../../utils/util";
 import "./teams.css";
 
 const Teams = () => {
@@ -24,6 +25,7 @@ const Teams = () => {
 
   useEffect(() => {
     getTeamsList()
+    // eslint-disable-next-line
   }, [])
 
   const getTeamsList = () => {
@@ -71,16 +73,17 @@ const Teams = () => {
                 {teamList.map((team: ITeam, index: number) => (
                   <Grid item xs={2} sm={2} md={3} key={index}>
                     <div key={team.id} className={`team_${team.short_name.toLowerCase()}`}>
-                      <a data-team_name={team.full_name} className="w-100">
+                      <a className="w-100">
                         <div className="d-flex flex-wrap justify-content-center">
                           <div className="team-logo">
-                            <img src={team.icon} alt="" />
+                            <img src={biteCodeConvertIntoImg(team.team_img.data)} alt="" />
                           </div>
                           <div className="hover_team_logo_and_name">
-                            <img src={team.icon} alt="" />
+                            <img src={biteCodeConvertIntoImg(team.team_img.data)} alt="" />
                             <span>{team.short_name}</span>
                           </div>
                           {userData.role === 'admin' && <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon /></div>}
+                          {userData.role === 'admin' && <div className="delete-icon" onClick={() => handleClickOpen(team.id)}><DeleteOutlineOutlinedIcon className="delete" /></div>}
                           <div className="team_full_name">
                             <div>{team.full_name}</div>
                           </div>
@@ -97,6 +100,10 @@ const Teams = () => {
                 ))}
               </Grid>
             </Box>
+            {
+              emptyMessageBanner &&
+              <div className='data-not-found'>Data Not Found</div>
+            }
           </div>
         </div>
       </div>

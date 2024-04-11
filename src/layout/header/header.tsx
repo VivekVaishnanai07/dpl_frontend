@@ -33,7 +33,7 @@ function Header({ handleDrawerToggle }: any) {
 
   useEffect(() => {
     if (user !== null) {
-      biteCodeConvertIntoImg(user);
+      biteCodeConvertIntoImg(user.userImg.data);
     }
   }, [user])
 
@@ -152,7 +152,7 @@ function Header({ handleDrawerToggle }: any) {
           </Box>
           <Box sx={{ flexGrow: 0 }} className="avatar-box">
             <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-              <Avatar alt='avatar' className='profileAvatar' src={user && user.userImg !== null ? biteCodeConvertIntoImg(user) : AvatarImg} />
+              <Avatar alt='avatar' className='profileAvatar' src={user && user.userImg !== null ? biteCodeConvertIntoImg(user.userImg.data) : AvatarImg} />
               <Typography className='avatar-title'>{user && user.first_name + " " + user.last_name}</Typography>
             </IconButton>
             <Menu

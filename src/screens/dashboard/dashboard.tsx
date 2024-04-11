@@ -120,7 +120,7 @@ const Dashboard = () => {
                     <tr key={index + 1}>
                       <td data-label="No.">{index + 1}</td>
                       <td data-label="Player Name" className="align-center">
-                        <Avatar alt='avatar' className='profileAvatar avatar-title mr-4' src={item.userImg !== null ? biteCodeConvertIntoImg(item) : AvatarImg} />
+                        <Avatar alt='avatar' className='profileAvatar avatar-title mr-4' src={item.userImg !== null ? biteCodeConvertIntoImg(item.userImg.data) : AvatarImg} />
                         <Typography>{item.full_name}</Typography>
                       </td>
                       <td data-label="Win">

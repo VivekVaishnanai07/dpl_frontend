@@ -2,6 +2,7 @@
   background-image: url('../../assets/img/teams-new-landing-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: 500px;
 }
 
 .team-container-background .ipl_logo {
@@ -10,8 +11,6 @@
 }
 
 .team-container {
-  margin-left: 64px;
-  margin-right: 64px;
   padding-bottom: 50px;
 }
 
@@ -40,6 +39,11 @@
 .btn {
   color: #fff !important;
   background-color: var(--primary-100, #1C4980) !important;
+}
+
+.data-not-found {
+  color: #ffffff;
+  font-size: 52px;
 }
 
 @media screen and (max-width: 1250px) {
@@ -148,6 +152,19 @@
   z-index: 999;
 }
 
+.delete-icon {
+  position: absolute;
+  top: 8px;
+  right: 40px;
+  opacity: 0;
+  z-index: 999;
+}
+
+.delete-icon .delete {
+  height: 30px;
+  width: 30px;
+}
+
 .team_full_name {
   position: relative;
   bottom: -70px;
@@ -230,30 +247,40 @@
 .team_csk:hover .trophy-text-align,
 .team_csk:hover .hover_team_logo_and_name,
 .team_csk:hover .edit-icon,
+.team_csk:hover .delete-icon,
 .team_gt:hover .team-on-hover img,
 .team_gt:hover .trophy-text-align,
 .team_gt:hover .hover_team_logo_and_name,
 .team_gt:hover .edit-icon,
+.team_gt:hover .delete-icon,
 .team_kkr:hover .team-on-hover img,
 .team_kkr:hover .trophy-text-align,
 .team_kkr:hover .hover_team_logo_and_name,
 .team_kkr:hover .edit-icon,
+.team_kkr:hover .delete-icon,
 .team_mi:hover .team-on-hover img,
 .team_mi:hover .trophy-text-align,
 .team_mi:hover .hover_team_logo_and_name,
 .team_mi:hover .edit-icon,
+.team_mi:hover .delete-icon,
 .team_rr:hover .team-on-hover img,
 .team_rr:hover .trophy-text-align,
 .team_rr:hover .hover_team_logo_and_name,
 .team_rr:hover .edit-icon,
+.team_rr:hover .delete-icon,
 .team_rcb:hover .edit-icon,
+.team_rcb:hover .delete-icon,
 .team_lsg:hover .edit-icon,
+.team_lsg:hover .delete-icon,
 .team_pbks:hover .edit-icon,
+.team_pbks:hover .delete-icon,
 .team_dc:hover .edit-icon,
+.team_dc:hover .delete-icon,
 .team_srh:hover .team-on-hover img,
 .team_srh:hover .trophy-text-align,
 .team_srh:hover .hover_team_logo_and_name,
-.team_srh:hover .edit-icon {
+.team_srh:hover .edit-icon,
+.team_srh:hover .delete-icon {
   opacity: 1;
 }
 

@@ -11,4 +11,5 @@ export interface ITeam {
   icon: string;
   team_color: string;
   winner_years: string;
+  team_img: any;
 }
