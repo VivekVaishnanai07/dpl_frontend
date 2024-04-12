@@ -93,7 +93,7 @@ const Match = () => {
     <div className="bottom-section-main bg">
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="team-container">
-          <table ref={tableRef} style={{ maxWidth: "1500px" }}>
+          <table ref={tableRef} style={{ maxWidth: "1300px" }}>
             <caption>Matches Table</caption>
             <thead>
               <tr>

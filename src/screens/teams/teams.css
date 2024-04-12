@@ -217,6 +217,19 @@
   color: #11141c;
 }
 
+.team_csk,
+.team_gt,
+.team_kkr,
+.team_mi,
+.team_rr,
+.team_rcb,
+.team_dc,
+.team_lsg,
+.team_pbks,
+.team_srh {
+  transition: background 0.3s ease;
+}
+
 .team_csk:hover,
 .team_gt:hover,
 .team_kkr:hover,
@@ -268,12 +281,16 @@
 .team_rr:hover .hover_team_logo_and_name,
 .team_rr:hover .edit-icon,
 .team_rr:hover .delete-icon,
+.team_rcb:hover .duck-container .duck,
 .team_rcb:hover .edit-icon,
 .team_rcb:hover .delete-icon,
+.team_lsg:hover .duck-container .duck,
 .team_lsg:hover .edit-icon,
 .team_lsg:hover .delete-icon,
+.team_pbks:hover .duck-container .duck,
 .team_pbks:hover .edit-icon,
 .team_pbks:hover .delete-icon,
+.team_dc:hover .duck-container .duck,
 .team_dc:hover .edit-icon,
 .team_dc:hover .delete-icon,
 .team_srh:hover .team-on-hover img,
@@ -440,4 +457,20 @@
 
 .team_srh {
   background: linear-gradient(137.7deg, rgba(139, 40, 36, .8) 1%, rgba(140, 40, 35, .8) 110.83%);
+}
+
+.duck-container {
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  height: 110px;
+}
+
+.duck {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s, transform 0.3s;
+  transform: scale(1);
 }

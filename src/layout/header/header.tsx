@@ -32,7 +32,7 @@ function Header({ handleDrawerToggle }: any) {
 
 
   useEffect(() => {
-    if (user !== null) {
+    if (user !== null && user.userImg.data !== null) {
       biteCodeConvertIntoImg(user.userImg.data);
     }
   }, [user])

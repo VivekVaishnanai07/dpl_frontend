@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import EditTeamIcon from "../../assets/icon/edit-team-icon";
+import DuckImg from "../../assets/img/duck.gif";
 import IplLogo from "../../assets/img/new-logo.png";
 import TeamTrophy from "../../assets/img/teams-trophy.svg";
 import ConfirmDialog from '../../components/dialog-box/confirm/confirm-dialog';
@@ -87,6 +88,9 @@ const Teams = () => {
                           <div className="team_full_name">
                             <div>{team.full_name}</div>
                           </div>
+                        </div>
+                        <div className='duck-container'>
+                          <img className="duck" src={DuckImg} alt='duck' />
                         </div>
                         <div className="team-on-hover">
                           <img src={TeamTrophy} alt="" />
