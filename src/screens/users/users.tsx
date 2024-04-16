@@ -80,7 +80,7 @@ const Users = () => {
                   <td data-label="First Name">{user.first_name}</td>
                   <td data-label="Last Name">{user.last_name}</td>
                   <td data-label="Email">{user.email}</td>
-                  <td className='buttons'>
+                  <td className='action-buttons'>
                     <div id='edit' data-label="">
                       <Button onClick={() => handlerEditMatch(user.id)}>
                         <EditIcon />
