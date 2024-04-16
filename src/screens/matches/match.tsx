@@ -1,7 +1,10 @@
-import { Button } from "@mui/material";
+import BedtimeIcon from '@mui/icons-material/Bedtime';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Button } from '@mui/material';
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import DeleteIcon from "../../assets/icon/delete";
@@ -25,14 +28,25 @@ const Match = () => {
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
   const [matchId, setMatchId] = useState<number>(0);
   const [matchDetails, setMatchDetails] = useState<IMatch>();
-  const tableRef = useRef<any>(null);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
 
   useEffect(() => {
     getMatchList();
   }, []);
 
   useEffect(() => {
-    scrollToDate();
+    scrollToToday();
     // eslint-disable-next-line
   }, [filterMatchList]);
 
@@ -44,6 +58,28 @@ const Match = () => {
         setEmptyMessageBanner(false)
       }
       setFilterMatchList(response.data)
+      response.data.map((data: IMatch, index: number) => {
+        const nthChildValue = response.data.length > 0 && `${response.data.length}n+${index + 1}`;
+        const styleElement = document.createElement('style');
+        styleElement.innerHTML = `
+        .main-timeline .timeline:nth-child(${nthChildValue})::before {
+          border-color: ${data.team_2_color};
+        }
+        
+        .main-timeline .timeline:nth-child(${nthChildValue})::after {
+          border-color: ${data.team_1_color};
+        }
+        
+        .main-timeline .timeline:nth-child(${nthChildValue}) .timeline-year,
+        .main-timeline .timeline:nth-child(${nthChildValue}) .match-title,
+        .main-timeline .timeline:nth-child(${nthChildValue}) .winner_team {
+          background: -webkit-linear-gradient(${data.team_1_color}, ${data.team_2_color});
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }`;
+        document.head.appendChild(styleElement);
+        return null;
+      });
     }).catch((error) => {
       setEmptyMessageBanner(true)
       console.error(error)
@@ -78,86 +114,101 @@ const Match = () => {
     setWinnerTeamSelectDialog(false);
   };
 
-  const scrollToDate = () => {
-    const today = dayjs().format('DD/MM/YYYY');
-    const todayRowIndex = filterMatchList.findIndex((item: any) => dayjs(item.date).format('DD/MM/YYYY') === today);
-    if (todayRowIndex !== -1) {
-      const rowElement = tableRef.current.querySelector(`tbody tr:nth-child(${todayRowIndex + 1})`);
-      if (rowElement) {
-        rowElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const scrollToToday = () => {
+    const todayIndex = filterMatchList.findIndex((match: any) => {
+      const matchDate = dayjs.utc(match.date).local();
+      const today = dayjs().startOf('day');
+      return matchDate.isSame(today, 'day');
+    });
+
+    if (todayIndex !== -1) {
+      const todayElement = document.getElementById(`timeline-${todayIndex}`);
+      if (todayElement) {
+        todayElement.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
   };
 
   return (
-    <div className="bottom-section-main bg">
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className="team-container">
-          <table ref={tableRef} style={{ maxWidth: "1300px" }}>
-            <caption>Matches Table</caption>
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col" colSpan={2}>Team 1</th>
-                <th scope="col" colSpan={2}>Team 2</th>
-                <th scope="col">Venue</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Price</th>
-                <th scope="col" colSpan={2}>Win Team</th>
-                {userData.role === 'admin' && <th scope="col" colSpan={2}>Action</th>}
-              </tr>
-            </thead>
-            <tbody>
+    <div className="bottom-section-main bg horizontal-align">
+      <div className="match-container">
+        <div className="col">
+          {filterMatchList.length > 0 &&
+            <div className="main-timeline">
               {filterMatchList.map((match: IMatch, index: number) => (
-                <tr key={index + 1}>
-                  <td data-label="No.">{index + 1}</td>
-                  <td data-label="Team 1" colSpan={2}>{match.team_1}</td>
-                  <td data-label="Team 2" colSpan={2}>{match.team_2}</td>
-                  <td data-label="Venue">{match.venue}</td>
-                  <td data-label="Date">{dayjs.utc(match.date).local().format('DD/MM/YYYY')}</td>
-                  <td data-label="Time">{dayjs.utc(match.date).local().format('h:mm A')}</td>
-                  <td data-label="Price">{match.match_price}</td>
-                  <td data-label="Win Team" colSpan={2}>{match.winner_team ? match.winner_team : '-'}</td>
-                  {userData.role === 'admin' && <td data-label="Action" colSpan={2}>
-                    <div className='buttons'>
-                      <div id='match_edit' data-label="Buttons">
-                        <Button onClick={() => handlerEditMatch(match.id)}>
-                          <EditIcon />
-                        </Button>
+                <div className="timeline" id={`timeline-${index}`} key={index + 1}>
+                  <div className="timeline-content w-100">
+                    <div className={`${userData.role === 'admin' ? 'timeline-event' : 'timeline-user-event'}`}>
+                      <div className='timeline-year'>
+                        <span>MATCH {match.match_no}</span>
+                        <div>{dayjs.utc(match.date).local().format('MMM, ddd D')}</div>
+                        <div>{dayjs.utc(match.date).local().format('h:mm a')}</div>
                       </div>
-                      <div id='winner_trophy' data-label="">
-                        <Button onClick={() => handlerSelectWinnerTeam(match)}>
-                          <Trophy />
-                        </Button>
+                      <div className="timeline-icon">
+                        {dayjs(match.date).format('h:mm') === "3:00" ?
+                          <LightModeIcon className='sun-icon' /> :
+                          <BedtimeIcon className='moon-icon' />
+                        }
                       </div>
-                      <div id='match_delete' data-label="">
-                        <Button onClick={() => handleClickOpen(match.id)}>
-                          <DeleteIcon />
-                        </Button>
+                      <div className='buttons'>
+                        <div id='match_edit' data-label="Buttons">
+                          <Button onClick={() => handlerEditMatch(match.id)}>
+                            <EditIcon />
+                          </Button>
+                        </div>
+                        <div id='winner_trophy' data-label="">
+                          <Button onClick={() => handlerSelectWinnerTeam(match)}>
+                            <Trophy />
+                          </Button>
+                        </div>
+                        <div id='match_delete' data-label="">
+                          <Button onClick={() => handleClickOpen(match.id)}>
+                            <DeleteIcon />
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </td>}
-                </tr>
+                    <div className="content" style={{ marginTop: '30px' }}>
+                      <h3 className="match-title horizontal-align"><LocationOnIcon className='location-icon' />{match.venue}</h3>
+                      <div className="description">
+                        <div className="card_content">
+                          <div className="card_left">
+                            <img className="team_icon" src={match.team_1_icon} alt="team_logo" style={{ width: 60 }} />
+                            <div className="team_1">{width < 767 ? match.team_1_short_name : match.team_1}</div>
+                          </div>
+                          <span className="card_center">
+                          </span>
+                          <div className="card_right">
+                            <div className="team_2">{width < 767 ? match.team_2_short_name : match.team_2}</div>
+                            <img className="team_icon" src={match.team_2_icon} alt="team_logo" style={{ width: 60 }} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className='match_on_hover'>
+                        <div className='winner_team'>{match.winner_team ?
+                          <div className='horizontal-align'>
+                            <Trophy className='trophy' />
+                            <span className='pl-4'>
+                              {match.winner_team}
+                            </span>
+                          </div> : '-'}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
-              {emptyMessageBanner && (
-                <tr>
-                  <td colSpan={userData.role === 'admin' ? 10 : 9}>
-                    <div id="main">
-                      <div className="fof">
-                        <h1>Data Not Found</h1>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-          {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
-          <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
+            </div>
+          }
         </div>
+        {emptyMessageBanner && (
+          <div>
+            <h1>Data Not Found</h1>
+          </div>
+        )}
+        {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
+        <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
       </div>
-    </div>
+    </div >
   )
 }
 

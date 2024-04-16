@@ -74,7 +74,7 @@ const Teams = () => {
                 {teamList.map((team: ITeam, index: number) => (
                   <Grid item xs={2} sm={2} md={3} key={index}>
                     <div key={team.id} className={`team_${team.short_name.toLowerCase()}`}>
-                      <a className="w-100">
+                      <div className="team_container w-100">
                         <div className="d-flex flex-wrap justify-content-center">
                           <div className="team-logo">
                             <img src={biteCodeConvertIntoImg(team.team_img.data)} alt="" />
@@ -98,7 +98,7 @@ const Teams = () => {
                             {team.winner_years ? team.winner_years.replace(/,/g, ' | ') : ''}
                           </div>
                         </div>
-                      </a>
+                      </div>
                     </div>
                   </Grid>
                 ))}

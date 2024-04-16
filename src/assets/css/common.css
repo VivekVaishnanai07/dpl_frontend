@@ -175,3 +175,7 @@ table th {
 .w-100 {
   width: 100% !important;
 }
+
+.pl-4 {
+  padding-left: 4px !important;
+}

@@ -1,4 +1,4 @@
-const Trophy = () => (
+const Trophy = (props: any) => (
   <svg
     width="25px"
     height="25px"
@@ -9,6 +9,7 @@ const Trophy = () => (
     role="img"
     className="iconify iconify--twemoji"
     preserveAspectRatio="xMidYMid meet"
+    {...props}
   >
     <path
       fill="#FFAC33"

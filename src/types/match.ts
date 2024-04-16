@@ -13,10 +13,12 @@ export interface IMatch {
   team_1_id: number;
   team_1: string;
   team_1_icon: string;
+  team_1_short_name: string;
   team_1_color: string;
   team_2_id: number;
   team_2: string;
   team_2_icon: string;
+  team_2_short_name: string;
   team_2_color: string;
   venue: string;
   match_price: number;
