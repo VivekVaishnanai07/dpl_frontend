@@ -125,6 +125,16 @@ const Match = () => {
       const todayElement = document.getElementById(`timeline-${todayIndex}`);
       if (todayElement) {
         todayElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        const moonIcon = todayElement.querySelector('.moon-icon');
+        const sunIcon = todayElement.querySelector('.sun-icon');
+
+        if (moonIcon) {
+          moonIcon.classList.add('moonLive');
+        }
+
+        if (sunIcon) {
+          sunIcon.classList.add('sunLive');
+        }
       }
     }
   };

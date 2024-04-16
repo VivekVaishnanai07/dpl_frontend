@@ -57,6 +57,27 @@
   }
 }
 
+@media screen and (max-width: 767px) {
+  .hover_team_logo_and_name img {
+    width: 24px !important;
+    margin-right: 4px !important;
+  }
+
+  .hover_team_logo_and_name span {
+    font-size: 18px !important;
+  }
+
+  .delete-icon .delete {
+    height: 20px !important;
+    width: 20px !important;
+  }
+
+  .edit-icon .edit {
+    height: 20px !important;
+    width: 20px !important;
+  }
+}
+
 /* team card css */
 .team_csk,
 .team_dc,
@@ -137,7 +158,7 @@
 .hover_team_logo_and_name {
   position: absolute;
   z-index: 999;
-  top: 8px;
+  top: 9px;
   left: 16px;
   opacity: 0;
   display: flex;
@@ -146,8 +167,8 @@
 
 .edit-icon {
   position: absolute;
-  right: 3px;
-  top: 10px;
+  right: 10px;
+  top: 9px;
   opacity: 0;
   z-index: 999;
 }
@@ -163,6 +184,12 @@
 .delete-icon .delete {
   height: 30px;
   width: 30px;
+}
+
+.edit-icon .edit {
+  height: 26px;
+  width: 26px;
+  padding-top: 2px;
 }
 
 .trophy-text-align {

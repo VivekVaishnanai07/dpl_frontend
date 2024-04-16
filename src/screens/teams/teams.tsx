@@ -1,10 +1,10 @@
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Box, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import EditTeamIcon from "../../assets/icon/edit-team-icon";
+import DeleteTeam from '../../assets/icon/delete';
+import EditTeamIcon from "../../assets/icon/edit";
 import DuckImg from "../../assets/img/duck.gif";
 import IplLogo from "../../assets/img/new-logo.png";
 import TeamTrophy from "../../assets/img/teams-trophy.svg";
@@ -83,8 +83,8 @@ const Teams = () => {
                             <img src={biteCodeConvertIntoImg(team.team_img.data)} alt="" />
                             <span>{team.short_name}</span>
                           </div>
-                          {userData.role === 'admin' && <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon /></div>}
-                          {userData.role === 'admin' && <div className="delete-icon" onClick={() => handleClickOpen(team.id)}><DeleteOutlineOutlinedIcon className="delete" /></div>}
+                          {userData.role === 'admin' && <div className="edit-icon" onClick={() => handlerEditMatch(team.id)}><EditTeamIcon className="edit" /></div>}
+                          {userData.role === 'admin' && <div className="delete-icon" onClick={() => handleClickOpen(team.id)}><DeleteTeam className="delete" /></div>}
                           <div className="team_full_name">
                             <div>{team.full_name}</div>
                           </div>

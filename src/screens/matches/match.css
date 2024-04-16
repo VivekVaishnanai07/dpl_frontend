@@ -258,6 +258,7 @@
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
+  display: flex;
 }
 
 .main-timeline .timeline:nth-child(even) .buttons {
@@ -412,5 +413,29 @@
   .match_on_hover .winner_team .trophy {
     height: 18px !important;
     width: 18px !important;
+  }
+}
+
+.moon-icon.moonLive {
+  animation: blinking 2.5s linear infinite !important;
+  color: #ffdb00 !important;
+}
+
+.sun-icon.sunLive {
+  animation: blinking 2.5s linear infinite !important;
+  color: #ffa500 !important;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 1.0;
+  }
+
+  50% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
   }
 }

@@ -1,4 +1,4 @@
-const DeleteIcon = () => (
+const DeleteIcon = (props: any) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={26}
@@ -8,6 +8,7 @@ const DeleteIcon = () => (
       width: 26,
     }}
     viewBox="0 0 1024 1024"
+    {...props}
   >
     <path fill="#FAFCFB" d="M724.3 198H296.1l54.1-146.6h320z" />
     <path
