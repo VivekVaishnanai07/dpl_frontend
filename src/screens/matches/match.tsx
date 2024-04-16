@@ -1,6 +1,7 @@
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
@@ -29,10 +30,23 @@ const Match = () => {
   const [matchId, setMatchId] = useState<number>(0);
   const [matchDetails, setMatchDetails] = useState<IMatch>();
   const [width, setWidth] = useState(window.innerWidth);
+  const [showButton, setShowButton] = useState(false);
 
-  const updateWidth = () => {
-    setWidth(window.innerWidth);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
@@ -114,6 +128,11 @@ const Match = () => {
     setWinnerTeamSelectDialog(false);
   };
 
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+
   const scrollToToday = () => {
     const todayIndex = filterMatchList.findIndex((match: any) => {
       const matchDate = dayjs.utc(match.date).local();
@@ -128,6 +147,7 @@ const Match = () => {
         const moonIcon = todayElement.querySelector('.moon-icon');
         const sunIcon = todayElement.querySelector('.sun-icon');
 
+
         if (moonIcon) {
           moonIcon.classList.add('moonLive');
         }
@@ -135,6 +155,9 @@ const Match = () => {
         if (sunIcon) {
           sunIcon.classList.add('sunLive');
         }
+        setShowButton(false);
+      } else {
+        setShowButton(true);
       }
     }
   };
@@ -215,6 +238,13 @@ const Match = () => {
             <h1>Data Not Found</h1>
           </div>
         )}
+        <button
+          className='back-to-current-match'
+          onClick={scrollToToday}
+          style={{ display: showButton ? "block" : "none" }}
+        >
+          <KeyboardArrowUpIcon className='upArrow-icon' />
+        </button>
         {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
         <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
       </div>
