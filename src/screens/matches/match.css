@@ -441,6 +441,7 @@
 }
 
 .back-to-current-match {
+  z-index: 1000;
   position: fixed;
   bottom: 20px;
   right: 20px;
