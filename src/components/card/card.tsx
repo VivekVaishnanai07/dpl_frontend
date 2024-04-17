@@ -21,6 +21,7 @@ const Card: React.FC<{ matchDetails: IMatch }> = (props) => {
     if (!getData) {
       navigate('/');
     }
+    // eslint-disable-next-line
   }, [days, hours, minutes, seconds]);
 
   return (
