@@ -57,7 +57,14 @@
   }
 
   .align-center {
-    display: block !important;
+    justify-content: center;
+    border-radius: 10px;
+    color: #ffffff;
+  }
+
+  .name-text {
+    font-size: 16px !important;
+    font-weight: 700 !important;
   }
 }
 

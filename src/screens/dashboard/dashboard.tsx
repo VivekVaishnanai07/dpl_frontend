@@ -29,6 +29,14 @@ const Dashboard = () => {
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
   const [playerStreakList, setPlayerStreakList] = useState([]);
   const [playerLeaderboardList, setPlayerLeaderboardList] = useState([]);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
 
   useEffect(() => {
     if (getData) {
@@ -93,6 +101,11 @@ const Dashboard = () => {
     return playerStatus;
   }
 
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+
   return (
     <div className="bottom-section-main bg content-center">
       <div className="max-width">
@@ -123,10 +136,10 @@ const Dashboard = () => {
                 <tbody>
                   {playerLeaderboardList.map((item: IPlayerLeaderboard, index: number) => (
                     <tr key={index + 1}>
-                      <td data-label="No.">{index + 1}</td>
-                      <td data-label="Player Name" className="align-center">
+                      {width > 767 && <td data-label="No.">{index + 1}</td>}
+                      <td className="align-center" style={{ backgroundColor: (width < 767) ? parseFloat(item.win_percentage) >= 60 ? '#6cb33e' : '#d14242' : '#ffffff' }}>
                         <Avatar alt='avatar' className='profileAvatar avatar-title mr-4' src={item.userImg !== null ? biteCodeConvertIntoImg(item.userImg.data) : AvatarImg} />
-                        <Typography>{item.full_name}</Typography>
+                        <Typography className="name-text">{item.full_name}</Typography>
                       </td>
                       <td data-label="Win">
                         <span>{item.win_matches}</span>

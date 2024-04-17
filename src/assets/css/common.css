@@ -110,7 +110,6 @@ table th {
     float: left;
     font-weight: bold;
     text-transform: uppercase;
-    color: #000000;
   }
 
   table td:last-child {
