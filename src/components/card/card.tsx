@@ -11,11 +11,15 @@ import "./card.css";
 const Card: React.FC<{ matchDetails: IMatch }> = (props) => {
   const { matchDetails } = props;
   const navigate = useNavigate();
+  let getData = localStorage.getItem('token') as string;
   const { days, hours, minutes, seconds } = useCountdownTimer(matchDetails.date);
 
   useEffect(() => {
     if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
       window.location.reload();
+    }
+    if (!getData) {
+      navigate('/');
     }
   }, [days, hours, minutes, seconds]);
 

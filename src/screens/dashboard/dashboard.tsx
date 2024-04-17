@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import FireIcon from "../../assets/icon/fire";
 import AvatarImg from '../../assets/img/avatar.jpg';
 import Card from "../../components/card/card";
@@ -20,6 +21,7 @@ import "./dashboard.css";
 dayjs.extend(utc);
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   let getData = localStorage.getItem('token') as string;
   let userData = jwtDecode(getData) as JwtTokenDecode;
   let user_id = userData.id;
@@ -29,9 +31,13 @@ const Dashboard = () => {
   const [playerLeaderboardList, setPlayerLeaderboardList] = useState([]);
 
   useEffect(() => {
-    getPlayerLeaderboardList();
-    getMatchListData();
-    checkPlayerStreak();
+    if (getData) {
+      getPlayerLeaderboardList();
+      getMatchListData();
+      checkPlayerStreak();
+    } else {
+      navigate('/');
+    }
     // eslint-disable-next-line
   }, [])
 
@@ -66,7 +72,6 @@ const Dashboard = () => {
       console.error(error);
     });
   }
-
 
   const showPlayerStreak = (playerName: string) => {
     let playerStatus = false;
