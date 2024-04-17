@@ -39,17 +39,13 @@
   padding: 5px 0;
   position: absolute;
   z-index: 1;
-  top: 150%;
-  left: 50%;
-  margin-left: -60px;
+  top: 170%;
 }
 
 .tooltip .tooltiptext::after {
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent black transparent;
@@ -57,4 +53,20 @@
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.tooltip .leftSide {
+  left: 0 !important;
+}
+
+.tooltip .rightSide {
+  right: 0 !important;
+}
+
+.tooltip .leftSide::after {
+  left: 10px !important;
+}
+
+.tooltip .rightSide::after {
+  right: 10px !important;
 }

@@ -65,14 +65,14 @@ const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) 
       </div>
       <div className="d-flex gap-1">
         <div className='tooltip' style={{ height: '8px', backgroundColor: showProgressBar ? '#9d9d9d' : matchDetails.team_1_color, transition: 'width 0.3s', width: `${showProgressBar ? 50 : winPercentage1}%` }}>
-          {team1SelectedUser.length > 0 && <span className="tooltiptext">
+          {team1SelectedUser.length > 0 && <span className="tooltiptext leftSide">
             {team1SelectedUser.map((item: IPredictedUser, index: number) => (
               <div key={index + 1}>{item.first_name + ' ' + item.last_name}</div>
             ))}
           </span>}
         </div>
         <div className='tooltip' style={{ height: '8px', backgroundColor: showProgressBar ? '#9d9d9d' : matchDetails.team_2_color, transition: 'width 0.3s', width: `${showProgressBar ? 50 : winPercentage2}%` }}>
-          {team2SelectedUser.length > 0 && <span className="tooltiptext">
+          {team2SelectedUser.length > 0 && <span className="tooltiptext rightSide">
             {team2SelectedUser.map((item: IPredictedUser, index: number) => (
               <div key={index + 1}>{item.first_name + ' ' + item.last_name}</div>
             ))}
