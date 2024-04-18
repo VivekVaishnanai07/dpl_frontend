@@ -88,7 +88,7 @@ function Header({ handleDrawerToggle }: any) {
       <div className='top-header'></div>
       <AppBar position='sticky' className='middle-header'>
         <Toolbar className='middle-header-container' style={{ paddingLeft: "0px !important" }}>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+          <Box className="ap-ipl-logo" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
             <img src={require('../../assets/img/ipl-logo-new-old.png')} alt='dpl-11' style={{ height: "auto", width: "95px" }} />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

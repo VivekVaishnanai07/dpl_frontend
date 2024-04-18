@@ -3,12 +3,10 @@
 }
 
 .bg {
-  background-image: url('../../assets/img/wrulf-bg-1.svg'), url('../../assets/img/wrulf-bg-2.png');
-  background-position: right top, left bottom;
-}
-
-.bg {
-  background-repeat: no-repeat, no-repeat;
+  background-image: url("../img/bottom-section-bg.svg");
+  background-repeat: repeat-y;
+  background-size: 120%;
+  background-position: center top;
 }
 
 .content-center {
@@ -163,8 +161,8 @@ table th {
 }
 
 .d-flex {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .flex-wrap {

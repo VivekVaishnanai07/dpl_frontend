@@ -13,10 +13,10 @@
 }
 
 .middle-header {
-  padding: 0 40px;
-  background: url(../../assets/img/header-curl-bg.svg) right/contain no-repeat, url(../../assets/img/header-rotate.png) left/contain no-repeat #19398a !important;
-  box-shadow: 0 4px 8px 0 hsl(0deg 0% 7% / 50%);
-  height: 63px
+  padding: 0 40px !important;
+  height: 63px !important;
+  background: url("../../assets/img/header-bomb-right.svg") top right -20px / auto 74px no-repeat #19398a !important;
+  box-shadow: 0 4px 8px 0 hsl(0deg 0% 7% / 50%) !important;
 }
 
 .header-title {
@@ -62,11 +62,11 @@
 }
 
 .title-header {
-  background: #081033;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 63px !important;
+  background: url("../../assets/img/title-bg.svg") left center / auto 120% no-repeat #081033;
 }
 
 .title {
@@ -98,6 +98,19 @@
   font-size: 20px !important;
   font-weight: 600 !important;
   cursor: pointer;
+}
+
+.ap-ipl-logo::after {
+  content: "";
+  background-image: url("../../assets/img/header-logo-bomb-left.svg");
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 63px;
+  left: -159px;
+  width: 485px;
+  background-size: 90% auto;
+  background-position: center left 10px;
+  top: 0px;
 }
 
 /* mobile view css */
