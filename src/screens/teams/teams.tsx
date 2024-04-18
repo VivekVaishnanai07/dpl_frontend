@@ -63,8 +63,11 @@ const Teams = () => {
 
   return (
     <div className="team-container-background">
-      <div className="horizontal-align">
-        <img src={IplLogo} className="ipl_logo" alt="ipl2024" />
+      <div className="teams-header-bg">
+        <div className="horizontal-align teams-tata-logo">
+          <img src={IplLogo} className="ipl_logo" alt="ipl2024" />
+        </div>
+      <div className="teams-text-img">TEAMS</div>
       </div>
       <div className="team-container">
         <div style={{ display: "flex", justifyContent: "center" }}>

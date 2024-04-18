@@ -1,8 +1,47 @@
 .team-container-background {
-  background-image: url('../../assets/img/teams-new-landing-bg.jpg');
+  min-height: 1000px;
+  background-image: url("../../assets/img/teams-card-bg.svg") !important;
+  background-repeat: repeat-y;
+  background-position: bottom;
+  background-color: #071026;
+}
+
+.teams-header-bg {
+  background-image: url("../../assets/img/teams-main-bg-2.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 1000px;
+  margin-bottom: 18px;
+}
+
+.teams-tata-logo {
+  width: 180px;
+  position: relative;
+  margin: 0 auto 0;
+}
+
+.teams-tata-logo::after {
+  content: "";
+  background-image: url("../../assets/img/teams-tata-logo-bg.svg");
+  position: absolute;
+  top: -174px;
+  right: 50%;
+  margin: 0 auto;
+  top: -82px;
+  width: 1175px;
+  height: 493px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translate(50%, 0);
+}
+
+.teams-text-img {
+  font-size: 100px;
+  color: rgba(255 255 255 / 5%);
+  font-family: 'Bebas Neue', sans-serif;
+  margin-top: 0;
+  line-height: 60px;
+  text-align: center;
 }
 
 .team-container-background .ipl_logo {
