@@ -25,11 +25,13 @@ const Dashboard = () => {
   let getData = localStorage.getItem('token') as string;
   let userData = jwtDecode(getData) as JwtTokenDecode;
   let user_id = userData.id;
+  const [isOpen, setIsOpen] = useState(false)
   const [matchListData, setMatchListData] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
   const [playerStreakList, setPlayerStreakList] = useState([]);
   const [playerLeaderboardList, setPlayerLeaderboardList] = useState([]);
   const [width, setWidth] = useState(window.innerWidth);
+  const [imgUrl, setImgUrl] = useState<any>(null);
 
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
@@ -105,6 +107,15 @@ const Dashboard = () => {
     setWidth(window.innerWidth);
   };
 
+  const showModal = (img: any) => {
+    setIsOpen(true);
+    if (img !== null) {
+      const imgUrlData = biteCodeConvertIntoImg(img.data);
+      setImgUrl(imgUrlData);
+    } else {
+      setImgUrl(AvatarImg);
+    }
+  }
 
   return (
     <div className="bottom-section-main bg content-center">
@@ -119,6 +130,14 @@ const Dashboard = () => {
               ))
             }
           </Grid>}
+          {isOpen && (
+            <div className="modal">
+              <span className="close" onClick={() => setIsOpen(false)}>
+                &times;
+              </span>
+              <img className="modal-content" src={imgUrl ? imgUrl : ''} alt="avatar" />
+            </div>
+          )}
           <Grid container columns={{ xs: 2, sm: 8, md: 12 }} sx={{ display: "flex", justifyContent: "center" }}>
             <div className="player-leaderboard-container">
               <table>
@@ -138,7 +157,7 @@ const Dashboard = () => {
                     <tr key={index + 1}>
                       {width > 767 && <td data-label="No.">{index + 1}</td>}
                       <td className="align-center" style={{ backgroundColor: (width < 767) ? parseFloat(item.win_percentage) >= 60 ? '#6cb33e' : '#d14242' : '#ffffff' }}>
-                        <Avatar alt='avatar' className='profileAvatar avatar-title mr-4' src={item.userImg !== null ? biteCodeConvertIntoImg(item.userImg.data) : AvatarImg} />
+                        <Avatar alt='avatar' onClick={() => showModal(item.userImg)} className='profileAvatar avatar-title mr-4' src={item.userImg !== null ? biteCodeConvertIntoImg(item.userImg.data) : AvatarImg} />
                         <Typography className="name-text">{item.full_name}</Typography>
                       </td>
                       <td data-label="Win">

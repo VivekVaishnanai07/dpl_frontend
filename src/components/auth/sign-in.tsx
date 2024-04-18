@@ -61,8 +61,10 @@ export default function SingIn() {
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSubmit();
+    if (email && password) {
+      if (event.key === 'Enter') {
+        handleSubmit();
+      }
     }
   };
   return (

@@ -97,6 +97,7 @@
   font-family: 'Rubik', sans-serif !important;
   font-size: 20px !important;
   font-weight: 600 !important;
+  cursor: pointer;
 }
 
 /* mobile view css */
