@@ -3,7 +3,7 @@ import { ToastOptions } from 'react-toastify';
 import "../assets/css/common.css";
 
 const axiosInstance = axios.create({
-  baseURL: "https://dpl-backend-3pdy.onrender.com/api",
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "Content-type": "application/json"
   }
