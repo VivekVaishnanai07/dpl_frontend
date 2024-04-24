@@ -1,4 +1,4 @@
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
   .dashboard_container {
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -46,7 +46,7 @@
   background-color: #fff;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
   .player-leaderboard-container {
     margin-left: 16px !important;
     margin-right: 16px !important;
@@ -65,6 +65,13 @@
   .name-text {
     font-size: 16px !important;
     font-weight: 700 !important;
+  }
+
+  .table-footer {
+    display: flex !important;
+    border: none !important;
+    justify-content: space-between !important;
+    font-weight: 600 !important;
   }
 }
 

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import FireIcon from "../../assets/icon/fire";
 import AvatarImg from '../../assets/img/avatar.jpg';
 import Card from "../../components/card/card";
-import MatchService from "../../service/matches.service";
+import MatchService from "../../service/match.service";
 import playerLeaderboardService from "../../service/player-leaderboard.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
 import { JwtTokenDecode } from "../../types/auth";
@@ -117,6 +117,12 @@ const Dashboard = () => {
     }
   }
 
+  const calculateTotalPayMoney = (playerList: IPlayerLeaderboard[]) => {
+    let totalPayMoney = playerList.reduce((total: any, item: IPlayerLeaderboard) => total + parseFloat(item.pay_money), 0);
+    return totalPayMoney;
+  }
+
+
   return (
     <div className="bottom-section-main bg content-center">
       <div className="max-width">
@@ -130,6 +136,7 @@ const Dashboard = () => {
               ))
             }
           </Grid>}
+
           {isOpen && (
             <div className="modal">
               <span className="close" onClick={() => setIsOpen(false)}>
@@ -187,6 +194,14 @@ const Dashboard = () => {
                     </tr>
                   )}
                 </tbody>
+                {playerLeaderboardList && <tfoot>
+                  <tr className="table-footer">
+                    {(width > 767) && <td colSpan={3}></td>}
+                    <td className="fw-600">Total :</td>
+                    <td className="fw-600">{calculateTotalPayMoney(playerLeaderboardList)}</td>
+                    {(width > 767) && <td></td>}
+                  </tr>
+                </tfoot>}
               </table>
             </div>
           </Grid>
