@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import FireIcon from "../../assets/icon/fire";
 import AvatarImg from '../../assets/img/avatar.jpg';
 import Card from "../../components/card/card";
-import MatchService from "../../service/match.service";
+import MatchService from "../../service/matches.service";
 import playerLeaderboardService from "../../service/player-leaderboard.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
 import { JwtTokenDecode } from "../../types/auth";
