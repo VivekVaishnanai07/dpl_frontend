@@ -12,7 +12,7 @@ import ConfirmDialog from "../../components/dialog-box/confirm/confirm-dialog";
 import UserContext from "../../context/user-context";
 import TournamentService from "../../service/tournament.service";
 import { JwtTokenDecode } from "../../types/auth";
-import { notificationConfig } from "../../utils/util";
+import { biteCodeConvertIntoImg, notificationConfig } from "../../utils/util";
 import './tournaments.css';
 
 const Tournaments = () => {
@@ -72,7 +72,7 @@ const Tournaments = () => {
               <Grid item xs={2} sm={2} md={3} key={index + 1}>
                 <div className="card">
                   <div className="card-info">
-                    <img className="card-avatar" src={CricketIcon} alt="tournament" />
+                    <img className="card-avatar" src={item.tournamentIcon !== null ? biteCodeConvertIntoImg(item.tournamentIcon.data) : CricketIcon} alt="tournament" />
                     <div className="card-title">{item.name} {item.year}</div>
                   </div>
                   <ul className="card-social">

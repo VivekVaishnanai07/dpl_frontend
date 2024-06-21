@@ -52,7 +52,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (getData) {
       getTournament();
-      getGroupList();
     } else {
       navigate('/');
     }
@@ -71,9 +70,10 @@ const Dashboard = () => {
   const getTournament = () => {
     TournamentService.getAll(userData.id).then((res) => {
       if (res.data) {
-        setTournamentList(res.data);
-        let findActiveTournament = res.data.find((item: any) => item.status === 'Active')
+        let findActiveTournament = res.data.find((item: any) => item.status === 'Active');
+        setTournamentList(findActiveTournament);
         if (findActiveTournament) {
+          getGroupList(findActiveTournament.id);
           setTournamentValue(findActiveTournament.id);
           setTournamentId(findActiveTournament.id);
 
@@ -87,9 +87,11 @@ const Dashboard = () => {
     })
   }
 
-  const getGroupList = () => {
-    GroupService.getAll(userData.id).then((res) => {
+  const getGroupList = (id: number) => {
+    console.log(userData.id, id);
+    GroupService.filterGroups(userData.id, id).then((res) => {
       setGroupsList(res.data);
+      console.log(res.data);
       setGroupsValue(res.data[0].id);
       setGroupId(res.data[0].id);
     }).catch((error) => {
@@ -272,7 +274,7 @@ const Dashboard = () => {
                       <td data-label="To Pay Money">{item.pay_money}</td>
                       <td className={parseFloat(item.win_percentage) >= 60 ? 'green-text' : 'red-text'} data-label="Win Percentage">
                         <span className="match-streak">
-                          {parseFloat(item.win_percentage).toFixed(2)}%
+                          {item.win_percentage ? parseFloat(item.win_percentage).toFixed(2) : 0}%
                           {showPlayerStreak(item.full_name) &&
                             <FireIcon width="16px" height="16px" />
                           }

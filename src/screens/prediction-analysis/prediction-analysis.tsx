@@ -24,7 +24,6 @@ const PredictionAnalysis = () => {
 
   useEffect(() => {
     getTournament();
-    getGroupList();
     // eslint-disable-next-line
   }, [])
 
@@ -57,6 +56,7 @@ const PredictionAnalysis = () => {
   const getTournament = () => {
     TournamentService.getAll(userData.id).then((res) => {
       if (res.data) {
+        getGroupList(res.data[0].id);
         setTournamentList(res.data);
         let findActiveTournament = res.data.find((item: any) => item.status === 'Active')
         if (findActiveTournament) {
@@ -70,8 +70,8 @@ const PredictionAnalysis = () => {
     })
   }
 
-  const getGroupList = () => {
-    GroupService.getAll(userData.id).then((res) => {
+  const getGroupList = (id: number) => {
+    GroupService.filterGroups(userData.id, id).then((res) => {
       setGroupsList(res.data);
       setGroupsValue(res.data[0].id);
     }).catch((error) => {
@@ -158,7 +158,7 @@ const PredictionAnalysis = () => {
                     </div>
                   </td>
                   <td className="d-flex justify-content-center align-items-center" data-label="">
-                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}/${groupsValue}`, { state: { name: item.full_name } })}>
+                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}/${groupsValue}/${tournamentValue}`, { state: { name: item.full_name } })}>
                       <ViewMoreIcon />
                     </IconButton>
                   </td>

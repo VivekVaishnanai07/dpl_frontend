@@ -29,7 +29,7 @@ const AuthRoutes = [
     <Route key="AddUser" path="/user/add-user" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="EditUser" path="/user/:id" element={<AuthGuard component={<AddUser />} allowedRole={[roles.Admin_Role]} />} />,
     <Route key="PredictionAnalysis" path="/prediction-analysis" element={<AuthGuard component={<PredictionAnalysis />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
-    <Route key="UserPredictionAnalysis" path="/prediction-analysis/:userId/:groupId" element={<AuthGuard component={<UserPredictionAnalysis />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
+    <Route key="UserPredictionAnalysis" path="/prediction-analysis/:userId/:groupId/:tournamentId" element={<AuthGuard component={<UserPredictionAnalysis />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="ChangePassword" path="/change-password" element={<AuthGuard component={<ChangePassword />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="UserProfile" path="/user-profile" element={<AuthGuard component={<UserProfile />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
     <Route key="Tournaments" path="/tournaments" element={<AuthGuard component={<Tournaments />} allowedRole={[roles.Admin_Role, roles.User_Role]} />} />,
