@@ -251,30 +251,10 @@
   align-items: center;
 }
 
-.buttons {
-  position: absolute;
-  top: 55%;
-  left: 23%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: flex;
-}
-
 .main-timeline .timeline:nth-child(even) .buttons {
   left: auto;
   right: 10%;
 }
-
-.timeline-event:hover .buttons {
-  opacity: 1;
-}
-
-.timeline-event:hover .timeline-icon,
-.timeline-event:hover .timeline-year {
-  opacity: 0;
-}
-
 
 .sun-icon {
   height: 80px !important;
@@ -296,13 +276,6 @@
 
   .main-timeline .timeline {
     padding: 8px !important;
-  }
-
-  .timeline-event {
-    display: flex;
-    justify-content: center;
-    margin-top: 35px;
-    align-items: center;
   }
 
   .timeline-user-event {
@@ -377,22 +350,6 @@
 
   .main-timeline .timeline-year {
     font-size: 14px !important;
-  }
-
-  .buttons {
-    position: unset !important;
-    transform: none !important;
-    display: none !important;
-  }
-
-  .timeline-event:hover .timeline-icon,
-  .timeline-event:hover .timeline-year {
-    display: none !important;
-  }
-
-  .timeline-event:hover .buttons {
-    opacity: 1;
-    display: flex !important;
   }
 
   .location-icon {
@@ -477,11 +434,13 @@
   transition: all 0.3s ease;
 }
 
-.back-to-current-match:hover {
-  background: rgb(73, 122, 255);
-}
-
 .back-to-current-match:hover .upArrow-icon {
   color: #fff;
-  top: 5px;
+  top: 1px;
+}
+
+.match-container .filter-tournament {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
 }

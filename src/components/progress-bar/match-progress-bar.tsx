@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+import UserContext from '../../context/user-context';
 import PredictionService from '../../service/prediction.service';
 import { IMatch } from '../../types/match';
 import { IPredictedUser } from '../../types/user';
 import './match-progress-bar.css';
 
 const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) => {
+  const { groupId, tournamentId } = useContext(UserContext);
   const [team1SelectedUser, setTeam1SelectedUser] = useState([]);
   const [team2SelectedUser, setTeam2SelectedUser] = useState([]);
   const [winPercentage1, setWinPercentage1] = useState(0);
@@ -12,16 +15,50 @@ const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) 
   const [showProgressBar, setShowProgressBar] = useState(false);
 
   useEffect(() => {
-    getPredictionMatchUserData();
+    const socket = io('http://localhost:3300')
+    socket.on('connect', () => console.log(socket.id))
+
+    socket.on("prediction_updated", ({ matchId, groupId, tournamentId }) => {
+      console.log({ matchId, groupId, tournamentId });
+      if (matchDetails.id === parseInt(matchId)) {
+        getPredictionMatchUserData(matchId, groupId, tournamentId);
+      }
+    });
+
+    socket.on("prediction_added", ({ matchId, groupId, tournamentId }) => {
+      console.log({ matchId, groupId, tournamentId });
+      if (matchDetails.id === parseInt(matchId)) {
+        getPredictionMatchUserData(matchId, groupId, tournamentId);
+      }
+    });
+
+    if (tournamentId && groupId) {
+      getPredictionMatchUserData(matchDetails.id, tournamentId, groupId);
+    }
+
+    return () => {
+      socket.disconnect(); // Disconnect Socket.IO connection
+    };
+
     // eslint-disable-next-line
-  }, [matchDetails.id])
+  }, [matchDetails.id, tournamentId, groupId])
 
-  const getPredictionMatchUserData = () => {
-    PredictionService.predictedMatchUser(matchDetails.id).then((res) => {
+  const getPredictionMatchUserData = (predictionMatchId: number, predictionGroupId: number, predictionTournamentId: number) => {
+    let team1SelectedUser = [];
+    let team2SelectedUser = [];
+    setTeam1SelectedUser([]);
+    setTeam2SelectedUser([]);
+    setWinPercentage1(0);
+    setWinPercentage2(0);
+    setShowProgressBar(false);
+    let data = {
+      tournamentId: predictionTournamentId,
+      groupId: predictionGroupId
+    }
+    PredictionService.predictedMatchUser(predictionMatchId, data).then((res) => {
       if (res.data) {
-        const team1SelectedUser = res.data.filter((item: IPredictedUser) => item.predicted_team_id === matchDetails.team_1_id);
-        const team2SelectedUser = res.data.filter((item: IPredictedUser) => item.predicted_team_id === matchDetails.team_2_id);
-
+        team1SelectedUser = res.data.filter((item: IPredictedUser) => item.predicted_team_id === matchDetails.team_1_id);
+        team2SelectedUser = res.data.filter((item: IPredictedUser) => item.predicted_team_id === matchDetails.team_2_id);
         const totalUserSelected = (team1SelectedUser.length + team2SelectedUser.length);
         if (team1SelectedUser.length > 0) {
           setTeam1SelectedUser(team1SelectedUser);

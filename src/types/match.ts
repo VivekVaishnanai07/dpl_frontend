@@ -5,6 +5,7 @@ export interface MatchDetailsRequestPayload {
   venue: string;
   match_price: number;
   match_no: number;
+  tournament_id: number;
   season_year: number;
 }
 

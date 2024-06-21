@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import DeleteIcon from "../../assets/icon/delete";
 import EditIcon from '../../assets/icon/edit';
 import ConfirmDialog from '../../components/dialog-box/confirm/confirm-dialog';
-import UserService from "../../service/users.service";
+import UserService from "../../service/user.service";
 import { JwtTokenDecode } from "../../types/auth";
 import { IUser } from "../../types/user";
 import "./users.css";
@@ -44,8 +44,8 @@ const Users = () => {
 
   const handlerDeleteMatch = (id: number) => {
     UserService.delete(id).then((res) => {
+      getUsersList();
       if (userData.id === id) {
-        getUsersList();
         localStorage.clear();
         navigate('/login');
       }

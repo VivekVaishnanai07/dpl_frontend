@@ -14,8 +14,6 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import cricketImg from '../../assets/img/cricket.gif';
 import AuthService from '../../service/auth.service';
-import { JwtToken, LoginRequestPayload } from '../../types/auth';
-import { ApiResponse } from '../../types/common';
 import { notificationConfig } from '../../utils/util';
 import './sign-in.css';
 
@@ -27,18 +25,18 @@ export default function SingIn() {
   const [password, setPassword] = useState<string>('');
 
   const handleSubmit = () => {
-    const requestPayload: LoginRequestPayload = {
+    const requestPayload = {
       email: email,
       password: password
     }
-    AuthService.login(requestPayload).then((response: AxiosResponse<any, ApiResponse<JwtToken>>) => {
-      const responseData: JwtToken = response.data;
+    AuthService.login(requestPayload).then((response) => {
+      const responseData = response.data;
+      console.log(responseData);
       if (responseData.token) {
         toast.success('You are successfully logged in', notificationConfig);
         localStorage.setItem("token", responseData.token)
         navigate('/dashboard');
       } else {
-        console.log(response.data.message);
         toast.error(response.data, {
           position: "top-right",
           autoClose: 2000,
@@ -56,7 +54,7 @@ export default function SingIn() {
       if (error.response.data) {
         toast.warning(error.response.data.message, notificationConfig);
       }
-      console.error(error)
+      toast.error(error.response.data, notificationConfig);
     })
   };
 

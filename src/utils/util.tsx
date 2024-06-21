@@ -96,6 +96,8 @@ export const adminHeader = [
   { navigateUrl: '/matches', componentName: 'Matches' },
   { navigateUrl: '/teams', componentName: 'Teams' },
   { navigateUrl: '/users', componentName: 'Users' },
+  { navigateUrl: '/groups', componentName: 'Groups' },
+  { navigateUrl: '/tournaments', componentName: 'Tournaments' },
   { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
 ]
 
@@ -103,5 +105,7 @@ export const userHeader = [
   { navigateUrl: '/dashboard', componentName: 'Dashboard' },
   { navigateUrl: '/matches', componentName: 'Matches' },
   { navigateUrl: '/teams', componentName: 'Teams' },
+  { navigateUrl: '/groups', componentName: 'Groups' },
+  { navigateUrl: '/tournaments', componentName: 'Tournaments' },
   { navigateUrl: '/prediction-analysis', componentName: 'Prediction Analysis' },
 ]

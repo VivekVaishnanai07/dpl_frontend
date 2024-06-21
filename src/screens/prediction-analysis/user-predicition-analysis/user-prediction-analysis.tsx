@@ -8,7 +8,7 @@ import { IPredictionAnalysis } from "../../../types/prediction";
 import "./user-prediction-analysis.css";
 
 const UserPredictionAnalysis = () => {
-  const { id }: any = useParams();
+  const { userId, groupId }: any = useParams();
   const location = useLocation();
   const state = location.state;
   const [predictionAnalysisList, setPredictionAnalysisList] = useState([]);
@@ -26,7 +26,7 @@ const UserPredictionAnalysis = () => {
   }, [predictionAnalysisList]);
 
   const getPredictionList = () => {
-    predictionAnalysisService.get(id).then((response: AxiosResponse<any, ApiResponse<IPredictionAnalysis[]>>) => {
+    predictionAnalysisService.get(userId, groupId).then((response: AxiosResponse<any, ApiResponse<IPredictionAnalysis[]>>) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {

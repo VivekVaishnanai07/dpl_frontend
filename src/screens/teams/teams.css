@@ -23,12 +23,11 @@
   content: "";
   background-image: url("../../assets/img/teams-tata-logo-bg.svg");
   position: absolute;
-  top: -174px;
+  top: 0;
   right: 50%;
   margin: 0 auto;
-  top: -82px;
   width: 1175px;
-  height: 493px;
+  height: 327px;
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -114,6 +113,14 @@
   .edit-icon .edit {
     height: 20px !important;
     width: 20px !important;
+  }
+
+  .team-header {
+    padding: 0px !important;
+  }
+
+  .teams-tata-logo::after {
+    width: 400px !important;
   }
 }
 
@@ -202,33 +209,6 @@
   opacity: 0;
   display: flex;
   align-items: center;
-}
-
-.edit-icon {
-  position: absolute;
-  right: 10px;
-  top: 9px;
-  opacity: 0;
-  z-index: 999;
-}
-
-.delete-icon {
-  position: absolute;
-  top: 8px;
-  right: 40px;
-  opacity: 0;
-  z-index: 999;
-}
-
-.delete-icon .delete {
-  height: 30px;
-  width: 30px;
-}
-
-.edit-icon .edit {
-  height: 26px;
-  width: 26px;
-  padding-top: 2px;
 }
 
 .trophy-text-align {
@@ -530,4 +510,12 @@
   object-fit: cover;
   transition: opacity 0.3s, transform 0.3s;
   transform: scale(1);
+}
+
+.team-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 100px;
+  align-items: center;
+  background: #ffffff;
 }

@@ -120,7 +120,7 @@
   background-color: var(--primary-100, #1C4980) !important;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
   .prediction_header {
     display: block !important;
     padding: 16px;

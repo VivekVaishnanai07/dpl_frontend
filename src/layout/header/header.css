@@ -45,7 +45,8 @@
   color: #fcfcfc;
   height: 30px !important;
   display: flex;
-  align-items: self-end;
+  align-items: center;
+  padding-top: 3px;
 }
 
 .bottom-header .container {

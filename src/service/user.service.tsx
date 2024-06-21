@@ -6,6 +6,10 @@ const UserService = {
     return http.get("/user");
   },
 
+  getUsers() {
+    return http.get("/user/user-list");
+  },
+
   getById(id: number) {
     return http.get(`/user/${id}`);
   },

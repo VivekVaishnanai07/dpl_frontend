@@ -42,3 +42,8 @@
   color: #fff;
   line-height: 25px;
 }
+
+.filter-tournament-groups {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -10,21 +10,27 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import { jwtDecode } from 'jwt-decode';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
-import MatchService from '../../service/matches.service';
-import TeamService from '../../service/teams.service';
-import { MatchDetailsRequestPayload } from '../../types/match';
-import { ITeam } from '../../types/team';
-import { notificationConfig } from '../../utils/util';
+import MatchService from '../../../service/match.service';
+import TeamService from '../../../service/team.service';
+import TournamentService from '../../../service/tournament.service';
+import { JwtTokenDecode } from '../../../types/auth';
+import { MatchDetailsRequestPayload } from '../../../types/match';
+import { ITeam } from '../../../types/team';
+import { notificationConfig } from '../../../utils/util';
 
 const defaultTheme = createTheme();
 
 export default function AddMatch() {
+  const token = localStorage.getItem('token') as string;
+  const userData = jwtDecode(token) as JwtTokenDecode;
   const navigate = useNavigate();
   const { id }: any = useParams();
   const [teamList, setTeamList] = useState([]);
+  const [tournamentList, setTournamentList] = useState([]);
   const [error, setError] = useState(false);
   const [matchData, setMatchData] = useState<MatchDetailsRequestPayload>({
     match_no: 0,
@@ -33,19 +39,21 @@ export default function AddMatch() {
     team_2: 0,
     venue: "",
     match_price: 10,
+    tournament_id: 0,
     season_year: 2024
   })
 
   useEffect(() => {
     getMatchData();
-    getTeamList();
+    getTournament();
     // eslint-disable-next-line
   }, [])
 
   const getMatchData = () => {
     if (id !== undefined) {
       MatchService.get(id).then((res) => {
-        const match = res.data[0]
+        const match = res.data[0];
+        getTeamList(match.tournament_id);
         if (match) {
           setMatchData({
             ...match,
@@ -55,6 +63,7 @@ export default function AddMatch() {
             date: dayjs(match.date),
             venue: match.venue,
             match_price: match.match_price,
+            tournament_id: match.tournament_id,
             season_year: match.season_year
           })
         }
@@ -62,10 +71,26 @@ export default function AddMatch() {
     }
   }
 
-  const getTeamList = () => {
-    TeamService.getAll().then((res) => {
-      setTeamList(res.data)
-    }).catch((error) => console.error(error))
+  const getTournament = () => {
+    TournamentService.getAll(userData.id).then((res) => {
+      if (res.data) {
+        setTournamentList(res.data);
+      }
+    }).catch((error) => {
+      toast.error(error.response.data, notificationConfig);
+    })
+  }
+
+  const getTeamList = (id: number) => {
+    if (id !== 0) {
+      TeamService.getAll(id).then((res) => {
+        if (res.data.length > 0) {
+          setTeamList(res.data)
+        } else {
+          toast.info(`First you create a team then create a match`, notificationConfig);
+        }
+      }).catch((error) => console.error(error))
+    }
   }
 
   const handleSubmit = () => {
@@ -75,14 +100,14 @@ export default function AddMatch() {
           if (id !== undefined) {
             let data = { ...matchData, date: matchData.date }
             MatchService.update(id, data).then((res) => {
-              navigate('/matches')
+              navigate('/tournament/matches')
             }).catch((error) => {
               toast.error(error.response.data.error, notificationConfig);
             })
           } else {
             let data = { ...matchData, date: matchData.date }
             MatchService.create(data).then((res) => {
-              navigate('/matches')
+              navigate('/tournament/matches')
             }).catch((error) => {
               console.error("Error fetching data:", error);
             });
@@ -128,6 +153,23 @@ export default function AddMatch() {
   const handleDateTimeChange = (newValue: any) => {
     setMatchData({ ...matchData, date: dayjs(newValue) })
   }
+
+  const handleTeam1Open = () => {
+    if (matchData.tournament_id === 0) {
+      toast.info(`Please select a tournament first.`, notificationConfig);
+    }
+  };
+
+  const handleTeam2Open = () => {
+    if (matchData.tournament_id === 0) {
+      toast.info(`Please select a tournament first.`, notificationConfig);
+    }
+  };
+
+  const handleTournamentChange = (event: SelectChangeEvent) => {
+    setMatchData({ ...matchData, tournament_id: parseInt(event.target.value) });
+    getTeamList(parseInt(event.target.value));
+  };
 
   return (
     <div className="bottom-section-main bg">
@@ -188,6 +230,7 @@ export default function AddMatch() {
                       value={matchData.team_1}
                       label="Home Team"
                       onChange={handleTeam1Change}
+                      onOpen={handleTeam1Open}
                       disabled={id ? true : false}
                     >
                       <MenuItem value={0}>
@@ -222,6 +265,7 @@ export default function AddMatch() {
                       value={matchData.team_2}
                       label="Team 2"
                       onChange={handleTeam2Change}
+                      onOpen={handleTeam2Open}
                       disabled={id ? true : false}
                     >
                       <MenuItem value={0}>
@@ -253,7 +297,7 @@ export default function AddMatch() {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     required
                     fullWidth
@@ -264,7 +308,29 @@ export default function AddMatch() {
                     onChange={(e) => setMatchData({ ...matchData, venue: e.target.value })}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Tournaments</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={matchData.tournament_id.toString()}
+                      label="Tournaments"
+                      onChange={handleTournamentChange}
+                      disabled={id !== undefined ? true : false}
+                    >
+                      <MenuItem value={0}>
+                        <div style={{ display: "flex", alignItems: "center", fontSize: 16 }}>
+                          Select a tournament
+                        </div>
+                      </MenuItem>
+                      {tournamentList.map((item: any, index: number) => (
+                        <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={4}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                       label="Date"
@@ -277,7 +343,7 @@ export default function AddMatch() {
                   </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
-                  <Button variant="contained" color='inherit' onClick={() => navigate('/matches')}>Back</Button>
+                  <Button variant="contained" color='inherit' onClick={() => navigate('/tournament/matches')}>Back</Button>
                   <Button variant="contained" className='btn' onClick={handleSubmit}>{id !== undefined ? 'Update' : 'Add'}</Button>
                 </Grid>
               </Grid>

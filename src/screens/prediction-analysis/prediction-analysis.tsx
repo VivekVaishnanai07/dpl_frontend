@@ -1,22 +1,47 @@
-import { IconButton } from "@mui/material";
+import { FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import ViewMoreIcon from "../../assets/icon/view-more";
+import GroupService from "../../service/group.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
+import TournamentService from "../../service/tournament.service";
+import { JwtTokenDecode } from "../../types/auth";
+import { notificationConfig } from "../../utils/util";
 import "./prediction-analysis.css";
 
 const PredictionAnalysis = () => {
+  const token = localStorage.getItem('token') as string;
+  const userData = jwtDecode(token) as JwtTokenDecode;
   const navigate = useNavigate();
   const [usersPredictionAnalysisList, setUsersPredictionAnalysisList] = useState([]);
+  const [tournamentList, setTournamentList] = useState([]);
+  const [tournamentValue, setTournamentValue] = useState(0);
+  const [groupsList, setGroupsList] = useState([]);
+  const [groupsValue, setGroupsValue] = useState(0);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
 
   useEffect(() => {
-    getUsersPredictionList()
+    getTournament();
+    getGroupList();
     // eslint-disable-next-line
   }, [])
 
-  const getUsersPredictionList = () => {
-    predictionAnalysisService.getAll().then((response: any) => {
+  useEffect(() => {
+    if (tournamentValue !== 0 && groupsValue !== 0) {
+      getUsersPredictionList(tournamentValue, groupsValue);
+    }
+  }, [tournamentValue, groupsValue])
+
+  const getUsersPredictionList = (tournament: number, groups: number) => {
+    if (!tournament || !groups) {
+      setEmptyMessageBanner(true);
+      return;
+    }
+
+
+    predictionAnalysisService.getAll(tournament, groups).then((response: any) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
@@ -29,10 +54,81 @@ const PredictionAnalysis = () => {
     })
   }
 
+  const getTournament = () => {
+    TournamentService.getAll(userData.id).then((res) => {
+      if (res.data) {
+        setTournamentList(res.data);
+        let findActiveTournament = res.data.find((item: any) => item.status === 'Active')
+        if (findActiveTournament) {
+          setTournamentValue(findActiveTournament.id);
+        } else {
+          setTournamentValue(res.data[0].id);
+        }
+      }
+    }).catch((error) => {
+      toast.error(error.response.data, notificationConfig);
+    })
+  }
+
+  const getGroupList = () => {
+    GroupService.getAll(userData.id).then((res) => {
+      setGroupsList(res.data);
+      setGroupsValue(res.data[0].id);
+    }).catch((error) => {
+      setEmptyMessageBanner(true);
+      console.error(error)
+    });
+  }
+
+  const handleSelectionChange = (event: SelectChangeEvent<number>, type: string) => {
+    const value = parseInt(event.target.value.toString());
+    if (type === 'tournament') {
+      setTournamentValue(value);
+    } else if (type === 'group') {
+      setGroupsValue(value);
+    }
+  };
+
   return (
     <div className="bottom-section-main bg">
-      <div className="team-container">
-        <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="team-container">
+          {(tournamentList.length > 1 || groupsList.length > 1) &&
+            <div className='filter-tournament-groups'>
+              {tournamentList.length > 1 &&
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-label">Tournaments</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={tournamentValue}
+                    label="Tournaments"
+                    onChange={(event) => handleSelectionChange(event, 'tournament')}
+                  >
+                    {tournamentList.map((item: any, index: number) => (
+                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
+              {groupsList.length > 1 &&
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-label">Groups</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={groupsValue}
+                    label="Tournaments"
+                    onChange={(event) => handleSelectionChange(event, 'group')}
+                  >
+                    {groupsList.map((item: any, index: number) => (
+                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
+            </div>
+          }
           <table style={{ maxWidth: "1100px" }}>
             <caption>Player Prediction Analysis</caption>
             <thead>
@@ -62,7 +158,7 @@ const PredictionAnalysis = () => {
                     </div>
                   </td>
                   <td className="d-flex justify-content-center align-items-center" data-label="">
-                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}`, { state: { name: item.full_name } })}>
+                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}/${groupsValue}`, { state: { name: item.full_name } })}>
                       <ViewMoreIcon />
                     </IconButton>
                   </td>

@@ -23,7 +23,7 @@ function Header({ handleDrawerToggle }: any) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { user } = useContext(UserContext);
-  let pathName = pathname.replace("/", "").toLocaleUpperCase()
+  let pathName = pathname.split("/").filter(Boolean);
   const getToken = localStorage.getItem('token') as string;
   let userData = jwtDecode(getToken) as JwtTokenDecode;
 
@@ -32,7 +32,7 @@ function Header({ handleDrawerToggle }: any) {
 
 
   useEffect(() => {
-    if (user !== null && user.userImg.data !== null) {
+    if (user !== null && user.userImg && user.userImg.data !== null) {
       biteCodeConvertIntoImg(user.userImg.data);
     }
   }, [user])
@@ -65,10 +65,14 @@ function Header({ handleDrawerToggle }: any) {
   }
 
   const addForms = () => {
-    if (pathname === "/teams") {
-      navigate("/team/add-team")
-    } else if (pathname === "/matches") {
-      navigate("/match/add-match")
+    if (pathname === "/tournament/teams") {
+      navigate("/tournament/team/add-team")
+    } else if (pathname === "/tournament/matches") {
+      navigate("/tournament/match/add-match")
+    } else if (pathname === "/tournaments") {
+      navigate("/tournament/add-tournament")
+    } else if (pathname === "/groups") {
+      navigate("/group/add-group")
     } else {
       navigate("/user/add-user")
     }
@@ -82,6 +86,29 @@ function Header({ handleDrawerToggle }: any) {
     }
   }
 
+  const handleNavigation = (path: any) => {
+    switch (path) {
+      case '/tournament':
+        navigate('/tournaments');
+        break;
+      case '/match':
+      case '/team':
+        navigate(-1);
+        break;
+      case '/prediction-analysis':
+        navigate('/prediction-analysis');
+        break;
+      case '/dashboard':
+        navigate('/dashboard');
+        break;
+      case '/user':
+        navigate('/users');
+        break;
+      case '/group':
+        navigate('/groups');
+        break;
+    }
+  };
 
   return (
     <div className='header'>
@@ -134,7 +161,7 @@ function Header({ handleDrawerToggle }: any) {
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <img src={require('../../assets/img/ipl-logo-new-old.png')} alt='dpl-11' style={{ height: "50px", width: "100px" }} />
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center" }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center", zIndex: 1 }}>
             {
               getHeaderData().map((item, index) => (
                 <React.Fragment key={index + 1}>
@@ -152,7 +179,7 @@ function Header({ handleDrawerToggle }: any) {
           </Box>
           <Box sx={{ flexGrow: 0 }} className="avatar-box">
             <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-              <Avatar alt='avatar' className='profileAvatar' src={user && user.userImg !== null ? biteCodeConvertIntoImg(user.userImg.data) : AvatarImg} />
+              <Avatar alt='avatar' className='profileAvatar' src={user && user.userImg && user.userImg !== null ? biteCodeConvertIntoImg(user.userImg.data) : AvatarImg} />
               <Typography className='avatar-title'>{user && user.first_name + " " + user.last_name}</Typography>
             </IconButton>
             <Menu
@@ -186,13 +213,18 @@ function Header({ handleDrawerToggle }: any) {
       </AppBar>
       <div className='bottom-header'>
         <div className='container'>
-          <span className='font'>HOME</span>&nbsp;&nbsp; / &nbsp;&nbsp;<span className='font'>{pathName}</span>
+          <span className='font' style={{ paddingRight: '4px' }}>HOME</span>
+          {
+            pathName.map((item: string, index: number) => (
+              <span key={index + 1} onClick={() => handleNavigation(`/${item}`)} className='font cursor-pointer'>{' / '}{item.toLocaleUpperCase()}&nbsp;</span>
+            ))
+          }
         </div>
       </div>
       <div className='title-header'>
-        <div className="title">{pathName}</div>
+        <div className="title">{pathName[pathName.length - 1].toLocaleUpperCase()}</div>
         {userData.role === 'admin' &&
-          (pathname === "/teams" || pathname === "/matches" || pathname === "/users") && (
+          (pathname === "/tournament/teams" || pathname === "/tournament/matches" || pathname === "/users" || pathname === "/tournaments" || pathname === "/groups") && (
             <div className="add-icon-box">
               <Fab color="primary" aria-label="add" className='add-button'>
                 <AddIcon onClick={addForms} />

@@ -115,11 +115,11 @@
   border: none !important;
 }
 
-.MuiChip-label {
+.card .MuiChip-label {
   padding: 0px !important;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
   .team_icon {
     width: 50px !important;
   }

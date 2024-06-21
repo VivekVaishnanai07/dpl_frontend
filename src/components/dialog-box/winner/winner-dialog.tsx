@@ -4,7 +4,7 @@ import DialogContent from '@mui/material/DialogContent';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import StadiumIcon from '../../../assets/icon/stadium';
-import MatchService from '../../../service/matches.service';
+import MatchService from '../../../service/match.service';
 import { notificationConfig } from '../../../utils/util';
 import "./winner-dialog.css";
 
@@ -23,6 +23,8 @@ export default function WinnerConfirmDialog(props: any) {
     if (teamDetails.winner_team !== null) {
       const winTeam = JSON.stringify(teamDetails.winner_team)
       setSelectedTeam(winTeam);
+    } else {
+      setSelectedTeam('');
     }
   }, [match.id, teamDetails.winner_team])
 
@@ -46,7 +48,13 @@ export default function WinnerConfirmDialog(props: any) {
       toast.success(`${winTeamName} won this match`, notificationConfig);
       setOpen(false);
     }).catch((err) => {
-      toast.error(err.response.data.message, notificationConfig);
+      if (err.response.data.message) {
+        toast.error(err.response.data.message, notificationConfig);
+      } else if (err.response.data.error) {
+        toast.error(err.response.data.error, notificationConfig);
+      } else {
+        console.error(err);
+      }
       setOpen(false);
     })
   }

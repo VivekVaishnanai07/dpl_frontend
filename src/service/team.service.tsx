@@ -2,8 +2,8 @@ import { TeamDetailsRequestPayload } from "../types/team";
 import http from "../utils/util";
 
 const TeamService = {
-  getAll() {
-    return http.get('/team');
+  getAll(id: number) {
+    return http.get(`/team/tournament/${id}`);
   },
 
   get(id: number) {

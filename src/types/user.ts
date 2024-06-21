@@ -1,3 +1,5 @@
+import { IGroup } from "./group";
+
 export interface UserRequestPayload {
   first_name: string;
   last_name: string;
@@ -5,6 +7,7 @@ export interface UserRequestPayload {
   password?: string;
   role?: string;
   userProfile?: any;
+  groups?: IGroup[];
 }
 
 export interface IUser {

@@ -3,6 +3,8 @@ export interface PredictionRequestPayload {
   userId?: number;
   teamId: number;
   predictionId?: number;
+  groupId?: number;
+  tournamentId?: number;
 }
 
 export interface IPredictionAnalysis {

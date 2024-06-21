@@ -156,6 +156,10 @@ table th {
   justify-content: center !important;
 }
 
+.justify-content-end {
+  justify-content: end !important;
+}
+
 .align-items-center {
   align-items: center !important;
 }
@@ -183,4 +187,18 @@ table th {
 
 .fw-600 {
   font-weight: 600 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.multi-select-box-width {
+  width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .multi-select-box-width {
+    width: 100% !important;
+  }
 }

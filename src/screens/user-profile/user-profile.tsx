@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AvatarImg from '../../assets/img/avatar.jpg';
 import UserContext from '../../context/user-context';
-import UserService from '../../service/users.service';
+import UserService from '../../service/user.service';
 import { biteCodeConvertIntoImg, notificationConfig } from '../../utils/util';
 import "./user-profile.css";
 

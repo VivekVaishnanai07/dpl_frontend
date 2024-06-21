@@ -1,0 +1,8 @@
+.outline-4 {
+  outline: 4px solid black !important;
+}
+
+.not-found {
+  color: black;
+  font-size: 58px;
+}

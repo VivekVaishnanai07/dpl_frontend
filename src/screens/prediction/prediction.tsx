@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import StadiumIcon from "../../assets/icon/stadium";
-import MatchService from "../../service/matches.service";
+import UserContext from "../../context/user-context";
+import MatchService from "../../service/match.service";
 import PredictionService from "../../service/prediction.service";
 import { JwtTokenDecode } from "../../types/auth";
 import { PredictionRequestPayload } from "../../types/prediction";
@@ -15,6 +16,7 @@ import "./prediction.css";
 const Prediction = () => {
   let navigate = useNavigate();
   let { id }: any = useParams();
+  let { groupId, tournamentId } = useContext(UserContext);
   let getData = localStorage.getItem('token') as string;
   let user = jwtDecode(getData) as JwtTokenDecode;
   let userId = user.id;
@@ -23,13 +25,19 @@ const Prediction = () => {
   const [matchDetails, setMatchDetails] = useState<any>({});
   const [defaultTeamId, setDefaultTeamId] = useState(0);
   const [selectedTeam, setSelectedTeam] = useState('');
+
   useEffect(() => {
     getPredictionData(userId, id);
     matchDetailsData(id);
+    // eslint-disable-next-line
   }, [userId, id])
 
   const getPredictionData = (userId: number, id: number) => {
-    PredictionService.get(userId, id).then((res) => {
+    let data = {
+      tournamentId: tournamentId,
+      groupId: groupId
+    }
+    PredictionService.get(userId, id, data).then((res) => {
       const data = res.data[0];
       if (data !== undefined) {
         let pId: string = JSON.stringify(data.id);
@@ -58,9 +66,11 @@ const Prediction = () => {
 
   const submitPrediction = () => {
     let predictionData: PredictionRequestPayload = {
-      matchId: id,
+      matchId: parseInt(id),
       userId: userId,
       teamId: parseInt(selectedTeam),
+      tournamentId: tournamentId,
+      groupId: groupId
     }
     let teamName = "";
     if (selectedTeam === teamOne) {
@@ -73,6 +83,8 @@ const Prediction = () => {
         matchId: parseInt(id),
         predictionId: parseInt(predictionId),
         teamId: parseInt(selectedTeam),
+        tournamentId: tournamentId,
+        groupId: groupId
       }
       PredictionService.update(predictionData).then((res) => {
         toast.success(`Are you selected ${teamName} and result will be declared after the match`, notificationConfig);

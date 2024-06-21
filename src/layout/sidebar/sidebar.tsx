@@ -1,6 +1,7 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GroupsIcon from '@mui/icons-material/Groups';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import Box from "@mui/material/Box";
@@ -8,6 +9,7 @@ import Drawer from "@mui/material/Drawer";
 import { jwtDecode } from 'jwt-decode';
 import { NavLink, useLocation } from 'react-router-dom';
 import MatchIcon from "../../assets/icon/match";
+import SideBarTeamIcon from '../../assets/icon/side-bar-team';
 import { JwtTokenDecode } from '../../types/auth';
 import "./sidebar.css";
 
@@ -26,7 +28,7 @@ const Sidebar = (props: Props) => {
   const userData = jwtDecode(token) as JwtTokenDecode;
   const location = useLocation();
 
-  const adminDrawerData = [
+  const drawerData = [
     {
       title: "Dashboard",
       icon: <DashboardIcon className={`${location.pathname === "/dashboard" ? "common-icon" : "default-icon"}`} />,
@@ -37,9 +39,17 @@ const Sidebar = (props: Props) => {
     },
     {
       title: "Teams",
-      icon: <GroupsIcon className={`${location.pathname === "/teams" ? "common-icon" : "default-icon"}`} />,
+      icon: <SideBarTeamIcon className={`${location.pathname === "/teams" ? "common-icon" : "default-icon"}`} />,
     },
     {
+      title: "Groups",
+      icon: <GroupsIcon className={`${location.pathname === "/groups" ? "common-icon" : "default-icon"}`} />,
+    },
+    {
+      title: "Tournaments",
+      icon: <EmojiEventsIcon className={`${location.pathname === "/tournament" ? "common-icon" : "default-icon"}`} />,
+    },
+    userData.role === 'admin' && {
       title: "Users",
       icon: <AccountCircleIcon className={`${location.pathname === "/users" ? "common-icon" : "default-icon"}`} />,
     },
@@ -47,31 +57,10 @@ const Sidebar = (props: Props) => {
       title: "Prediction Analysis",
       icon: <TroubleshootIcon className={`${location.pathname === "/prediction-analysis" ? "common-icon" : "default-icon"}`} />,
     },
-  ];
+  ].filter(Boolean);
 
-  const userDrawerData = [
-    {
-      title: "Dashboard",
-      icon: <DashboardIcon className={`${location.pathname === "/dashboard" ? "common-icon" : "default-icon"}`} />,
-    },
-    {
-      title: "Matches",
-      icon: <MatchIcon className={`${location.pathname === "/matches" ? "common-icon" : "default-icon"}`} />,
-    },
-    {
-      title: "Teams",
-      icon: <GroupsIcon className={`${location.pathname === "/teams" ? "common-icon" : "default-icon"}`} />,
-    },
-    {
-      title: "Prediction Analysis",
-      icon: <TroubleshootIcon className={`${location.pathname === "/prediction-analysis" ? "common-icon" : "default-icon"}`} />,
-    },
-  ];
+  const container = window !== undefined ? () => window().document.body : undefined;
 
-  const showDrawerData = userData.role === 'admin' ? adminDrawerData : userDrawerData;
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
   return (
     <Box
       component="nav"
@@ -103,7 +92,7 @@ const Sidebar = (props: Props) => {
             <CloseIcon className="header-icon" onClick={handleDrawerToggle} />
           </div>
 
-          {showDrawerData.map((data, index: number) => {
+          {drawerData.map((data: any, index: number) => {
             const isActive = location.pathname === `/${data.title === "Prediction Analysis" ? "prediction-analysis" : data.title.toLowerCase()}` ? '' : 'sidebar-menu-title'
             return (
               <NavLink

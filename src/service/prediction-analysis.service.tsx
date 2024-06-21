@@ -2,11 +2,11 @@ import http from "../utils/util";
 
 const predictionAnalysisService = {
 
-  getAll() {
-    return http.get("/prediction-analysis");
+  getAll(tournamentId: number, groupId: number) {
+    return http.get(`/prediction-analysis/filter/${tournamentId}/${groupId}`);
   },
-  get(id: number) {
-    return http.get(`/prediction-analysis/${id}`);
+  get(userId: number, groupId: number) {
+    return http.get(`/prediction-analysis/${userId}/${groupId}`);
   }
 }
 

@@ -2,12 +2,12 @@ import { MatchDetailsRequestPayload } from "../types/match";
 import http from "../utils/util";
 
 const MatchService = {
-  getAll() {
-    return http.get('/match');
+  getAll(id: number) {
+    return http.get(`/match/tournament/${id}`);
   },
 
-  getDashboard(id: number) {
-    return http.get(`/match/dashboard/${id}`);
+  getDashboard(userId: number, tournamentId: number) {
+    return http.get(`/match/dashboard/${userId}/${tournamentId}`);
   },
 
   getPredictionDetailsById(id: number) {

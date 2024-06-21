@@ -1,27 +1,32 @@
-import { Avatar, Box, Grid, Typography } from "@mui/material";
+import { Avatar, Box, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import FireIcon from "../../assets/icon/fire";
 import AvatarImg from '../../assets/img/avatar.jpg';
 import Card from "../../components/card/card";
-import MatchService from "../../service/matches.service";
+import UserContext from "../../context/user-context";
+import GroupService from "../../service/group.service";
+import MatchService from "../../service/match.service";
 import playerLeaderboardService from "../../service/player-leaderboard.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
+import TournamentService from "../../service/tournament.service";
 import { JwtTokenDecode } from "../../types/auth";
 import { ApiResponse } from "../../types/common";
 import { IMatch } from "../../types/match";
 import { IPlayerLeaderboard } from "../../types/prediction";
-import { biteCodeConvertIntoImg } from "../../utils/util";
+import { biteCodeConvertIntoImg, notificationConfig } from "../../utils/util";
 import "./dashboard.css";
 
 dayjs.extend(utc);
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { setGroupId, setTournamentId } = useContext(UserContext);
   let getData = localStorage.getItem('token') as string;
   let userData = jwtDecode(getData) as JwtTokenDecode;
   let user_id = userData.id;
@@ -32,6 +37,10 @@ const Dashboard = () => {
   const [playerLeaderboardList, setPlayerLeaderboardList] = useState([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [imgUrl, setImgUrl] = useState<any>(null);
+  const [tournamentList, setTournamentList] = useState([]);
+  const [tournamentValue, setTournamentValue] = useState(0);
+  const [groupsList, setGroupsList] = useState([]);
+  const [groupsValue, setGroupsValue] = useState(0);
 
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
@@ -42,25 +51,68 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (getData) {
-      getPlayerLeaderboardList();
-      getMatchListData();
-      checkPlayerStreak();
+      getTournament();
+      getGroupList();
     } else {
       navigate('/');
     }
     // eslint-disable-next-line
   }, [])
 
-  const getMatchListData = () => {
-    MatchService.getDashboard(user_id).then((response: AxiosResponse<any, ApiResponse<IMatch[]>>) => {
+  useEffect(() => {
+    if (tournamentValue !== 0 && groupsValue !== 0) {
+      getPlayerLeaderboardList(tournamentValue, groupsValue);
+      checkPlayerStreak(tournamentValue, groupsValue);
+      getMatchListData(user_id, tournamentValue);
+    }
+    // eslint-disable-next-line
+  }, [user_id, tournamentValue, groupsValue])
+
+  const getTournament = () => {
+    TournamentService.getAll(userData.id).then((res) => {
+      if (res.data) {
+        setTournamentList(res.data);
+        let findActiveTournament = res.data.find((item: any) => item.status === 'Active')
+        if (findActiveTournament) {
+          setTournamentValue(findActiveTournament.id);
+          setTournamentId(findActiveTournament.id);
+
+        } else {
+          setTournamentValue(res.data[0].id);
+          setTournamentId(res.data[0].id);
+        }
+      }
+    }).catch((error) => {
+      toast.error(error.response.data, notificationConfig);
+    })
+  }
+
+  const getGroupList = () => {
+    GroupService.getAll(userData.id).then((res) => {
+      setGroupsList(res.data);
+      setGroupsValue(res.data[0].id);
+      setGroupId(res.data[0].id);
+    }).catch((error) => {
+      setEmptyMessageBanner(true);
+      console.error(error)
+    });
+  }
+
+  const getMatchListData = (userId: number, tournamentId: number) => {
+    MatchService.getDashboard(user_id, tournamentId).then((response: AxiosResponse<any, ApiResponse<IMatch[]>>) => {
       setMatchListData(response.data);
     }).catch((error) => {
       console.error(error)
     })
   }
 
-  const getPlayerLeaderboardList = () => {
-    playerLeaderboardService.getAll().then((response) => {
+  const getPlayerLeaderboardList = (tournamentId: number, groupId: number) => {
+    if (!tournamentId || !groupId) {
+      setEmptyMessageBanner(true);
+      return;
+    }
+
+    playerLeaderboardService.getAll(tournamentId, groupId).then((response) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
@@ -73,8 +125,8 @@ const Dashboard = () => {
     })
   }
 
-  const checkPlayerStreak = () => {
-    predictionAnalysisService.getAll().then((response) => {
+  const checkPlayerStreak = (tournamentId: number, groupId: number) => {
+    predictionAnalysisService.getAll(tournamentId, groupId).then((response) => {
       if (response.data) {
         setPlayerStreakList(response.data);
       }
@@ -122,11 +174,58 @@ const Dashboard = () => {
     return totalPayMoney;
   }
 
+  const handleSelectionChange = (event: SelectChangeEvent<number>, type: string) => {
+    const value = parseInt(event.target.value.toString());
+    if (type === 'tournament') {
+      setTournamentValue(value);
+      setTournamentId(value);
+    } else if (type === 'group') {
+      setGroupsValue(value);
+      setGroupId(value);
+    }
+  };
+
 
   return (
     <div className="bottom-section-main bg content-center">
       <div className="max-width">
         <Box className="dashboard_container" sx={{ flexGrow: 1, ml: 7, mr: 7 }}>
+          {(tournamentList.length > 1 || groupsList.length > 1) &&
+            <div className='filter-tournament-groups'>
+              {tournamentList.length > 1 &&
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-label">Tournaments</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={tournamentValue}
+                    label="Tournaments"
+                    onChange={(event) => handleSelectionChange(event, 'tournament')}
+                  >
+                    {tournamentList.map((item: any, index: number) => (
+                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
+              {groupsList.length > 1 &&
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-label">Groups</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={groupsValue}
+                    label="Tournaments"
+                    onChange={(event) => handleSelectionChange(event, 'group')}
+                  >
+                    {groupsList.map((item: any, index: number) => (
+                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              }
+            </div>
+          }
           {matchListData.length > 0 && <Grid container columns={{ xs: 2, sm: 8, md: 12 }} sx={{ display: "flex", justifyContent: "center" }}>
             {
               matchListData.map((match: IMatch, index: number) => (
@@ -136,7 +235,6 @@ const Dashboard = () => {
               ))
             }
           </Grid>}
-
           {isOpen && (
             <div className="modal">
               <span className="close" onClick={() => setIsOpen(false)}>

@@ -1,37 +1,31 @@
 import BedtimeIcon from '@mui/icons-material/Bedtime';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import DeleteIcon from "../../assets/icon/delete";
-import EditIcon from '../../assets/icon/edit';
 import Trophy from "../../assets/icon/trophy";
-import ConfirmDialog from '../../components/dialog-box/confirm/confirm-dialog';
-import WinnerConfirmDialog from "../../components/dialog-box/winner/winner-dialog";
-import MatchService from "../../service/matches.service";
+import MatchService from "../../service/match.service";
+import TournamentService from '../../service/tournament.service';
 import { JwtTokenDecode } from "../../types/auth";
 import { IMatch } from "../../types/match";
-import { notificationConfig } from "../../utils/util";
 import './match.css';
+import { toast } from 'react-toastify';
+import { notificationConfig } from '../../utils/util';
 
 const Match = () => {
   const token = localStorage.getItem('token') as string;
   const userData = jwtDecode(token) as JwtTokenDecode;
-  const navigate = useNavigate();
   const [filterMatchList, setFilterMatchList] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [winnerTeamSelectDialog, setWinnerTeamSelectDialog] = useState(false);
+  const [tournamentList, setTournamentList] = useState([]);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
-  const [matchId, setMatchId] = useState<number>(0);
-  const [matchDetails, setMatchDetails] = useState<IMatch>();
   const [width, setWidth] = useState(window.innerWidth);
   const [showButton, setShowButton] = useState(false);
+  const [filterTournament, setFilterTournament] = useState('');
 
+  // Back to redirect current match
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
@@ -48,6 +42,7 @@ const Match = () => {
     };
   }, []);
 
+  // Adjust responsive ui
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
     return () => {
@@ -55,17 +50,20 @@ const Match = () => {
     };
   }, []);
 
+  // Getting data api calls
   useEffect(() => {
-    getMatchList();
+    getTournament();
+    // eslint-disable-next-line
   }, []);
 
+  // Scrolling current match
   useEffect(() => {
     scrollToToday();
     // eslint-disable-next-line
   }, [filterMatchList]);
 
-  const getMatchList = () => {
-    MatchService.getAll().then((response) => {
+  const getMatchList = (id: number) => {
+    MatchService.getAll(id).then((response) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
@@ -100,38 +98,22 @@ const Match = () => {
     })
   }
 
-  const handlerEditMatch = (id: number) => {
-    navigate(`/match/${id}`)
-  }
-
-  const handlerDeleteMatch = (id: number) => {
-    MatchService.delete(id).then((res) => {
-      getMatchList()
-    }).catch((err) => {
-      toast.error(err.response.data.error, notificationConfig);
+  const getTournament = () => {
+    TournamentService.getAll(userData.id).then((res) => {
+      if (res.data) {
+        setTournamentList(res.data);
+        let getActiveTournament = res.data.find((item: any) => item.status === "Active");
+        setFilterTournament(getActiveTournament.id);
+        getMatchList(getActiveTournament.id);
+      }
+    }).catch((error) => {
+      toast.error(error.response.data, notificationConfig);
     })
-    setOpen(false)
   }
-
-  const handleClickOpen = (id: number) => {
-    setOpen(true);
-    setMatchId(id);
-  };
-
-  const handlerSelectWinnerTeam = (match: IMatch) => {
-    setWinnerTeamSelectDialog(true);
-    setMatchDetails(match);
-  }
-
-  const handleWinnerSelect = () => {
-    getMatchList();
-    setWinnerTeamSelectDialog(false);
-  };
 
   const updateWidth = () => {
     setWidth(window.innerWidth);
   };
-
 
   const scrollToToday = () => {
     const todayIndex = filterMatchList.findIndex((match: any) => {
@@ -162,16 +144,39 @@ const Match = () => {
     }
   };
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilterTournament(event.target.value);
+    getMatchList(parseInt(event.target.value));
+  };
+
   return (
     <div className="bottom-section-main bg horizontal-align">
       <div className="match-container">
+        {tournamentList.length > 1 &&
+          <div className='filter-tournament'>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-label">Tournaments</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filterTournament}
+                label="Tournaments"
+                onChange={handleChange}
+              >
+                {tournamentList.map((item: any, index: number) => (
+                  <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        }
         <div className="col">
           {filterMatchList.length > 0 &&
             <div className="main-timeline">
               {filterMatchList.map((match: IMatch, index: number) => (
                 <div className="timeline" id={`timeline-${index}`} key={index + 1}>
                   <div className="timeline-content w-100">
-                    <div className={`${userData.role === 'admin' ? 'timeline-event' : 'timeline-user-event'}`}>
+                    <div className='timeline-user-event'>
                       <div className='timeline-year'>
                         <span>MATCH {match.match_no}</span>
                         <div>{dayjs.utc(match.date).local().format('MMM, ddd D')}</div>
@@ -182,23 +187,6 @@ const Match = () => {
                           <LightModeIcon className='sun-icon' /> :
                           <BedtimeIcon className='moon-icon' />
                         }
-                      </div>
-                      <div className='buttons'>
-                        <div id='match_edit' data-label="Buttons">
-                          <Button onClick={() => handlerEditMatch(match.id)}>
-                            <EditIcon />
-                          </Button>
-                        </div>
-                        <div id='winner_trophy' data-label="">
-                          <Button onClick={() => handlerSelectWinnerTeam(match)}>
-                            <Trophy />
-                          </Button>
-                        </div>
-                        <div id='match_delete' data-label="">
-                          <Button onClick={() => handleClickOpen(match.id)}>
-                            <DeleteIcon />
-                          </Button>
-                        </div>
                       </div>
                     </div>
                     <div className="content" style={{ marginTop: '30px' }}>
@@ -234,7 +222,7 @@ const Match = () => {
           }
         </div>
         {emptyMessageBanner && (
-          <div>
+          <div className='text-algin-center'>
             <h1>Data Not Found</h1>
           </div>
         )}
@@ -245,8 +233,6 @@ const Match = () => {
         >
           <KeyboardArrowUpIcon className='upArrow-icon' />
         </button>
-        {matchDetails && <WinnerConfirmDialog match={matchDetails} open={winnerTeamSelectDialog} setOpen={setWinnerTeamSelectDialog} onWinnerSelect={handleWinnerSelect} />}
-        <ConfirmDialog id={matchId} open={open} setOpen={setOpen} handlerDeleteMatch={handlerDeleteMatch} />
       </div>
     </div >
   )
