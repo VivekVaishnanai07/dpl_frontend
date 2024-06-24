@@ -15,7 +15,7 @@ const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) 
   const [showProgressBar, setShowProgressBar] = useState(false);
 
   useEffect(() => {
-    const socket = io('http://localhost:3300');
+    const socket = io('https://dpl-backend-3pdy.onrender.com');
     const fetchData = () => {
       if (tournamentId !== null && groupId !== null) {
         getPredictionMatchUserData(matchDetails.id, groupId, tournamentId);
