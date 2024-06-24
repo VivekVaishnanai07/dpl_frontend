@@ -15,26 +15,24 @@ const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) 
   const [showProgressBar, setShowProgressBar] = useState(false);
 
   useEffect(() => {
-    const socket = io('http://localhost:3300')
+    const socket = io('http://localhost:3300');
+    const fetchData = () => {
+      if (tournamentId !== null && groupId !== null) {
+        getPredictionMatchUserData(matchDetails.id, groupId, tournamentId);
+      }
+    };
+
+    fetchData();
+
     socket.on('connect', () => console.log(socket.id))
 
     socket.on("prediction_updated", ({ matchId, groupId, tournamentId }) => {
-      console.log({ matchId, groupId, tournamentId });
-      if (matchDetails.id === parseInt(matchId)) {
-        getPredictionMatchUserData(matchId, groupId, tournamentId);
-      }
+      fetchData();
     });
 
     socket.on("prediction_added", ({ matchId, groupId, tournamentId }) => {
-      console.log({ matchId, groupId, tournamentId });
-      if (matchDetails.id === parseInt(matchId)) {
-        getPredictionMatchUserData(matchId, groupId, tournamentId);
-      }
+      fetchData();
     });
-
-    if (tournamentId && groupId) {
-      getPredictionMatchUserData(matchDetails.id, tournamentId, groupId);
-    }
 
     return () => {
       socket.disconnect(); // Disconnect Socket.IO connection
