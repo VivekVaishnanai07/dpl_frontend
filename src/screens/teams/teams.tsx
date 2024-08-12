@@ -45,8 +45,13 @@ const Teams = () => {
       if (res.data) {
         setTournamentList(res.data);
         let getActiveTournament = res.data.find((item: any) => item.status === "Active");
-        setFilterTournament(getActiveTournament.id);
-        getTeamsList(getActiveTournament.id);
+        if (!getActiveTournament) {
+          setFilterTournament(res.data[0].id);
+          getTeamsList(res.data[0].id);
+        } else {
+          setFilterTournament(getActiveTournament.id);
+          getTeamsList(getActiveTournament.id);
+        }
       }
     }).catch((error) => {
       toast.error(error.response.data, notificationConfig);

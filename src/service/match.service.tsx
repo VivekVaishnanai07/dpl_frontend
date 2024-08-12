@@ -6,8 +6,8 @@ const MatchService = {
     return http.get(`/match/tournament/${id}`);
   },
 
-  getDashboard(userId: number, tournamentId: number) {
-    return http.get(`/match/dashboard/${userId}/${tournamentId}`);
+  getDashboard(userId: number) {
+    return http.get(`/match/dashboard/${userId}`);
   },
 
   getPredictionDetailsById(id: number) {

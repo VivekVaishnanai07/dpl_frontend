@@ -26,11 +26,11 @@ const MatchProgressBar: React.FC<{ matchDetails: IMatch }> = ({ matchDetails }) 
 
     socket.on('connect', () => console.log(socket.id))
 
-    socket.on("prediction_updated", ({ matchId, groupId, tournamentId }) => {
+    socket.on("prediction_updated", () => {
       fetchData();
     });
 
-    socket.on("prediction_added", ({ matchId, groupId, tournamentId }) => {
+    socket.on("prediction_added", () => {
       fetchData();
     });
 

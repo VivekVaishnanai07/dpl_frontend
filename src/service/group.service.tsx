@@ -1,10 +1,6 @@
 import http from "../utils/util";
 
 const GroupService = {
-  filterGroups(userId: number | null, tournamentId: number | null) {
-    return http.get(`/group/dashboard-groups/${userId}/${tournamentId}`);
-  },
-
   getAll(id: number | null) {
     return http.get(`/group/user-groups/${id}`);
   },

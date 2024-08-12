@@ -10,7 +10,6 @@ import FireIcon from "../../assets/icon/fire";
 import AvatarImg from '../../assets/img/avatar.jpg';
 import Card from "../../components/card/card";
 import UserContext from "../../context/user-context";
-import GroupService from "../../service/group.service";
 import MatchService from "../../service/match.service";
 import playerLeaderboardService from "../../service/player-leaderboard.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
@@ -38,9 +37,9 @@ const Dashboard = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [imgUrl, setImgUrl] = useState<any>(null);
   const [tournamentList, setTournamentList] = useState([]);
-  const [tournamentValue, setTournamentValue] = useState(0);
+  const [tournamentValue, setTournamentValue] = useState<any>(null);
   const [groupsList, setGroupsList] = useState([]);
-  const [groupsValue, setGroupsValue] = useState(0);
+  const [groupsValue, setGroupsValue] = useState<any>(null);
 
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
@@ -59,10 +58,10 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    if (tournamentValue !== 0 && groupsValue !== 0) {
-      getPlayerLeaderboardList(tournamentValue, groupsValue);
-      checkPlayerStreak(tournamentValue, groupsValue);
-      getMatchListData(user_id, tournamentValue);
+    if (tournamentValue && groupsValue) {
+      getPlayerLeaderboardList(tournamentValue.id, groupsValue.id);
+      checkPlayerStreak(tournamentValue.id, groupsValue.id);
+      getMatchListData(user_id);
     }
     // eslint-disable-next-line
   }, [user_id, tournamentValue, groupsValue])
@@ -71,15 +70,20 @@ const Dashboard = () => {
     TournamentService.getAll(userData.id).then((res) => {
       if (res.data) {
         let findActiveTournament = res.data.find((item: any) => item.status === 'Active');
-        setTournamentList(findActiveTournament);
         if (findActiveTournament) {
-          getGroupList(findActiveTournament.id);
-          setTournamentValue(findActiveTournament.id);
+          setTournamentList(findActiveTournament);
+          setGroupsList(findActiveTournament.group_details);
+          setTournamentValue(findActiveTournament);
           setTournamentId(findActiveTournament.id);
-
+          setGroupsValue(findActiveTournament.group_details[0]);
+          setGroupId(findActiveTournament.group_details[0].id)
         } else {
-          setTournamentValue(res.data[0].id);
+          setTournamentList(res.data[0]);
+          setTournamentValue(res.data[0]);
           setTournamentId(res.data[0].id);
+          setGroupsList(res.data[0].group_details);
+          setGroupsValue(res.data[0].group_details[0]);
+          setGroupId(res.data[0].group_details[0].id)
         }
       }
     }).catch((error) => {
@@ -87,21 +91,8 @@ const Dashboard = () => {
     })
   }
 
-  const getGroupList = (id: number) => {
-    console.log(userData.id, id);
-    GroupService.filterGroups(userData.id, id).then((res) => {
-      setGroupsList(res.data);
-      console.log(res.data);
-      setGroupsValue(res.data[0].id);
-      setGroupId(res.data[0].id);
-    }).catch((error) => {
-      setEmptyMessageBanner(true);
-      console.error(error)
-    });
-  }
-
-  const getMatchListData = (userId: number, tournamentId: number) => {
-    MatchService.getDashboard(user_id, tournamentId).then((response: AxiosResponse<any, ApiResponse<IMatch[]>>) => {
+  const getMatchListData = (userId: number) => {
+    MatchService.getDashboard(userId).then((response: AxiosResponse<any, ApiResponse<IMatch[]>>) => {
       setMatchListData(response.data);
     }).catch((error) => {
       console.error(error)
@@ -176,14 +167,14 @@ const Dashboard = () => {
     return totalPayMoney;
   }
 
-  const handleSelectionChange = (event: SelectChangeEvent<number>, type: string) => {
-    const value = parseInt(event.target.value.toString());
+  const handleSelectionChange = (event: any, type: string) => {
+    const value = event.target.value;
     if (type === 'tournament') {
       setTournamentValue(value);
-      setTournamentId(value);
+      setTournamentId(value.id);
     } else if (type === 'group') {
       setGroupsValue(value);
-      setGroupId(value);
+      setGroupId(value.id);
     }
   };
 
@@ -192,7 +183,7 @@ const Dashboard = () => {
     <div className="bottom-section-main bg content-center">
       <div className="max-width">
         <Box className="dashboard_container" sx={{ flexGrow: 1, ml: 7, mr: 7 }}>
-          {(tournamentList.length > 1 || groupsList.length > 1) &&
+          {tournamentList.length > 1 &&
             <div className='filter-tournament-groups'>
               {tournamentList.length > 1 &&
                 <FormControl sx={{ m: 1, minWidth: 120 }}>

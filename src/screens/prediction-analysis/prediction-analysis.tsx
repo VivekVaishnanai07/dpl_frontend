@@ -1,10 +1,9 @@
-import { FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import ViewMoreIcon from "../../assets/icon/view-more";
-import GroupService from "../../service/group.service";
 import predictionAnalysisService from "../../service/prediction-analysis.service";
 import TournamentService from "../../service/tournament.service";
 import { JwtTokenDecode } from "../../types/auth";
@@ -17,9 +16,9 @@ const PredictionAnalysis = () => {
   const navigate = useNavigate();
   const [usersPredictionAnalysisList, setUsersPredictionAnalysisList] = useState([]);
   const [tournamentList, setTournamentList] = useState([]);
-  const [tournamentValue, setTournamentValue] = useState(0);
+  const [tournamentValue, setTournamentValue] = useState<any>(null);
   const [groupsList, setGroupsList] = useState([]);
-  const [groupsValue, setGroupsValue] = useState(0);
+  const [groupsValue, setGroupsValue] = useState<any>(null);
   const [emptyMessageBanner, setEmptyMessageBanner] = useState(false);
 
   useEffect(() => {
@@ -33,14 +32,13 @@ const PredictionAnalysis = () => {
     }
   }, [tournamentValue, groupsValue])
 
-  const getUsersPredictionList = (tournament: number, groups: number) => {
+  const getUsersPredictionList = (tournament: any, groups: any) => {
     if (!tournament || !groups) {
       setEmptyMessageBanner(true);
       return;
     }
 
-
-    predictionAnalysisService.getAll(tournament, groups).then((response: any) => {
+    predictionAnalysisService.getAll(tournament.id, groups.id).then((response: any) => {
       if (response.data.length === 0) {
         setEmptyMessageBanner(true);
       } else {
@@ -56,13 +54,16 @@ const PredictionAnalysis = () => {
   const getTournament = () => {
     TournamentService.getAll(userData.id).then((res) => {
       if (res.data) {
-        getGroupList(res.data[0].id);
         setTournamentList(res.data);
         let findActiveTournament = res.data.find((item: any) => item.status === 'Active')
         if (findActiveTournament) {
-          setTournamentValue(findActiveTournament.id);
+          setTournamentValue(findActiveTournament);
+          setGroupsList(findActiveTournament.group_details);
+          setGroupsValue(findActiveTournament.group_details[0]);
         } else {
-          setTournamentValue(res.data[0].id);
+          setTournamentValue(res.data[0]);
+          setGroupsList(res.data[0].group_details);
+          setGroupsValue(res.data[0].group_details[0]);
         }
       }
     }).catch((error) => {
@@ -70,20 +71,12 @@ const PredictionAnalysis = () => {
     })
   }
 
-  const getGroupList = (id: number) => {
-    GroupService.filterGroups(userData.id, id).then((res) => {
-      setGroupsList(res.data);
-      setGroupsValue(res.data[0].id);
-    }).catch((error) => {
-      setEmptyMessageBanner(true);
-      console.error(error)
-    });
-  }
-
-  const handleSelectionChange = (event: SelectChangeEvent<number>, type: string) => {
-    const value = parseInt(event.target.value.toString());
+  const handleSelectionChange = (event: any, type: string) => {
+    const value = event.target.value;
     if (type === 'tournament') {
       setTournamentValue(value);
+      setGroupsList(value.group_details)
+      setGroupsValue(value.group_details[0]);
     } else if (type === 'group') {
       setGroupsValue(value);
     }
@@ -106,7 +99,7 @@ const PredictionAnalysis = () => {
                     onChange={(event) => handleSelectionChange(event, 'tournament')}
                   >
                     {tournamentList.map((item: any, index: number) => (
-                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                      <MenuItem value={item} key={index + 1}>{item.name}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -122,7 +115,7 @@ const PredictionAnalysis = () => {
                     onChange={(event) => handleSelectionChange(event, 'group')}
                   >
                     {groupsList.map((item: any, index: number) => (
-                      <MenuItem value={item.id} key={index + 1}>{item.name}</MenuItem>
+                      <MenuItem value={item} key={index + 1}>{item.name}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -158,7 +151,7 @@ const PredictionAnalysis = () => {
                     </div>
                   </td>
                   <td className="d-flex justify-content-center align-items-center" data-label="">
-                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}/${groupsValue}/${tournamentValue}`, { state: { name: item.full_name } })}>
+                    <IconButton onClick={() => navigate(`/prediction-analysis/${item.user_id}/${groupsValue.id}/${tournamentValue.id}`, { state: { name: item.full_name } })}>
                       <ViewMoreIcon />
                     </IconButton>
                   </td>

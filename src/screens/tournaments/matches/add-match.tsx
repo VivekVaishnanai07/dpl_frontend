@@ -240,14 +240,14 @@ export default function AddMatch() {
                       </MenuItem>
                       {teamList && teamList.map((team: ITeam) => (
                         <MenuItem key={team.id} value={team.id}>
-                          <div style={{ display: "flex", alignItems: "center", fontSize: 18 }}>
+                          <div style={{ display: "flex", alignItems: "center", fontSize: 16 }}>
                             <img
                               loading="lazy"
-                              width="40"
-                              height="40"
+                              width="45"
+                              height="28"
                               src={team.icon}
                               alt="team_1"
-                              style={{ paddingRight: "4px" }}
+                              style={{ marginRight: "8px" }}
                             />
                             {team.short_name}
                           </div>
@@ -275,14 +275,14 @@ export default function AddMatch() {
                       </MenuItem>
                       {teamList && teamList.map((team: ITeam) => (
                         <MenuItem key={team.id} value={team.id}>
-                          <div style={{ display: "flex", alignItems: "center", fontSize: 18 }}>
+                          <div style={{ display: "flex", alignItems: "center", fontSize: 16 }}>
                             <img
                               loading="lazy"
-                              width="40"
-                              height="40"
+                              width="45"
+                              height="28"
                               src={team.icon}
                               alt="team_2"
-                              style={{ paddingRight: "4px" }}
+                              style={{ marginRight: "8px" }}
                             />
                             {team.short_name}
                           </div>

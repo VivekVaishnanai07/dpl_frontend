@@ -27,19 +27,19 @@ const Card: React.FC<{ matchDetails: IMatch }> = (props) => {
   return (
     <div className="card">
       <div className="card_header">
-        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && '#1e5b79'} ` }}>{matchDetails.match_status}</div>
+        <div className="match_status" style={{ color: `${matchDetails.match_status === "Today Match" && '#1e5b79'}` }}>{matchDetails.match_status}</div>
         <div className="match_number">T20 {matchDetails.match_no} of 74</div>
       </div>
       <div className="card_content">
         <div className="card_left">
-          <img className="team_icon" src={matchDetails.team_1_icon} alt="team_logo" style={{ width: 60 }} />
+          <img className="team_icon" src={matchDetails.team_1_icon} alt="team_logo" style={{ width: 45 }} />
           <div className="team_1">{matchDetails.team_1}</div>
         </div>
         <span className="card_center">
         </span>
         <div className="card_right">
           <div className="team_2">{matchDetails.team_2}</div>
-          <img className="team_icon" src={matchDetails.team_2_icon} alt="team_logo" style={{ width: 60 }} />
+          <img className="team_icon" src={matchDetails.team_2_icon} alt="team_logo" style={{ width: 45 }} />
         </div>
       </div>
       <div className="card_footer">

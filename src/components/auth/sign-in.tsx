@@ -31,7 +31,6 @@ export default function SingIn() {
     }
     AuthService.login(requestPayload).then((response) => {
       const responseData = response.data;
-      console.log(responseData);
       if (responseData.token) {
         toast.success('You are successfully logged in', notificationConfig);
         localStorage.setItem("token", responseData.token)

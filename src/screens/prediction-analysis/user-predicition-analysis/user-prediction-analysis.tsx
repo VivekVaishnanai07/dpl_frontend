@@ -77,7 +77,7 @@ const UserPredictionAnalysis = () => {
                 <td id="table_row" data-label="Venue">{item.venue}</td>
                 <td id="table_row" data-label="Date">{dayjs(item.date).format('DD/MM/YYYY')}</td>
                 <td id="table_row" data-label="Time">{dayjs(item.date).format('h:mm A')}</td>
-                <td id="table_row" data-label="Predict Team">{item.predict_team ? item.predict_team : '-'}</td>
+                <td id="table_row" data-label="Predict Team">{item.predicted_team ? item.predicted_team : '-'}</td>
                 <td id="table_row" data-label="Won Team">{item.winner_team ? item.winner_team : '-'}</td>
                 <td id="table_row" data-label="">
                   {item.status === "true" && <span className="winner_lost_pending_farm winner">W</span>}
