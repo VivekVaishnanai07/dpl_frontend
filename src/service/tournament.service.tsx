@@ -1,8 +1,12 @@
 import http from "../utils/util";
 
 const TournamentService = {
-  getAll(id: number | null) {
+  getByUserAll(id: number | null) {
     return http.get(`/tournament/user-tournaments/${id}`);
+  },
+
+  getAll(id: number | null) {
+    return http.get(`/tournament/get-tournaments/${id}`);
   },
 
   get(id: number) {

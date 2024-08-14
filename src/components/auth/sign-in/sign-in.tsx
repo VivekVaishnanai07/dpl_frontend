@@ -1,4 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Link } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,18 +9,17 @@ import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { AxiosResponse } from 'axios';
 import { KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import cricketImg from '../../assets/img/cricket.gif';
-import AuthService from '../../service/auth.service';
-import { notificationConfig } from '../../utils/util';
+import cricketImg from '../../../assets/img/cricket.gif';
+import AuthService from '../../../service/auth.service';
+import { notificationConfig } from '../../../utils/util';
 import './sign-in.css';
 
 const defaultTheme = createTheme();
 
-export default function SingIn() {
+export default function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -29,7 +29,7 @@ export default function SingIn() {
       email: email,
       password: password
     }
-    AuthService.login(requestPayload).then((response) => {
+    AuthService.login(requestPayload).then((response: any) => {
       const responseData = response.data;
       if (responseData.token) {
         toast.success('You are successfully logged in', notificationConfig);
@@ -49,7 +49,7 @@ export default function SingIn() {
         setEmail("");
         setPassword("");
       }
-    }).catch((error) => {
+    }).catch((error: any) => {
       if (error.response.data) {
         toast.warning(error.response.data.message, notificationConfig);
       }
@@ -122,6 +122,13 @@ export default function SingIn() {
               >
                 Sign In
               </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Register"}
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>

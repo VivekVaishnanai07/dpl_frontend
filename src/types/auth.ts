@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export interface LoginRequestPayload {
   email: string;
   password: string;
@@ -29,3 +31,16 @@ export interface JwtTokenDecode {
   exp: number;
 }
 
+export interface Resignation {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  groupName: string
+  groupDescription: string
+  tournamentName: string
+  year: number
+  startDate: dayjs.Dayjs
+  endDate: dayjs.Dayjs
+  tournamentStatus: string
+}

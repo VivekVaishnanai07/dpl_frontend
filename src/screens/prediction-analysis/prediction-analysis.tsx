@@ -52,7 +52,7 @@ const PredictionAnalysis = () => {
   }
 
   const getTournament = () => {
-    TournamentService.getAll(userData.id).then((res) => {
+    TournamentService.getByUserAll(userData.id).then((res) => {
       if (res.data) {
         setTournamentList(res.data);
         let findActiveTournament = res.data.find((item: any) => item.status === 'Active')

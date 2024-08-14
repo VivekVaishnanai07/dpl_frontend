@@ -28,13 +28,21 @@ export default function UserProfile() {
 
   useEffect(() => {
     if (user !== null) {
-      const getImage = biteCodeConvertIntoImg(user.userImg.data);
-      setImagePreview(getImage);
-      setUserDetails({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        userImg: getImage
-      })
+      if (user.userImg !== null) {
+        const getImage = biteCodeConvertIntoImg(user.userImg.data);
+        setImagePreview(getImage);
+        setUserDetails({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          userImg: getImage
+        })
+      } else {
+        setUserDetails({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          userImg: ''
+        })
+      }
     }
     // eslint-disable-next-line
   }, [user])

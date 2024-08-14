@@ -67,7 +67,7 @@ const Dashboard = () => {
   }, [user_id, tournamentValue, groupsValue])
 
   const getTournament = () => {
-    TournamentService.getAll(userData.id).then((res) => {
+    TournamentService.getByUserAll(userData.id).then((res) => {
       if (res.data) {
         let findActiveTournament = res.data.find((item: any) => item.status === 'Active');
         if (findActiveTournament) {

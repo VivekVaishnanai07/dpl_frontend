@@ -70,7 +70,7 @@ export default function AddGroup() {
   }
 
   const getTournamentList = () => {
-    TournamentService.getAll(null).then((res) => {
+    TournamentService.getByUserAll(null).then((res) => {
       if (res.data.length === 0) {
         setTournamentFieldDisable(true);
       } else {

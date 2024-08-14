@@ -72,7 +72,7 @@ export default function AddMatch() {
   }
 
   const getTournament = () => {
-    TournamentService.getAll(userData.id).then((res) => {
+    TournamentService.getByUserAll(userData.id).then((res) => {
       if (res.data) {
         setTournamentList(res.data);
       }

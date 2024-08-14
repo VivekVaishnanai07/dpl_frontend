@@ -54,7 +54,7 @@ export default function AddTeam() {
   }, [id])
 
   const getTournament = () => {
-    TournamentService.getAll(userData.id).then((res) => {
+    TournamentService.getByUserAll(userData.id).then((res) => {
       if (res.data) {
         setTournamentList(res.data);
       }

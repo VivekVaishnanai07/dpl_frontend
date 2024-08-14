@@ -1,4 +1,4 @@
-import { ChangePasswordRequestPayload, LoginRequestPayload } from "../types/auth";
+import { ChangePasswordRequestPayload, LoginRequestPayload, Resignation } from "../types/auth";
 import http from "../utils/util";
 
 const AuthService = {
@@ -12,6 +12,10 @@ const AuthService = {
 
   changePassword(data: ChangePasswordRequestPayload) {
     return http.post("/change-password", data);
+  },
+
+  registration(data: Resignation) {
+    return http.post("/register", data);
   },
 }
 
