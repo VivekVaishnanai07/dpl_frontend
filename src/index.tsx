@@ -3,6 +3,25 @@ import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
+function isDevToolsOpen(): boolean {
+  const start = new Date().getTime();
+  debugger; // The 'debugger' statement can cause a delay if DevTools is open
+  const time = new Date().getTime() - start;
+  return time > 100; // Adjust this threshold based on your needs
+}
+
+function checkDevTools() {
+  if (isDevToolsOpen()) {
+    alert('DevTools is open! The site is paused.');
+    setTimeout(checkDevTools, 1); // Check every second
+  } else {
+    console.log('DevTools is closed. Resuming site...');
+  }
+}
+
+// Initial check
+checkDevTools();
+
 // Disable right-click and specific keyboard shortcuts
 document.addEventListener('contextmenu', (e: any) => e.preventDefault());
 
