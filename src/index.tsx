@@ -8,7 +8,7 @@ function isDevToolsOpen(): boolean {
   debugger; // The 'debugger' statement can cause a delay if DevTools is open
   const time = new Date().getTime() - start;
   console.log("start --->", start);
-  console.log("time --->", time);
+  console.log("new Date().getTime() --->", new Date().getTime());
   console.log(time > 100);
   return time > 100; // Adjust this threshold based on your needs
 }
