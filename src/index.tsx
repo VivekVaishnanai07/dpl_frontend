@@ -3,33 +3,27 @@ import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-function isDevToolsOpen(): boolean {
-  const start = new Date().getTime();
-  debugger; // The 'debugger' statement can cause a delay if DevTools is open
-  const time = new Date().getTime() - start;
-  console.log("start --->", start);
-  console.log("new Date().getTime() --->", new Date().getTime());
-  console.log(time > 100);
-  return time > 100; // Adjust this threshold based on your needs
+function detectDevTools(): boolean {
+    let devToolsOpen = false;
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() {
+            devToolsOpen = true;
+        }
+    });
+    console.log(element);
+    return devToolsOpen;
 }
 
-let devToolsDetected = false;
-
 function checkDevTools() {
-  if (isDevToolsOpen()) {
-    if (!devToolsDetected) {
-      devToolsDetected = true;
-      alert('DevTools is open! The site is paused.');
+    if (detectDevTools()) {
+        alert('DevTools is open! The site is paused.');
+        setTimeout(checkDevTools, 1000); // Check every second
+    } else {
+        console.log('DevTools is closed. Resuming site...');
+        // Resume site functionality
+        setTimeout(checkDevTools, 1000); // Continue checking every second
     }
-    setTimeout(checkDevTools, 1000); // Check every second
-  } else {
-    if (devToolsDetected) {
-      devToolsDetected = false;
-      console.log('DevTools is closed. Resuming site...');
-      // Add code to resume site functionality if needed
-    }
-    setTimeout(checkDevTools, 1000); // Continue checking every second
-  }
 }
 
 // Initial check
