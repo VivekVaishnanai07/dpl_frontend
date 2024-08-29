@@ -5,20 +5,30 @@ import reportWebVitals from './reportWebVitals';
 
 function isDevToolsOpen(): boolean {
   const start = new Date().getTime();
-  console.log("start --->",start)
   debugger; // The 'debugger' statement can cause a delay if DevTools is open
   const time = new Date().getTime() - start;
-   console.log("time --->",time)
-  console.log(time > 100)
+  console.log("start --->", start);
+  console.log("time --->", time);
+  console.log(time > 100);
   return time > 100; // Adjust this threshold based on your needs
 }
 
+let devToolsDetected = false;
+
 function checkDevTools() {
   if (isDevToolsOpen()) {
-    alert('DevTools is open! The site is paused.');
-    setTimeout(checkDevTools, 1); // Check every second
+    if (!devToolsDetected) {
+      devToolsDetected = true;
+      alert('DevTools is open! The site is paused.');
+    }
+    setTimeout(checkDevTools, 1000); // Check every second
   } else {
-    console.log('DevTools is closed. Resuming site...');
+    if (devToolsDetected) {
+      devToolsDetected = false;
+      console.log('DevTools is closed. Resuming site...');
+      // Add code to resume site functionality if needed
+    }
+    setTimeout(checkDevTools, 1000); // Continue checking every second
   }
 }
 
