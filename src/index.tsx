@@ -3,32 +3,6 @@ import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-function detectDevTools(): boolean {
-    let devToolsOpen = false;
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-        get: function() {
-            devToolsOpen = true;
-        }
-    });
-    console.log(element);
-    return devToolsOpen;
-}
-
-function checkDevTools() {
-    if (detectDevTools()) {
-        alert('DevTools is open! The site is paused.');
-        setTimeout(checkDevTools, 1000); // Check every second
-    } else {
-        console.log('DevTools is closed. Resuming site...');
-        // Resume site functionality
-        setTimeout(checkDevTools, 1000); // Continue checking every second
-    }
-}
-
-// Initial check
-checkDevTools();
-
 // Disable right-click and specific keyboard shortcuts
 document.addEventListener('contextmenu', (e: any) => e.preventDefault());
 
