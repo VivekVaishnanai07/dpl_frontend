@@ -5,8 +5,11 @@ import reportWebVitals from './reportWebVitals';
 
 function isDevToolsOpen(): boolean {
   const start = new Date().getTime();
+  console.log("start --->",start)
   debugger; // The 'debugger' statement can cause a delay if DevTools is open
   const time = new Date().getTime() - start;
+   console.log("time --->",time)
+  console.log(time > 100)
   return time > 100; // Adjust this threshold based on your needs
 }
 
